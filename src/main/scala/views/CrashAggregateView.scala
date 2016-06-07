@@ -23,6 +23,7 @@ object CrashAggregateView {
   class Conf(args: Array[String]) extends ScallopConf(args) {
     val from = opt[String]("from", descr = "From submission date", required = false)
     val to = opt[String]("to", descr = "To submission date", required = false)
+    val pingPath = opt[String]("pingPath", descr = "Ping path pattern", required = false)
     verify()
   }
 
@@ -38,6 +39,7 @@ object CrashAggregateView {
       case Some(f) => fmt.parseDateTime(f)
       case _ => DateTime.now.minusDays(1)
     }
+    val pingPath = conf.pingPath.get.getOrElse("*")
 
     // set up Spark
     val sparkConf = new SparkConf().setAppName("CrashAggregateVie")
@@ -54,8 +56,8 @@ object CrashAggregateView {
       val currentDateString = currentDate.toString("yyyy-MM-dd")
 
       // obtain the crash aggregates from telemetry ping data
-      val messages = Telemetry.getMessages(sc, currentDate, List("telemetry", "4", "crash"))
-        .union(Telemetry.getMessages(sc, currentDate, List("telemetry", "4", "main")))
+      val messages = Telemetry.getMessages(sc, currentDate, List("telemetry", "4", "crash", pingPath))
+        .union(Telemetry.getMessages(sc, currentDate, List("telemetry", "4", "main", pingPath)))
         .map(message => HekaFrame.fields(message) + ("payload" -> message.payload.getOrElse("")))
       val (rowRDD, main_processed, main_ignored, crash_processed, crash_ignored) = compareCrashes(sc, messages)
 
