@@ -81,6 +81,9 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
         ("os" ->
           ("name" -> "Windows_NT") ~
           ("locale" -> "en_US") ~
+          ("windowsBuildNumber" -> 10586) ~
+          ("windowsUBR" -> 446) ~
+          ("installYear" -> 2016) ~
           ("version" -> "6.1")) ~
         ("hdd" ->
           ("profile" ->
@@ -95,7 +98,8 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
         ("activeAddons" -> Map(
           "jid0-edalmuivkozlouyij0lpdx548bc@jetpack" ->
             ("name" -> "geckoprofiler") ~
-            ("version" -> "1.16.14"))) ~
+            ("version" -> "1.16.14") ~
+            ("isSystem" -> true))) ~
         ("theme" ->
           ("id" -> "{972ce4c6-7e08-4474-a285-3208198ce6fd}") ~
           ("description" -> "The default theme.")) ~
@@ -244,6 +248,14 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     records.foreach(x => assert(x.getAs[String]("name") == "Windows_NT"))
   }
 
+  "environment.system/os windows fields" must "be converted correctly" in {
+    val records = fixture.row.getList[Row](fixture.row.fieldIndex("system_os"))
+    assert(records.length == fixture.payloads.length)
+    records.foreach(x => assert(x.getAs[Int]("windows_build_number") == 10586))
+    records.foreach(x => assert(x.getAs[Int]("windows_ubr") == 446))
+    records.foreach(x => assert(x.getAs[Int]("install_year") == 2016))
+  }
+
   "environment.system/hdd" must "be converted correctly" in {
     val records = fixture.row.getList[Row](fixture.row.fieldIndex("system_hdd"))
     assert(records.length == fixture.payloads.length)
@@ -274,6 +286,7 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     records.foreach{ x =>
       val addon = x.get("jid0-edalmuivkozlouyij0lpdx548bc@jetpack").get
       assert(addon.getAs[String]("name") == "geckoprofiler")
+      assert(addon.getAs[Boolean]("is_system"))
     }
   }
 
