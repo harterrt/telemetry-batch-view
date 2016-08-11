@@ -1,6 +1,7 @@
 package com.mozilla.telemetry.views
 
 
+import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 
@@ -47,9 +48,31 @@ object CrossSectionalView {
     (ll, ds, row, elem)
   }
 
-  def main() = {
-    val ll = sqlContext.read.load("/home/harterrt/data/l10l_20160725_single_shard.parquet").limit(10)
-    val ds = ll.as[longitudinal]
+  private class Opts(args: Array[String]) extends ScallopConf(args) {
+    val source = opt[String](
+      "source",
+      descr = "Path to l10l set source",
+      required = true)
+    val outputBucket = opt[String](
+      "outputBucket",
+      descr = "Bucket in which to save data",
+      required = false,
+      default=Some("telemetry-test-bucket/harter"))
+    val outName = opt[String](
+      "outName",
+      descr = "Name for the output of this run",
+      required = true)
+    verify()
+  }
+
+  def main(args: Array[String]): Unit = {
+    val opts = new Opts(args)
+    val source = opts.source()
+
+    val ds = sqlContext.read.load(source).as[longitudinal]
     ds.map(generateCrossSectional)
+
+    val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
+
   }
 }
