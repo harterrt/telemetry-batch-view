@@ -4,7 +4,6 @@ package com.mozilla.telemetry.views
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 
-
 case class longitudinal (
     client_id: String
   , geo_country: Seq[String]
