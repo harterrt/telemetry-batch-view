@@ -11,6 +11,11 @@ case class longitudinal (
   , session_length: Seq[Long]
 )
 
+case class crossSectional (
+    client_id: String
+  , modal_country: String
+)
+
 object CrossSectionalView {
   val sparkConf = new SparkConf().setAppName("Cross Sectional Example")
   sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
@@ -29,6 +34,10 @@ object CrossSectionalView {
     weightedMode(row.geo_country, row.session_length)
   } 
 
+  def generateCrossSectional(base: longitudinal) = {
+      crossSectional(base.client_id, modalCountry(base))
+  }
+
   def getData() = {
     val ll = sqlContext.read.load("/home/harterrt/data/l10l_20160725_single_shard.parquet")
 
@@ -37,5 +46,11 @@ object CrossSectionalView {
     val elem = row(0)
     
     (ll, ds, row, elem)
+  }
+
+  def main() = {
+    val ll = sqlContext.read.load("/home/harterrt/data/l10l_20160725_single_shard.parquet").limit(10)
+    val ds = ll.as[longitudinal]
+    ds.map(generateCrossSectional)
   }
 }
