@@ -69,10 +69,9 @@ object CrossSectionalView {
     val opts = new Opts(args)
     val source = opts.source()
 
-    val ds = sqlContext.read.load(source).as[longitudinal]
-    ds.map(generateCrossSectional)
+    val ds = sqlContext.read.parquet(source).as[longitudinal]
+    val output = ds.map(generateCrossSectional)
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
-
   }
 }
