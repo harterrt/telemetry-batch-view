@@ -3,7 +3,7 @@ package com.mozilla.telemetry.views
 
 import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.hive.HiveContext 
 
 case class longitudinal (
     client_id: String
@@ -20,9 +20,11 @@ object CrossSectionalView {
   val sparkConf = new SparkConf().setAppName("Cross Sectional Example")
   sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
   implicit val sc = new SparkContext(sparkConf)
-  val sqlContext = new SQLContext(sc)
+     
+  val hiveContext = new HiveContext(sc)
+  import hiveContext.implicits._
 
-  import sqlContext.implicits._
+  private val logger = org.apache.log4j.Logger.getLogger("XSec")
 
   def weightedMode[T <: Comparable[T]](values: Seq[T], weights: Seq[Long]) = {
     val pairs = values zip weights
@@ -35,24 +37,13 @@ object CrossSectionalView {
   } 
 
   def generateCrossSectional(base: longitudinal) = {
-      crossSectional(base.client_id, modalCountry(base))
-  }
-
-  def getData() = {
-    val ll = sqlContext.read.load("/home/harterrt/data/l10l_20160725_single_shard.parquet")
-
-    val ds = ll.as[longitudinal]
-    val row = ds.take(1)
-    val elem = row(0)
-    
-    (ll, ds, row, elem)
+    logger.debug(s"Generate xsec called with geo_country: $base.geo_country")
+    val output = crossSectional(base.client_id, modalCountry(base))
+    logger.debug(s"Exiting from geo_country: $base.geo_country")
+    output
   }
 
   private class Opts(args: Array[String]) extends ScallopConf(args) {
-    val source = opt[String](
-      "source",
-      descr = "Path to l10l set source",
-      required = true)
     val outputBucket = opt[String](
       "outputBucket",
       descr = "Bucket in which to save data",
@@ -66,12 +57,14 @@ object CrossSectionalView {
   }
 
   def main(args: Array[String]): Unit = {
+    logger.debug("Entering main function.")
     val opts = new Opts(args)
-    val source = opts.source()
 
-    val ds = sqlContext.read.parquet(source).as[longitudinal]
+    val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
     val output = ds.map(generateCrossSectional)
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
+    logger.debug("starting row count")
+    println(output.count())
   }
 }
