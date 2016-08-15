@@ -33,15 +33,17 @@ object CrossSectionalView {
   }
 
   def modalCountry(row: longitudinal) = {
-    weightedMode(row.geo_country, row.session_length)
+    //weightedMode(row.geo_country, row.session_length)
+    //row.geo_country.head
+    1
   } 
 
-  def generateCrossSectional(base: longitudinal) = {
-    logger.debug(s"Generate xsec called with geo_country: $base.geo_country")
-    val output = crossSectional(base.client_id, modalCountry(base))
-    logger.debug(s"Exiting from geo_country: $base.geo_country")
-    output
-  }
+//  def generateCrossSectional(base: longitudinal) = {
+//    logger.debug(s"Generate xsec called with geo_country: $base.geo_country")
+//    val output = crossSectional(base.client_id, modalCountry(base))
+//    logger.debug(s"Exiting from geo_country: $base.geo_country")
+//    output
+//  }
 
   private class Opts(args: Array[String]) extends ScallopConf(args) {
     val outputBucket = opt[String](
@@ -56,15 +58,15 @@ object CrossSectionalView {
     verify()
   }
 
-  def main(args: Array[String]): Unit = {
-    logger.debug("Entering main function.")
-    val opts = new Opts(args)
-
-    val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
-    val output = ds.map(generateCrossSectional)
-
-    val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
-    logger.debug("starting row count")
-    println(output.count())
-  }
+//  def main(args: Array[String]): Unit = {
+//    logger.debug("Entering main function.")
+//    val opts = new Opts(args)
+//
+//    val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
+//    val output = ds.map(generateCrossSectional)
+//
+//    val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
+//    logger.debug("starting row count")
+//    println(output.count())
+//  }
 }

@@ -12,10 +12,11 @@ object TestRead {
 
   def main(args: Array[String]): Unit = {
 	println("=+"*40)
-    val read = hiveContext.sql("SELECT * FROM longitudinal").limit(10)
+    val frame = hiveContext.sql("SELECT * FROM longitudinal").limit(10)
 	println("=+"*40)
-    val ds = read.as[longitudinal]
+    val ds = frame.as[longitudinal]
 	println("=+"*40)
-    println(ds.count)
+    val output = ds.map(CrossSectionalView.modalCountry)
+    println(output.count)
   }
 }
