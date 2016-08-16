@@ -4,6 +4,7 @@ package com.mozilla.telemetry.views
 import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.hive.HiveContext
+import org.apache.spark.sql.SQLContext
 
 case class longitudinal (
     client_id: String
@@ -20,9 +21,13 @@ object CrossSectionalView {
   val sparkConf = new SparkConf().setAppName("Cross Sectional Example")
   sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
   implicit val sc = new SparkContext(sparkConf)
-     
-  val sqlContext = new HiveContext(sc)
+
+  val sqlContext = new SQLContext(sc)
+  sqlContext.setConf("spark.sql.hive.convertMetastoreParquet", "false")
   import sqlContext.implicits._
+     
+  val hiveContext = new HiveContext(sc)
+  hiveContext.setConf("spark.sql.hive.convertMetastoreParquet", "false")
 
   private val logger = org.apache.log4j.Logger.getLogger("XSec")
 
@@ -44,8 +49,11 @@ object CrossSectionalView {
   }
 
   def loadLocalData(filename: String) = {
+    println("Read Data")
     val data = sqlContext.read.parquet(filename)
+    println("Local Table")
     data.registerTempTable("longitudinal")
+    println("Exit")
   }
 
   def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
@@ -71,15 +79,18 @@ object CrossSectionalView {
   }
 
   def main(args: Array[String]): Unit = {
+    import hiveContext.implicits._
     logger.debug("Entering main function.")
     val opts = new Opts(args)
 
+    println("Local Table Read Start")
     if(opts.localTable.isSupplied) {
       val localTable = opts.localTable()
       loadLocalData(localTable)
     }
 
-    val ds = sqlContext.sql("SELECT * FROM longitudinal").as[longitudinal]
+    println("Local Table Read End")
+    val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
     val output = ds.map(generateCrossSectional)
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
