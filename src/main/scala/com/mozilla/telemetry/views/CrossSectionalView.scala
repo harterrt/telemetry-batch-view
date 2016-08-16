@@ -49,11 +49,8 @@ object CrossSectionalView {
   }
 
   def loadLocalData(filename: String) = {
-    println("Read Data")
     val data = sqlContext.read.parquet(filename)
-    println("Local Table")
     data.registerTempTable("longitudinal")
-    println("Exit")
   }
 
   def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
@@ -83,13 +80,11 @@ object CrossSectionalView {
     logger.debug("Entering main function.")
     val opts = new Opts(args)
 
-    println("Local Table Read Start")
     if(opts.localTable.isSupplied) {
       val localTable = opts.localTable()
       loadLocalData(localTable)
     }
 
-    println("Local Table Read End")
     val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
     val output = ds.map(generateCrossSectional)
 
