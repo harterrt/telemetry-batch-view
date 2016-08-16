@@ -16,7 +16,7 @@ object TestRead {
 	println("=+"*40)
     val ds = frame.as[longitudinal]
 	println("=+"*40)
-    val output = ds.map(CrossSectionalView.modalCountry)
-    println(output.count)
+    //val output = ds.map(CrossSectionalView.modalCountry)
+    //println(output.count)
   }
 }
