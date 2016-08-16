@@ -3,7 +3,7 @@ package com.mozilla.telemetry.views
 
 import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.hive.HiveContext
 
 case class longitudinal (
     client_id: String
@@ -22,7 +22,7 @@ object CrossSectionalView {
   sparkConf.set("spark.executor.memory", "4g")
   implicit val sc = new SparkContext(sparkConf)
      
-  val sqlContext = new SQLContext(sc)
+  val sqlContext = new HiveContext(sc)
   import sqlContext.implicits._
 
   private val logger = org.apache.log4j.Logger.getLogger("XSec")
@@ -49,15 +49,19 @@ object CrossSectionalView {
     data.registerTempTable("longitudinal")
   }
 
-  def weightedMode[T <: Comparable[T]](values: Seq[T], weights: Seq[Long]): T = {
-    val pairs = values zip weights
-    val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-    agg.maxBy(_._2)._1
+  def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
+    if (values.size > 0 && values.size == weights.size) {
+      val pairs = values zip weights
+      val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
+      Some(agg.maxBy(_._2)._1)
+    } else {
+      Option(null)
+    }
   }
 
   def modalCountry(row: longitudinal): Option[String] = {
     (row.geo_country, row.session_length) match {
-      case (Some(gc), Some(sl)) => Some(weightedMode(gc, sl))
+      case (Some(gc), Some(sl)) => weightedMode(gc, sl)
       case _ => Option(null)
     }
   } 
@@ -70,9 +74,9 @@ object CrossSectionalView {
   def main(args: Array[String]): Unit = {
     logger.debug("Entering main function.")
     val opts = new Opts(args)
-    val localTable = opts.localTable()
 
     if(opts.localTable.isSupplied) {
+      val localTable = opts.localTable()
       loadLocalData(localTable)
     }
 
