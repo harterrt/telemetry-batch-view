@@ -19,7 +19,6 @@ case class crossSectional (
 object CrossSectionalView {
   val sparkConf = new SparkConf().setAppName("Cross Sectional Example")
   sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
-  sparkConf.set("spark.executor.memory", "4g")
   implicit val sc = new SparkContext(sparkConf)
      
   val sqlContext = new HiveContext(sc)
