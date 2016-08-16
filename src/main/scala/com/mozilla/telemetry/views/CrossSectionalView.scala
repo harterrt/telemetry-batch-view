@@ -7,48 +7,25 @@ import org.apache.spark.sql.SQLContext
 
 case class longitudinal (
     client_id: String
-  , geo_country: Seq[String]
-  , session_length: Seq[Long]
+  , geo_country: Option[Seq[String]]
+  , session_length: Option[Seq[Long]]
 )
 
 case class crossSectional (
     client_id: String
-  , modal_country: String
+  , modal_country: Option[String]
 )
 
 object CrossSectionalView {
   val sparkConf = new SparkConf().setAppName("Cross Sectional Example")
   sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
   sparkConf.set("spark.executor.memory", "4g")
-
   implicit val sc = new SparkContext(sparkConf)
      
   val sqlContext = new SQLContext(sc)
   import sqlContext.implicits._
 
   private val logger = org.apache.log4j.Logger.getLogger("XSec")
-
-  def weightedMode[T <: Comparable[T]](values: Seq[T], weights: Seq[Long]) = {
-    val pairs = values zip weights
-    val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-    agg.maxBy(_._2)._1
-  }
-
-  def loadLocalData(filename: String) = {
-    val data = sqlContext.read.parquet(filename)
-    data.registerTempTable("longitudinal")
-  }
-
-  def modalCountry(row: longitudinal) = {
-    weightedMode(row.geo_country, row.session_length)
-  } 
-
-  def generateCrossSectional(base: longitudinal) = {
-    logger.debug(s"Generate xsec called with geo_country: $base.geo_country")
-    val output = crossSectional(base.client_id, modalCountry(base))
-    logger.debug(s"Exiting from geo_country: $base.geo_country")
-    output
-  }
 
   private class Opts(args: Array[String]) extends ScallopConf(args) {
     val outputBucket = opt[String](
@@ -67,6 +44,29 @@ object CrossSectionalView {
     verify()
   }
 
+  def loadLocalData(filename: String) = {
+    val data = sqlContext.read.parquet(filename)
+    data.registerTempTable("longitudinal")
+  }
+
+  def weightedMode[T <: Comparable[T]](values: Seq[T], weights: Seq[Long]): T = {
+    val pairs = values zip weights
+    val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
+    agg.maxBy(_._2)._1
+  }
+
+  def modalCountry(row: longitudinal): Option[String] = {
+    (row.geo_country, row.session_length) match {
+      case (Some(gc), Some(sl)) => Some(weightedMode(gc, sl))
+      case _ => Option(null)
+    }
+  } 
+
+  def generateCrossSectional(base: longitudinal): crossSectional = {
+    val output = crossSectional(base.client_id, modalCountry(base))
+    output
+  }
+
   def main(args: Array[String]): Unit = {
     logger.debug("Entering main function.")
     val opts = new Opts(args)
@@ -77,7 +77,7 @@ object CrossSectionalView {
     }
 
     val ds = sqlContext.sql("SELECT * FROM longitudinal").as[longitudinal]
-    val output = ds.map(xx => crossSectional(xx.client_id, xx.geo_country.head))
+    val output = ds.map(generateCrossSectional)
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
     logger.debug("starting row count")
