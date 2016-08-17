@@ -1,6 +1,7 @@
 package com.mozilla.telemetry.views
 
 
+import com.mozilla.telemetry.utils._
 import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.hive.HiveContext
@@ -53,28 +54,6 @@ object CrossSectionalView {
     data.registerTempTable("longitudinal")
   }
 
-  def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
-    if (values.size > 0 && values.size == weights.size) {
-      val pairs = values zip weights
-      val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-      Some(agg.maxBy(_._2)._1)
-    } else {
-      Option(null)
-    }
-  }
-
-  def modalCountry(row: longitudinal): Option[String] = {
-    (row.geo_country, row.session_length) match {
-      case (Some(gc), Some(sl)) => weightedMode(gc, sl)
-      case _ => Option(null)
-    }
-  } 
-
-  def generateCrossSectional(base: longitudinal): crossSectional = {
-    val output = crossSectional(base.client_id, modalCountry(base))
-    output
-  }
-
   def main(args: Array[String]): Unit = {
     import hiveContext.implicits._
     logger.debug("Entering main function.")
@@ -85,7 +64,7 @@ object CrossSectionalView {
       loadLocalData(localTable)
     }
 
-    val ds = hiveContext.sql("SELECT * FROM longitudinal").as[longitudinal]
+    val ds = hiveContext.sql("SELECT * FROM longitudinal").selectExpr("client_id", "geo_country", "session_length").as[longitudinal]
     val output = ds.map(generateCrossSectional)
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
