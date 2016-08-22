@@ -3,7 +3,6 @@ package object utils{
   import java.rmi.dgc.VMID
   import org.apache.hadoop.fs.Path
   import org.joda.time._
-  import com.mozilla.telemetry.views.{longitudinal, crossSectional}
 
   private val specialCases = Map(
     "submission_url" -> "submissionURL",
@@ -92,27 +91,5 @@ package object utils{
     val t1 = System.nanoTime()
     println(s"Elapsed time: ${(t1 - t0)/1000000000.0} s")
     result
-  }
-
-  def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
-    if (values.size > 0 && values.size == weights.size) {
-      val pairs = values zip weights
-      val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-      Some(agg.maxBy(_._2)._1)
-    } else {
-      Option(null)
-    }
-  }
-
-  def modalCountry(row: longitudinal): Option[String] = {
-    (row.geo_country, row.session_length) match {
-      case (Some(gc), Some(sl)) => weightedMode(gc, sl)
-      case _ => Option(null)
-    }
-  } 
-
-  def generateCrossSectional(base: longitudinal): crossSectional = {
-    val output = crossSectional(base.client_id, modalCountry(base))
-    output
   }
 }
