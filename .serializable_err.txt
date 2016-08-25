@@ -1,0 +1,75 @@
+[0m[[0minfo[0m] [0mLoading project definition from /home/harterrt/Documents/xsec/harter/project[0m
+[0m[[0minfo[0m] [0mSet current project to telemetry-batch-view (in build file:/home/harterrt/Documents/xsec/harter/)[0m
+> test-only com.mozilla.telemetry.CrossSectionalViewTest
+[0m[[0minfo[0m] [0m[32mCrossSectionalViewTest:[0m[0m
+[0m[[0minfo[0m] [0m[32mCrossSectional[0m[0m
+[0m[[0minfo[0m] [0m[31m- must be calculated correctly *** FAILED ***[0m[0m
+[0m[[0minfo[0m] [0m[31m  org.apache.spark.SparkException: Task not serializable[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:304)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.org$apache$spark$util$ClosureCleaner$$clean(ClosureCleaner.scala:294)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.clean(ClosureCleaner.scala:122)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.clean(SparkContext.scala:2055)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1857)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1929)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.rdd.RDD$$anonfun$collect$1.apply(RDD.scala:927)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.rdd.RDD.withScope(RDD.scala:316)[0m[0m
+[0m[[0minfo[0m] [0m[31m  ...[0m[0m
+[0m[[0minfo[0m] [0m[31m  Cause: java.io.NotSerializableException: org.scalatest.Assertions$AssertionsHelper[0m[0m
+[0m[[0minfo[0m] [0m[31mSerialization stack:[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object not serializable (class: org.scalatest.Assertions$AssertionsHelper, value: org.scalatest.Assertions$AssertionsHelper@6ef9942d)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.scalatest.FlatSpec, name: assertionsHelper, type: class org.scalatest.Assertions$AssertionsHelper)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class com.mozilla.telemetry.CrossSectionalViewTest, CrossSectionalViewTest)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: com.mozilla.telemetry.CrossSectionalViewTest$$anonfun$1, name: $outer, type: class com.mozilla.telemetry.CrossSectionalViewTest)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class com.mozilla.telemetry.CrossSectionalViewTest$$anonfun$1, <function0>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: com.mozilla.telemetry.CrossSectionalViewTest$$anonfun$1$$anonfun$4, name: $outer, type: class com.mozilla.telemetry.CrossSectionalViewTest$$anonfun$1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class com.mozilla.telemetry.CrossSectionalViewTest$$anonfun$1$$anonfun$4, <function1>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.sql.Dataset$$anonfun$map$1, name: func$3, type: interface scala.Function1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.sql.Dataset$$anonfun$map$1, <function1>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.sql.execution.MapPartitions, name: func, type: interface scala.Function1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.sql.execution.MapPartitions, !MapPartitions <function1>, class[client_id[0]: string, geo_country[0]: array<string>, session_length[0]: array<bigint>], class[client_id[0]: string, modal_country[0]: string], [client_id#9,modal_country#10][0m[0m
+[0m[[0minfo[0m] [0m[31m+- LocalTableScan [client_id#3,geo_country#4,session_length#5], [[0,2000000001,2800000016,4000000028,61,1000000003,1400000012,544945444544,1000000003,2000000018,2,3,4],[0,2000000001,2800000016,4000000028,62,1000000003,1400000012,454447454745,1000000003,2000000018,1,1,2]][0m[0m
+[0m[[0minfo[0m] [0m[31m)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.sql.execution.MapPartitions$$anonfun$8, name: $outer, type: class org.apache.spark.sql.execution.MapPartitions)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.sql.execution.MapPartitions$$anonfun$8, <function1>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1, name: f$22, type: interface scala.Function1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1, <function0>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$21, name: $outer, type: class org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$21, <function3>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.MapPartitionsRDD, name: f, type: interface scala.Function3)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.MapPartitionsRDD, MapPartitionsRDD[1] at collect at CrossSectionalViewTest.scala:15)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.NarrowDependency, name: _rdd, type: class org.apache.spark.rdd.RDD)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.OneToOneDependency, org.apache.spark.OneToOneDependency@7ca0f2b7)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- writeObject data (class: scala.collection.immutable.$colon$colon)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class scala.collection.immutable.$colon$colon, List(org.apache.spark.OneToOneDependency@7ca0f2b7))[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.RDD, name: org$apache$spark$rdd$RDD$$dependencies_, type: interface scala.collection.Seq)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.MapPartitionsRDD, MapPartitionsRDD[2] at collect at CrossSectionalViewTest.scala:15)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.RDD$$anonfun$collect$1, name: $outer, type: class org.apache.spark.rdd.RDD)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.RDD$$anonfun$collect$1, <function0>)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- field (class: org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12, name: $outer, type: class org.apache.spark.rdd.RDD$$anonfun$collect$1)[0m[0m
+[0m[[0minfo[0m] [0m[31m	- object (class org.apache.spark.rdd.RDD$$anonfun$collect$1$$anonfun$12, <function1>)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.serializer.SerializationDebugger$.improveException(SerializationDebugger.scala:40)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.serializer.JavaSerializationStream.writeObject(JavaSerializer.scala:47)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.serializer.JavaSerializerInstance.serialize(JavaSerializer.scala:101)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:301)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.org$apache$spark$util$ClosureCleaner$$clean(ClosureCleaner.scala:294)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.util.ClosureCleaner$.clean(ClosureCleaner.scala:122)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.clean(SparkContext.scala:2055)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1857)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1929)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at org.apache.spark.rdd.RDD$$anonfun$collect$1.apply(RDD.scala:927)[0m[0m
+[0m[[0minfo[0m] [0m[31m  ...[0m[0m
+[0m[[0minfo[0m] [0m[32mModes[0m[0m
+[0m[[0minfo[0m] [0m[32m- must combine repeated keys[0m[0m
+[0m[[0minfo[0m] [0m[32m- must respect session weight[0m[0m
+[0m[[0minfo[0m] [0m[36mRun completed in 4 seconds, 465 milliseconds.[0m[0m
+[0m[[0minfo[0m] [0m[36mTotal number of tests run: 3[0m[0m
+[0m[[0minfo[0m] [0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0minfo[0m] [0m[36mTests: succeeded 2, failed 1, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0minfo[0m] [0m[31m*** 1 TEST FAILED ***[0m[0m
+[0m[[31merror[0m] [0mFailed tests:[0m
+[0m[[31merror[0m] [0m	com.mozilla.telemetry.CrossSectionalViewTest[0m
+[0m[[31merror[0m] [0m(test:[31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[31merror[0m] [0mTotal time: 6 s, completed Aug 25, 2016 3:49:48 PM[0m
+> 

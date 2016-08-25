@@ -4,11 +4,13 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.views._
 import CrossSectionalView._
-import Aggregation._
-import org.scalatest.FlatSpec
+import org.scalatest.{FlatSpec, PrivateMethodTester}
 import org.apache.spark.sql.Dataset
 
-class CrossSectionalViewTest extends FlatSpec {
+class CrossSectionalViewTest extends FlatSpec with PrivateMethodTester{
+  private val modalCountry = PrivateMethod[Option[String]]('modalCountry)
+  private val generateCrossSectional = PrivateMethod[CrossSectional]('generateCrossSectional)
+
   def compareDS(actual: Dataset[CrossSectional], expected: Dataset[CrossSectional]) = {
     actual.collect.zip(expected.collect)
       .map(xx => xx._1 == xx._2)
@@ -27,7 +29,9 @@ class CrossSectionalViewTest extends FlatSpec {
       Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
     ).toDS
 
-    val actual = longitudinalDataset.map(generateCrossSectional)
+    val actual = longitudinalDataset.map(
+      xx => CrossSectionalView.invokePrivate(generateCrossSectional(xx))
+    )
     val expected = Seq(
       CrossSectional("a", Option("DE")),
       CrossSectional("b", Option("EG"))).toDS
@@ -41,7 +45,7 @@ class CrossSectionalViewTest extends FlatSpec {
       "id",
       Option(Seq("DE", "IT", "DE")),
       Option(Seq(3, 6, 4)))
-    val country = modalCountry(ll)
+    val country = CrossSectionalView invokePrivate modalCountry(ll)
     assert(country == Some("DE"))
   }
 
@@ -50,7 +54,7 @@ class CrossSectionalViewTest extends FlatSpec {
       "id",
       Option(Seq("DE", "IT", "IT")),
       Option(Seq(3, 1, 1)))
-    val country = modalCountry(ll)
+    val country = CrossSectionalView invokePrivate modalCountry(ll)
     assert(country == Some("DE"))
   }
 }
