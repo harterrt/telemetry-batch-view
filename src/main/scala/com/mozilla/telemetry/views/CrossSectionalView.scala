@@ -23,7 +23,7 @@ object CrossSectionalView {
       "outputBucket",
       descr = "Bucket in which to save data",
       required = false,
-      default=Some("telemetry-test-bucket/harter"))
+      default=Some("telemetry-test-bucket"))
     val localTable = opt[String](
       "localTable",
       descr = "Optional path to a local Parquet file with longitudinal data",
@@ -88,15 +88,17 @@ object CrossSectionalView {
     val output = ds.map(Aggregation.generateCrossSectional)
 
     // Save to S3
-    val prefix = s"CrossSectional/${opts.outName()}"
+    val prefix = s"harter/CrossSectional/${opts.outName()}"
     val outputBucket = opts.outputBucket()
+
 
     require(S3Store.isPrefixEmpty(outputBucket, prefix),
       s"s3://${outputBucket}/${prefix} already exists!")
 
-    val localFile = new java.io.File(com.mozilla.telemetry.utils.temporaryFileName().toUri())
-    output.write.parquet(localFile)
-    S3Store.uploadFile(localFile, outputBucket, prefix)
+    val localFileName = com.mozilla.telemetry.utils.temporaryFileName().toString()
+    val localFile = new java.io.File(localFileName)
+    output.toDF().write.parquet(localFileName)
+    //S3Store.uploadFile(localFile, outputBucket, prefix)
     localFile.delete()
 
     // Force the computation, debugging purposes only
