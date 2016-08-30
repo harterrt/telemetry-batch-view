@@ -93,13 +93,9 @@ object CrossSectionalView {
 
 
     require(S3Store.isPrefixEmpty(outputBucket, prefix),
-      s"s3://${outputBucket}/${prefix} already exists!")
+      s"s3a://${outputBucket}/${prefix} already exists!")
 
-    val localFileName = com.mozilla.telemetry.utils.temporaryFileName().toString()
-    val localFile = new java.io.File(localFileName)
-    output.toDF().write.parquet(localFileName)
-    //S3Store.uploadFile(localFile, outputBucket, prefix)
-    localFile.delete()
+    output.toDF().write.parquet("s3://telemetry-test-bucket/harter/cross_sectional/test")
 
     // Force the computation, debugging purposes only
     // TODO(harterrt): Remove this
