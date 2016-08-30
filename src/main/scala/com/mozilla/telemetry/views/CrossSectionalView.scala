@@ -6,14 +6,18 @@ import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.utils.S3Store
 
+class DataSetRow() extends Product {
+  def productArity() = 3
+  def productElement(n: Int) = {"Hey!"}
+  def canEqual(that: Any) = true
+  override def equals(that: Any) = true
+}
+
 class Longitudinal (
     val client_id: String
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
-) extends Product {
-  def productArity() = 3
-  def productElement(n: Int) = {"Hey!"}
-  def canEqual(that: Any) = false
+) extends DataSetRow {
 }
 
 case class CrossSectional (

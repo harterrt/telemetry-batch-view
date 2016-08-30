@@ -53,4 +53,18 @@ class CrossSectionalViewTest extends FlatSpec {
     val country = modalCountry(ll)
     assert(country == Some("DE"))
   }
+
+  "DataSetRows" must "distinguish between unequal rows" in {
+    val l1 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
+    val l2 = new Longitudinal("other_id", Some(Seq("DE")), Some(Seq(1)))
+
+    assert(l1 != l2)
+  }
+
+  it must "acknowledge equal rows" in {
+    val l1 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
+    val l2 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
+
+    assert(l1 == l2)
+  }
 }
