@@ -6,11 +6,15 @@ import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.utils.S3Store
 
-case class Longitudinal (
-    client_id: String
-  , geo_country: Option[Seq[String]]
-  , session_length: Option[Seq[Long]]
-)
+class Longitudinal (
+    val client_id: String
+  , val geo_country: Option[Seq[String]]
+  , val session_length: Option[Seq[Long]]
+) extends Product {
+  def productArity() = 3
+  def productElement(n: Int) = {"Hey!"}
+  def canEqual(that: Any) = false
+}
 
 case class CrossSectional (
     client_id: String
@@ -95,7 +99,7 @@ object CrossSectionalView {
     require(S3Store.isPrefixEmpty(outputBucket, prefix),
       s"s3a://${outputBucket}/${prefix} already exists!")
 
-    output.toDF().write.parquet("s3a://telemetry-test-bucket/harter/cross_sectional/test")
+    output.toDF().write.parquet(s"s3a://telemetry-test-bucket/harter/cross_sectional/${opts.outName()}")
 
     // Force the computation, debugging purposes only
     // TODO(harterrt): Remove this

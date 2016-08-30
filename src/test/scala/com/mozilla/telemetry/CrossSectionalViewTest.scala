@@ -23,8 +23,8 @@ class CrossSectionalViewTest extends FlatSpec {
     import sqlContext.implicits._
 
     val longitudinalDataset = Seq(
-      Longitudinal("a", Option(Seq("DE", "DE", "IT")), Option(Seq(2, 3, 4))),
-      Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
+      new Longitudinal("a", Option(Seq("DE", "DE", "IT")), Option(Seq(2, 3, 4))),
+      new Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
     ).toDS
 
     val actual = longitudinalDataset.map(generateCrossSectional)
@@ -37,7 +37,7 @@ class CrossSectionalViewTest extends FlatSpec {
   }
 
   "Modes" must "combine repeated keys" in {
-    val ll = Longitudinal(
+    val ll = new Longitudinal(
       "id",
       Option(Seq("DE", "IT", "DE")),
       Option(Seq(3, 6, 4)))
@@ -46,7 +46,7 @@ class CrossSectionalViewTest extends FlatSpec {
   }
 
   it must "respect session weight" in {
-    val ll = Longitudinal(
+    val ll = new Longitudinal(
       "id",
       Option(Seq("DE", "IT", "IT")),
       Option(Seq(3, 1, 1)))
