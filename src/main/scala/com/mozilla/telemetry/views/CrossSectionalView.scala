@@ -95,7 +95,7 @@ object CrossSectionalView {
     require(S3Store.isPrefixEmpty(outputBucket, prefix),
       s"s3a://${outputBucket}/${prefix} already exists!")
 
-    output.toDF().write.parquet("s3://telemetry-test-bucket/harter/cross_sectional/test")
+    output.toDF().write.parquet("s3a://telemetry-test-bucket/harter/cross_sectional/test")
 
     // Force the computation, debugging purposes only
     // TODO(harterrt): Remove this
