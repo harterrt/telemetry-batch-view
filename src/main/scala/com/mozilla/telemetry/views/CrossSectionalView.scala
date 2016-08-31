@@ -7,10 +7,24 @@ import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.utils.S3Store
 
 class DataSetRow() extends Product {
-  def productArity() = 3
-  def productElement(n: Int) = {"Hey!"}
+  // Not ideal, but a workaround until we get past the 22 field limit in case
+  // classes. Create a class which implements the Product interface. We only
+  // really care about the type casting. The array is used to measure arity
+  // and equality
+  // TODO(harter): There has to be a better way to do this
+  // TODO(harter): If not, think about this choice of data structure
+  private val valSeq = Array()
+
+  def productArity() = valSeq.length
+  def productElement(n: Int) = valSeq(n)
+  //TODO(harter): restrict equality to a data type
   def canEqual(that: Any) = true
-  override def equals(that: Any) = true
+  override def equals(that: Any) = {
+    that match {
+      case that: DataSetRow => that.canEqual(this) && this.hashCode == that.hashCode
+      case _ => false
+    }
+  }
 }
 
 class Longitudinal (
@@ -18,6 +32,7 @@ class Longitudinal (
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
 ) extends DataSetRow {
+  private val valSeq = Array(client_id, geo_country, session_length)
 }
 
 case class CrossSectional (
