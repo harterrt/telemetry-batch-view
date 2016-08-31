@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).
   settings(
     name := "telemetry-batch-view",
     version := "1.1",
-    scalaVersion := "2.10.6",
+    scalaVersion := "2.11.0",
     retrieveManaged := true,
     ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
     libraryDependencies += "org.apache.avro" % "avro" % "1.7.7",
@@ -26,7 +26,6 @@ lazy val root = (project in file(".")).
     libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.6.1",
     libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.6.1",
     libraryDependencies += "org.apache.spark" %% "spark-hive" % "1.6.1",
-    libraryDependencies += "vitillo" % "spark-hyperloglog" % "1.0.2",
     libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.3.0"
   )
 
