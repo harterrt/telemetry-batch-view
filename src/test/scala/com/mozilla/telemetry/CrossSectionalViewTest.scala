@@ -27,10 +27,10 @@ class CrossSectionalViewTest extends FlatSpec {
       new Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
     ).toDS
 
-    val actual = longitudinalDataset.map(generateCrossSectional)
+    val actual = longitudinalDataset.map(new CrossSectional(_))
     val expected = Seq(
-      CrossSectional("a", Option("DE")),
-      CrossSectional("b", Option("EG"))).toDS
+      new CrossSectional("a", Option("DE")),
+      new CrossSectional("b", Option("EG"))).toDS
 
     assert(compareDS(actual, expected))
     sc.stop()
@@ -65,6 +65,8 @@ class CrossSectionalViewTest extends FlatSpec {
     val l1 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
     val l2 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
 
+    println(l1.valSeq.hashCode)
+    println(l2.valSeq.hashCode)
     assert(l1 == l2)
   }
 }

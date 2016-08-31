@@ -6,14 +6,14 @@ import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.utils.S3Store
 
-class DataSetRow() extends Product {
+abstract class DataSetRow() extends Product {
   // Not ideal, but a workaround until we get past the 22 field limit in case
   // classes. Create a class which implements the Product interface. We only
   // really care about the type casting. The array is used to measure arity
   // and equality
   // TODO(harter): There has to be a better way to do this
   // TODO(harter): If not, think about this choice of data structure
-  private val valSeq = Array()
+  val valSeq: Array[Any]
 
   def productArity() = valSeq.length
   def productElement(n: Int) = valSeq(n)
@@ -21,7 +21,7 @@ class DataSetRow() extends Product {
   def canEqual(that: Any) = true
   override def equals(that: Any) = {
     that match {
-      case that: DataSetRow => that.canEqual(this) && this.hashCode == that.hashCode
+      case that: DataSetRow => that.canEqual(this) && this.valSeq.deep == that.valSeq.deep
       case _ => false
     }
   }
@@ -32,13 +32,22 @@ class Longitudinal (
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
 ) extends DataSetRow {
-  private val valSeq = Array(client_id, geo_country, session_length)
+  override val valSeq = Array[Any](client_id, geo_country, session_length)
 }
 
-case class CrossSectional (
-    client_id: String
-  , modal_country: Option[String]
-)
+class CrossSectional (
+    val client_id: String
+  , val modal_country: Option[String]
+) extends DataSetRow {
+  override val valSeq = Array[Any](client_id, modal_country)
+
+  def this(ll: Longitudinal) {
+    this(
+      ll.client_id,
+      CrossSectionalView.Aggregation.modalCountry(ll)
+    )
+  }
+}
 
 object CrossSectionalView {
   private class Opts(args: Array[String]) extends ScallopConf(args) {
@@ -79,11 +88,6 @@ object CrossSectionalView {
         case _ => None
       }
     } 
-
-    def generateCrossSectional(base: Longitudinal): CrossSectional = {
-      val output = CrossSectional(base.client_id, modalCountry(base))
-      output
-    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -108,7 +112,7 @@ object CrossSectionalView {
       .sql("SELECT * FROM longitudinal")
       .selectExpr("client_id", "geo_country", "session_length")
       .as[Longitudinal]
-    val output = ds.map(Aggregation.generateCrossSectional)
+    val output = ds.map(xx => new CrossSectional(xx))
 
     // Save to S3
     val prefix = s"harter/CrossSectional/${opts.outName()}"
