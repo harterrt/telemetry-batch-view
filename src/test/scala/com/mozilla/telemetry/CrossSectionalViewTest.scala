@@ -27,7 +27,7 @@ class CrossSectionalViewTest extends FlatSpec {
       Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
     ).toDS
 
-    val actual = longitudinalDataset.map(generateCrossSectional)
+    val actual = longitudinalDataset.map(xx => new CrossSectional(xx))
     val expected = Seq(
       CrossSectional("a", Option("DE")),
       CrossSectional("b", Option("EG"))).toDS
@@ -36,21 +36,13 @@ class CrossSectionalViewTest extends FlatSpec {
     sc.stop()
   }
 
-  "Modes" must "combine repeated keys" in {
-    val ll = Longitudinal(
-      "id",
-      Option(Seq("DE", "IT", "DE")),
-      Option(Seq(3, 6, 4)))
-    val country = modalCountry(ll)
-    assert(country == Some("DE"))
+  "The weighted mode" must "combine repeated keys" in {
+    val mode = weightedMode(Seq("DE", "IT", "DE"), Seq(3, 6, 4))
+    assert(mode == "DE")
   }
 
   it must "respect session weight" in {
-    val ll = Longitudinal(
-      "id",
-      Option(Seq("DE", "IT", "IT")),
-      Option(Seq(3, 1, 1)))
-    val country = modalCountry(ll)
-    assert(country == Some("DE"))
+    val mode = weightedMode(Seq("DE", "IT", "IT"), Seq(3, 1, 1))
+    assert(mode == "DE")
   }
 }

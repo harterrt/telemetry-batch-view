@@ -9,12 +9,40 @@ case class Longitudinal (
     client_id: String
   , geo_country: Option[Seq[String]]
   , session_length: Option[Seq[Long]]
-)
+) {
+  def sessionWeightedMode(values: Option[Seq[String]]) = {
+    (values, this.session_length) match {
+      case (Some(gc), Some(sl)) => Some(Aggregation.weightedMode(gc, sl))
+      case _ => None
+    }
+  } 
+}
 
 case class CrossSectional (
     client_id: String
   , modal_country: Option[String]
-)
+) {
+  def this(base: Longitudinal) = {
+    this(
+      client_id = base.client_id,
+      modal_country = base.sessionWeightedMode(base.geo_country)
+    )
+  }
+}
+
+object Aggregation {
+  def weightedMode(values: Seq[String], weights: Seq[Long]): String = {
+    if (values.size != weights.size) {
+      throw new IllegalArgumentException("Args to weighted mode must have the same length.")
+    } else if (values.size == 0) {
+      throw new IllegalArgumentException("Args to weighted mode must have length > 0.")
+    } else {
+      val pairs = values zip weights
+      val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
+      agg.maxBy(_._2)._1
+    }
+  }
+}
 
 object CrossSectionalView {
   private class Opts(args: Array[String]) extends ScallopConf(args) {
@@ -32,34 +60,6 @@ object CrossSectionalView {
       descr = "Name for the output of this run",
       required = true)
     verify()
-  }
-
-  private[telemetry] object Aggregation {
-    // Spark triggers a strange error during distributed computation if these
-    // functions are in the same scope as the main function. This appears to
-    // only be an issue with Spark 1.6. 
-    // TODO(harter): debug this error and remove this object if possible.
-    def weightedMode(values: Seq[String], weights: Seq[Long]): Option[String] = {
-      if (values.size > 0 && values.size == weights.size) {
-        val pairs = values zip weights
-        val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-        Some(agg.maxBy(_._2)._1)
-      } else {
-        None
-      }
-    }
-
-    def modalCountry(row: Longitudinal): Option[String] = {
-      (row.geo_country, row.session_length) match {
-        case (Some(gc), Some(sl)) => weightedMode(gc, sl)
-        case _ => None
-      }
-    } 
-
-    def generateCrossSectional(base: Longitudinal): CrossSectional = {
-      val output = CrossSectional(base.client_id, modalCountry(base))
-      output
-    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -84,7 +84,7 @@ object CrossSectionalView {
       .sql("SELECT * FROM longitudinal")
       .selectExpr("client_id", "geo_country", "session_length")
       .as[Longitudinal]
-    val output = ds.map(Aggregation.generateCrossSectional)
+    val output = ds.map(xx => new CrossSectional(xx))
 
     val prefix = s"s3://${opts.outputBucket()}/CrossSectional/${opts.outName}"
     println("="*80 + "\n" + output.count + "\n" + "="*80)
