@@ -4,6 +4,7 @@ import org.rogach.scallop._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.sql.SQLContext
+import com.mozilla.telemetry.utils.Aggregation
 
 case class Longitudinal (
     client_id: String
@@ -15,7 +16,7 @@ case class Longitudinal (
       case (Some(gc), Some(sl)) => Some(Aggregation.weightedMode(gc, sl))
       case _ => None
     }
-  } 
+  }
 }
 
 case class CrossSectional (
@@ -27,20 +28,6 @@ case class CrossSectional (
       client_id = base.client_id,
       modal_country = base.sessionWeightedMode(base.geo_country)
     )
-  }
-}
-
-object Aggregation {
-  def weightedMode(values: Seq[String], weights: Seq[Long]): String = {
-    if (values.size != weights.size) {
-      throw new IllegalArgumentException("Args to weighted mode must have the same length.")
-    } else if (values.size == 0) {
-      throw new IllegalArgumentException("Args to weighted mode must have length > 0.")
-    } else {
-      val pairs = values zip weights
-      val agg = pairs.groupBy(_._1).map(kv => (kv._1, kv._2.map(_._2).sum))
-      agg.maxBy(_._2)._1
-    }
   }
 }
 
@@ -63,6 +50,7 @@ object CrossSectionalView {
   }
 
   def main(args: Array[String]): Unit = {
+    // Setup spark contexts
     val sparkConf = new SparkConf().setAppName(this.getClass.getName)
     sparkConf.setMaster(sparkConf.get("spark.master", "local[*]"))
     val sc = new SparkContext(sparkConf)
@@ -72,6 +60,7 @@ object CrossSectionalView {
     val hiveContext = new HiveContext(sc)
     import hiveContext.implicits._
 
+    // Parse command line options
     val opts = new Opts(args)
 
     if(opts.localTable.isSupplied) {
@@ -80,6 +69,7 @@ object CrossSectionalView {
       data.registerTempTable("longitudinal")
     }
 
+    // Generate and save the view
     val ds = hiveContext
       .sql("SELECT * FROM longitudinal")
       .selectExpr("client_id", "geo_country", "session_length")

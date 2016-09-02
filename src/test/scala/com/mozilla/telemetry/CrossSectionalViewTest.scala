@@ -4,7 +4,6 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.views._
 import CrossSectionalView._
-import Aggregation._
 import org.scalatest.FlatSpec
 import org.apache.spark.sql.Dataset
 
@@ -34,15 +33,5 @@ class CrossSectionalViewTest extends FlatSpec {
 
     assert(compareDS(actual, expected))
     sc.stop()
-  }
-
-  "The weighted mode" must "combine repeated keys" in {
-    val mode = weightedMode(Seq("DE", "IT", "DE"), Seq(3, 6, 4))
-    assert(mode == "DE")
-  }
-
-  it must "respect session weight" in {
-    val mode = weightedMode(Seq("DE", "IT", "IT"), Seq(3, 1, 1))
-    assert(mode == "DE")
   }
 }
