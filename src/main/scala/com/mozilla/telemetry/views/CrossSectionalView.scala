@@ -7,12 +7,11 @@ import org.apache.spark.sql.SQLContext
 import com.mozilla.telemetry.utils.S3Store
 
 abstract class DataSetRow() extends Product {
-  // Not ideal, but a workaround until we get past the 22 field limit in case
-  // classes. Create a class which implements the Product interface. We only
-  // really care about the type casting. The array is used to measure arity
-  // and equality
-  // TODO(harter): There has to be a better way to do this
-  // TODO(harter): If not, think about this choice of data structure
+  // This class is a work around the 22 field limit in case classes. The 22
+  // field limit is removed in scala 2.11, but until we upgrade our spark
+  // clusters, we have to work with 2.10.
+  // Spark only includes encoders for primitive types and objects implementing
+  // the Product interface.
   val valSeq: Array[Any]
 
   def productArity() = valSeq.length
