@@ -27,6 +27,32 @@ abstract class DataSetRow() extends Product {
   }
 }
 
+case class DefaultSearchEngineData (
+    val name: String
+  , val load_path: String
+  , val submission_url: String
+)
+
+case class Update (
+    val channel: String
+  , val enabled: Boolean
+  , val auto_download: Boolean
+)
+
+case class Settings (
+   val addon_compatibility_check_enabled: Boolean
+ , val blocklist_enabled: Boolean
+ , val is_default_browser: Boolean
+ , val default_search_engine: String
+ , val default_search_engine_data: DefaultSearchEngineData
+ , val search_cohort: String
+ , val e10s_enabled: Boolean
+ , val telemetry_enabled: Boolean
+ , val locale: String
+ , val update: Update
+ , var user_prefs: scala.collection.Map[String, String]
+)
+
 case class Build (
     val application_id: String
   , val application_name: String
@@ -42,15 +68,32 @@ case class Build (
 
 class Longitudinal (
     val client_id: String
+  , val normalized_channel: String
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
   , val build: Option[Seq[Build]]
+  , val settings: Option[Seq[Settings]]
 ) extends DataSetRow {
   override val valSeq = Array[Any](client_id, geo_country, session_length, build)
 
-  def sessionWeightedMode(values: Option[Seq[String]]) = {
+  def weightedMode(values: Option[Seq[String]]) = {
     (values, this.session_length) match {
       case (Some(gc), Some(sl)) => Some(Aggregation.weightedMode(gc, sl))
+      case _ => None
+    }
+  }
+
+  def getAll[Group, Field]
+    (chooseGroup: (Longitudinal) => Option[Seq[Group]])
+    (chooseField: (Group) => Field): Option[Seq[Field]] = {
+    // TODO(harterrt): Fix this comment structure
+    // Most columns are Seq of objects, when we really want an object
+    // containing sequences for each field. This function takes an accessor
+    // function for the Seq and Field and generates an Seq of all field
+    // values.
+    // TODO(harterrt): Should this be implemented as a subgroups's property?
+    chooseGroup(this) match {
+      case Some(yy) => Some(yy.map(chooseField))
       case _ => None
     }
   }
@@ -58,16 +101,20 @@ class Longitudinal (
 
 class CrossSectional (
     val client_id: String
+  , val normalized_channel: String
   , val geo_Mode: Option[String]
   , val architecture_Mode: Option[String]
+  , val ffLocale_Mode: Option[String]
 ) extends DataSetRow {
   override val valSeq = Array[Any](client_id, geo_Mode, architecture_Mode)
 
   def this(base: Longitudinal) = {
     this(
       client_id = base.client_id,
-      geo_Mode = base.sessionWeightedMode(base.geo_country),
-      architecture_Mode = base.sessionWeightedMode(base.getArchitecture(base))
+      normalized_channel = base.normalized_channel,
+      geo_Mode = base.weightedMode(base.geo_country),
+      architecture_Mode = base.weightedMode(base.getAll(_.build)(_.architecture)),
+      ffLocale_Mode = base.weightedMode(base.getAll(_.settings)(_.locale))
     )
   }
 }
@@ -114,7 +161,10 @@ object CrossSectionalView {
     // Generate and save the view
     val ds = hiveContext
       .sql("SELECT * FROM longitudinal")
-      .selectExpr("client_id", "geo_country", "session_length", "build")
+      .selectExpr(
+        "client_id", "normalized_channel", "geo_country", "session_length",
+        "build", "settings"
+      )
       .as[Longitudinal]
     val output = ds.map(new CrossSectional(_))
 
