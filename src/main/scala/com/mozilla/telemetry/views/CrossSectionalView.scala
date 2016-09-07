@@ -27,12 +27,26 @@ abstract class DataSetRow() extends Product {
   }
 }
 
+case class Build (
+    val application_id: String
+  , val application_name: String
+  , val architecture: String
+  , val architectures_in_binary: String
+  , val build_id: String
+  , val version: String
+  , val vendor: String
+  , val platform_version: String
+  , val xpcom_abi: String
+  , val hotfix_version: String
+)
+
 class Longitudinal (
     val client_id: String
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
+  , val build: Option[Seq[Build]]
 ) extends DataSetRow {
-  override val valSeq = Array[Any](client_id, geo_country, session_length)
+  override val valSeq = Array[Any](client_id, geo_country, session_length, build)
 
   def sessionWeightedMode(values: Option[Seq[String]]) = {
     (values, this.session_length) match {
@@ -44,14 +58,16 @@ class Longitudinal (
 
 class CrossSectional (
     val client_id: String
-  , val modal_country: Option[String]
+  , val geo_Mode: Option[String]
+  , val architecture_Mode: Option[String]
 ) extends DataSetRow {
-  override val valSeq = Array[Any](client_id, modal_country)
+  override val valSeq = Array[Any](client_id, geo_Mode, architecture_Mode)
 
   def this(base: Longitudinal) = {
     this(
       client_id = base.client_id,
-      modal_country = base.sessionWeightedMode(base.geo_country)
+      geo_Mode = base.sessionWeightedMode(base.geo_country),
+      architecture_Mode = base.sessionWeightedMode(base.getArchitecture(base))
     )
   }
 }
@@ -88,15 +104,17 @@ object CrossSectionalView {
 
     // Read local parquet data, if supplied
     if(opts.localTable.isSupplied) {
+      println("HERE"*20)
       val localTable = opts.localTable()
       val data = hiveContext.read.parquet(localTable)
       data.registerTempTable("longitudinal")
+      println(hiveContext.tableNames())
     }
 
     // Generate and save the view
     val ds = hiveContext
       .sql("SELECT * FROM longitudinal")
-      .selectExpr("client_id", "geo_country", "session_length")
+      .selectExpr("client_id", "geo_country", "session_length", "build")
       .as[Longitudinal]
     val output = ds.map(new CrossSectional(_))
 
@@ -111,8 +129,7 @@ object CrossSectionalView {
 
     output.toDF().write.parquet(path)
 
-    // Force the computation, debugging purposes only
-    // TODO(harterrt): Remove this
-    println("="*80 + "\n" + output.count + "\n" + "="*80)
+    val ex = output.take(2)
+    println("="*80 + "\n" + ex + "\n" + "="*80)
   }
 }
