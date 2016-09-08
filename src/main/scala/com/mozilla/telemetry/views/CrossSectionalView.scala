@@ -83,6 +83,13 @@ class Longitudinal (
     }
   }
 
+  def distinctConfigs[A](acc: (Longitudinal) => Option[Seq[A]]) = {
+    acc(this) match {
+      case Some(values) => values.distinct.length
+      case _ => 0
+    }
+  }
+
   def getAll[Group, Field]
     (chooseGroup: (Longitudinal) => Option[Seq[Group]])
     (chooseField: (Group) => Field): Option[Seq[Field]] = {
@@ -103,6 +110,7 @@ class CrossSectional (
     val client_id: String
   , val normalized_channel: String
   , val geo_Mode: Option[String]
+  , val geo_Cfgs: Long
   , val architecture_Mode: Option[String]
   , val ffLocale_Mode: Option[String]
 ) extends DataSetRow {
@@ -113,6 +121,7 @@ class CrossSectional (
       client_id = base.client_id,
       normalized_channel = base.normalized_channel,
       geo_Mode = base.weightedMode(base.geo_country),
+      geo_Cfgs = base.distinctConfigs(_.geo_country),
       architecture_Mode = base.weightedMode(base.getAll(_.build)(_.architecture)),
       ffLocale_Mode = base.weightedMode(base.getAll(_.settings)(_.locale))
     )
