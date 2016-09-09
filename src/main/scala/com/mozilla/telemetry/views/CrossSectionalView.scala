@@ -66,9 +66,14 @@ case class Build (
   , val hotfix_version: String
 )
 
+object Longitudinal {
+  private val date_parser =  new java.text.SimpleDateFormat("yyyy-MM-dd")
+}
+
 class Longitudinal (
     val client_id: String
   , val normalized_channel: String
+  , val submission_date: Option[Seq[String]]
   , val geo_country: Option[Seq[String]]
   , val session_length: Option[Seq[Long]]
   , val build: Option[Seq[Build]]
@@ -84,10 +89,26 @@ class Longitudinal (
   }
 
   def distinctConfigs[A](acc: (Longitudinal) => Option[Seq[A]]) = {
+    // should be .getOrElse(List()).distinct.length
     acc(this) match {
       case Some(values) => values.distinct.length
       case _ => 0
     }
+  }
+
+  def parsedSubmissionDate() = {
+    this.submission_date.map(_.map(Longitudinal.date_parser.parse(_)))
+  }
+
+  private def filterByDOW[A](acc: Longitudinal => Option[Seq[A]], dow: Int): Option[Seq[A]] = {
+    (acc(this), this.parsedSubmissionDate) match {
+      case(Some(vals), Some(sd)) => Some((vals zip sd).filter(_._2.getDay == dow).map(_._1))
+      case _ => None
+    }
+  }
+
+  def activeHoursByDOW(dow: Int) = {
+    this.filterByDOW(_.session_length, dow).map(_.sum)
   }
 
   def getAll[Group, Field]
@@ -109,6 +130,13 @@ class Longitudinal (
 class CrossSectional (
     val client_id: String
   , val normalized_channel: String
+  , val active_hours_sun: Option[Long]
+  , val active_hours_mon: Option[Long]
+  , val active_hours_tue: Option[Long]
+  , val active_hours_wed: Option[Long]
+  , val active_hours_thu: Option[Long]
+  , val active_hours_fri: Option[Long]
+  , val active_hours_sat: Option[Long]
   , val geo_Mode: Option[String]
   , val geo_Cfgs: Long
   , val architecture_Mode: Option[String]
@@ -120,6 +148,13 @@ class CrossSectional (
     this(
       client_id = base.client_id,
       normalized_channel = base.normalized_channel,
+      active_hours_sun = base.activeHoursByDOW(0),
+      active_hours_mon = base.activeHoursByDOW(1),
+      active_hours_tue = base.activeHoursByDOW(2),
+      active_hours_wed = base.activeHoursByDOW(3),
+      active_hours_thu = base.activeHoursByDOW(4),
+      active_hours_fri = base.activeHoursByDOW(5),
+      active_hours_sat = base.activeHoursByDOW(6),
       geo_Mode = base.weightedMode(base.geo_country),
       geo_Cfgs = base.distinctConfigs(_.geo_country),
       architecture_Mode = base.weightedMode(base.getAll(_.build)(_.architecture)),
