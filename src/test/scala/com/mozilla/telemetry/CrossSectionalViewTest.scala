@@ -14,6 +14,31 @@ class CrossSectionalViewTest extends FlatSpec {
       .reduce(_ && _)
   }
 
+  def getExampleLongitudinal(client_id: String) = {
+    val build = Build(
+      application_id = "some_app_id",
+      application_name = "build_app_name",
+      architecture = "build_architecture",
+      architecture_in_binary = "build_architecture_in_binary",
+      build_id = "build_id",
+      version = "build_version",
+      vendor = "build_vendor" 
+      platform_version = "build_platform_version" 
+      xpcom_abi = "build_xpcom_abi" 
+      hotfix_version = "build_hotfix_version" 
+    )
+
+    new Longitudinal(
+      client_id = client_id,
+      normalized_channel = "release",
+      submission_date: Option(Seq("2015-01-01T00:00:00.0+00:00",
+        "2015-01-02T00:00:00.0+00:00", "2015-01-03T00:00:00.0+00:00")),
+      geo_country: Option(Seq("DE", "DE", "IT")),
+      session_length: Option(Seq(3600, 7200, 14400))
+      build = Option(Seq(build, build, build))
+    )
+  }
+
   "CrossSectional" must "be calculated correctly" in {
     val sparkConf = new SparkConf().setAppName("CrossSectionalTest")
     sparkConf.setMaster(sparkConf.get("spark.master", "local[1]"))
