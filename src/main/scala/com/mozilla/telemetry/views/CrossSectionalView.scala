@@ -108,7 +108,7 @@ class Longitudinal (
   }
 
   def activeHoursByDOW(dow: Int) = {
-    this.filterByDOW(_.session_length, dow).map(_.sum)
+    this.filterByDOW(_.session_length, dow).map(_.sum/3600.0)
   }
 
   def getAll[Group, Field]
@@ -130,13 +130,14 @@ class Longitudinal (
 class CrossSectional (
     val client_id: String
   , val normalized_channel: String
-  , val active_hours_sun: Option[Long]
-  , val active_hours_mon: Option[Long]
-  , val active_hours_tue: Option[Long]
-  , val active_hours_wed: Option[Long]
-  , val active_hours_thu: Option[Long]
-  , val active_hours_fri: Option[Long]
-  , val active_hours_sat: Option[Long]
+  , val active_hours_total: Option[Double]
+  , val active_hours_sun: Option[Double]
+  , val active_hours_mon: Option[Double]
+  , val active_hours_tue: Option[Double]
+  , val active_hours_wed: Option[Double]
+  , val active_hours_thu: Option[Double]
+  , val active_hours_fri: Option[Double]
+  , val active_hours_sat: Option[Double]
   , val geo_Mode: Option[String]
   , val geo_Cfgs: Long
   , val architecture_Mode: Option[String]
@@ -148,6 +149,7 @@ class CrossSectional (
     this(
       client_id = base.client_id,
       normalized_channel = base.normalized_channel,
+      active_hours_total = base.session_length.map(_.sum),
       active_hours_sun = base.activeHoursByDOW(0),
       active_hours_mon = base.activeHoursByDOW(1),
       active_hours_tue = base.activeHoursByDOW(2),
