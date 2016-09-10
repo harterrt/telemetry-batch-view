@@ -19,9 +19,30 @@ abstract class DataSetRow() extends Product {
   def productElement(n: Int) = valSeq(n)
   //TODO(harter): restrict equality to a data type
   def canEqual(that: Any) = true
+
   override def equals(that: Any) = {
     that match {
-      case that: DataSetRow => that.canEqual(this) && this.valSeq.deep == that.valSeq.deep
+      case that: DataSetRow => this.canEqual(that) && this.valSeq.deep == that.valSeq.deep
+      case _ => false
+    }
+  }
+  
+  def compare(that: Any, epsilon: Double = 1E-7) = {
+    //This is like equal, but with fuzzy match for doubles.
+    //It's better not to override equality because this functions will not
+    //necessarily preserve transitivity.
+    def compareElement(pair: (Any, Any)) = {
+      pair match {
+        case (Some(first: Double), Some(second: Double)) => Math.abs(first - second) < epsilon
+        case (first: Any, second: Any) => first == second
+        case _ => false
+      }
+    }
+
+    that match {
+      case that: DataSetRow => {this.canEqual(that) &&
+        this.valSeq.zip(that.valSeq).foldLeft(true)((acc, pair) => acc && compareElement(pair))
+      }
       case _ => false
     }
   }
@@ -143,7 +164,10 @@ class CrossSectional (
   , val architecture_Mode: Option[String]
   , val ffLocale_Mode: Option[String]
 ) extends DataSetRow {
-  override val valSeq = Array[Any](client_id, geo_Mode, architecture_Mode)
+  override val valSeq = Array[Any](client_id, normalized_channel,
+    active_hours_total, active_hours_sun, active_hours_mon, active_hours_tue,
+    active_hours_wed, active_hours_thu, active_hours_fri, active_hours_sat,
+    geo_Mode, geo_Cfgs, architecture_Mode, ffLocale_Mode)
 
   def this(base: Longitudinal) = {
     this(
@@ -197,11 +221,9 @@ object CrossSectionalView {
 
     // Read local parquet data, if supplied
     if(opts.localTable.isSupplied) {
-      println("HERE"*20)
       val localTable = opts.localTable()
       val data = hiveContext.read.parquet(localTable)
       data.registerTempTable("longitudinal")
-      println(hiveContext.tableNames())
     }
 
     // Generate and save the view

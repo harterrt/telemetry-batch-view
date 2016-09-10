@@ -10,32 +10,78 @@ import org.apache.spark.sql.Dataset
 class CrossSectionalViewTest extends FlatSpec {
   def compareDS(actual: Dataset[CrossSectional], expected: Dataset[CrossSectional]) = {
     actual.collect.zip(expected.collect)
-      .map(xx => xx._1 == xx._2)
+      .map(xx=> xx._1.compare(xx._2))
       .reduce(_ && _)
   }
 
   def getExampleLongitudinal(client_id: String) = {
+    val default_search_engine = DefaultSearchEngineData (
+      name = "grep",
+      load_path = "test",
+      submission_url = "cli"
+    )
+
+    val update = Update (
+      channel = "update_channel",
+      enabled = true,
+      auto_download = false
+    )
+
+    val settings = Settings (
+      addon_compatibility_check_enabled = true,
+      blocklist_enabled = false,
+      is_default_browser = false,
+      default_search_engine = "grep",
+      default_search_engine_data = default_search_engine,
+      search_cohort = "a_cohort",
+      e10s_enabled = false,
+      telemetry_enabled = true,
+      locale = "en_US",
+      update = update,
+      user_prefs = Map("browser.download.lastDir" -> "/home/johnny/Desktop")
+    )
+
     val build = Build(
       application_id = "some_app_id",
       application_name = "build_app_name",
       architecture = "build_architecture",
-      architecture_in_binary = "build_architecture_in_binary",
+      architectures_in_binary = "build_architecture_in_binary",
       build_id = "build_id",
       version = "build_version",
-      vendor = "build_vendor" 
-      platform_version = "build_platform_version" 
-      xpcom_abi = "build_xpcom_abi" 
-      hotfix_version = "build_hotfix_version" 
+      vendor = "build_vendor",
+      platform_version = "build_platform_version",
+      xpcom_abi = "build_xpcom_abi",
+      hotfix_version = "build_hotfix_version"
     )
 
     new Longitudinal(
       client_id = client_id,
       normalized_channel = "release",
-      submission_date: Option(Seq("2015-01-01T00:00:00.0+00:00",
-        "2015-01-02T00:00:00.0+00:00", "2015-01-03T00:00:00.0+00:00")),
-      geo_country: Option(Seq("DE", "DE", "IT")),
-      session_length: Option(Seq(3600, 7200, 14400))
-      build = Option(Seq(build, build, build))
+      submission_date = Some(Seq("2016-01-01T00:00:00.0+00:00",
+        "2016-01-02T00:00:00.0+00:00", "2016-01-03T00:00:00.0+00:00")),
+      geo_country = Some(Seq("DE", "DE", "IT")),
+      session_length = Some(Seq(3600, 7200, 14400)),
+      build = Some(Seq(build, build, build)),
+      settings = Some(Seq(settings, settings, settings))
+    )
+  }
+
+  def getExampleCrossSectional(client_id: String) = {
+    new CrossSectional(
+      client_id = client_id,
+      normalized_channel = "release",
+      active_hours_total = Some(25200),
+      active_hours_sun = Some(14400 / 3600.0),
+      active_hours_mon = Some(0.0),
+      active_hours_tue = Some(0.0),
+      active_hours_wed = Some(0.0),
+      active_hours_thu = Some(0.0),
+      active_hours_fri = Some(3600/3600.0),
+      active_hours_sat = Some(7200/3600.0),
+      geo_Mode = Some("IT"),
+      geo_Cfgs = 2,
+      architecture_Mode = Some("build_architecture"),
+      ffLocale_Mode = Some("en_US")
     )
   }
 
@@ -47,14 +93,13 @@ class CrossSectionalViewTest extends FlatSpec {
     import sqlContext.implicits._
 
     val longitudinalDataset = Seq(
-      new Longitudinal("a", Option(Seq("DE", "DE", "IT")), Option(Seq(2, 3, 4))),
-      new Longitudinal("b", Option(Seq("EG", "EG", "DE")), Option(Seq(1, 1, 2)))
+      getExampleLongitudinal("a"), getExampleLongitudinal("b")
     ).toDS
 
-    val actual = longitudinalDataset.map(xx => new CrossSectional(xx))
+    val actual = longitudinalDataset.map(new CrossSectional(_))
     val expected = Seq(
-      new CrossSectional("a", Option("DE")),
-      new CrossSectional("b", Option("EG"))
+      getExampleCrossSectional("a"),
+      getExampleCrossSectional("b")
     ).toDS
 
     assert(compareDS(actual, expected))
@@ -62,15 +107,15 @@ class CrossSectionalViewTest extends FlatSpec {
   }
 
   "DataSetRows" must "distinguish between unequal rows" in {
-    val l1 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
-    val l2 = new Longitudinal("other_id", Some(Seq("DE")), Some(Seq(1)))
+    val l1 = getExampleLongitudinal("id")
+    val l2 = getExampleLongitudinal("other_id")
 
     assert(l1 != l2)
   }
 
   it must "acknowledge equal rows" in {
-    val l1 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
-    val l2 = new Longitudinal("id", Some(Seq("DE")), Some(Seq(1)))
+    val l1 = getExampleLongitudinal("id")
+    val l2 = getExampleLongitudinal("id")
 
     println(l1.valSeq.hashCode)
     println(l2.valSeq.hashCode)
