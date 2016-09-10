@@ -70,6 +70,7 @@ case class Settings (
  , val default_search_engine_data: DefaultSearchEngineData
  , val search_cohort: String
  , val e10s_enabled: Boolean
+ , val e10s_cohort: String
  , val telemetry_enabled: Boolean
  , val locale: String
  , val update: Update
@@ -163,14 +164,14 @@ class CrossSectional (
   , val active_hours_fri: Option[Double]
   , val active_hours_sat: Option[Double]
   , val geo_Mode: Option[String]
-  , val geo_Cfgs: Long
+  //, val geo_Cfgs: Long // TODO(harterrt) Make optional, for some reason.
   , val architecture_Mode: Option[String]
   , val ffLocale_Mode: Option[String]
 ) extends DataSetRow {
   override val valSeq = Array[Any](client_id, normalized_channel,
     active_hours_total, active_hours_sun, active_hours_mon, active_hours_tue,
     active_hours_wed, active_hours_thu, active_hours_fri, active_hours_sat,
-    geo_Mode, geo_Cfgs, architecture_Mode, ffLocale_Mode)
+    geo_Mode, architecture_Mode, ffLocale_Mode)
 
   def this(base: Longitudinal) = {
     this(
@@ -185,7 +186,7 @@ class CrossSectional (
       active_hours_fri = base.activeHoursByDOW(5),
       active_hours_sat = base.activeHoursByDOW(6),
       geo_Mode = base.weightedMode(base.geo_country),
-      geo_Cfgs = base.distinctConfigs(_.geo_country),
+      //geo_Cfgs = base.distinctConfigs(_.geo_country),
       architecture_Mode = base.weightedMode(base.getAll(_.build)(_.architecture)),
       ffLocale_Mode = base.weightedMode(base.getAll(_.settings)(_.locale))
     )
@@ -233,7 +234,7 @@ object CrossSectionalView {
     val ds = hiveContext
       .sql("SELECT * FROM longitudinal")
       .selectExpr(
-        "client_id", "normalized_channel", "geo_country", "session_length",
+        "client_id", "normalized_channel", "submission_date", "geo_country", "session_length",
         "build", "settings"
       )
       .as[Longitudinal]

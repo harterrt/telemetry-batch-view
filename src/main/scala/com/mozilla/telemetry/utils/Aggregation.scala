@@ -1,7 +1,7 @@
 package com.mozilla.telemetry.utils
 
 object Aggregation {
-  def weightedMode(values: Seq[String], weights: Seq[Long]): String = {
+  def weightedMode[A](values: Seq[Option[A]], weights: Seq[Long]) = {
     if (values.size != weights.size) {
       throw new IllegalArgumentException("Args to weighted mode must have the same length.")
     } else if (values.size == 0) {
