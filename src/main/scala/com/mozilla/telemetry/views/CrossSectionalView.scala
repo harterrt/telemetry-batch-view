@@ -17,6 +17,7 @@ abstract class DataSetRow() extends Product {
 
   def productArity() = valSeq.length
   def productElement(n: Int) = valSeq(n)
+
   //TODO(harter): restrict equality to a data type
   def canEqual(that: Any) = true
 
@@ -31,6 +32,7 @@ abstract class DataSetRow() extends Product {
     //This is like equal, but with fuzzy match for doubles.
     //It's better not to override equality because this functions will not
     //necessarily preserve transitivity.
+
     def compareElement(pair: (Any, Any)) = {
       pair match {
         case (Some(first: Double), Some(second: Double)) => Math.abs(first - second) < epsilon
@@ -121,6 +123,7 @@ class Longitudinal (
     this.submission_date.map(_.map(Longitudinal.date_parser.parse(_)))
   }
 
+  // TODO(harterrt): acc is a bad variable name for accessor
   private def filterByDOW[A](acc: Longitudinal => Option[Seq[A]], dow: Int): Option[Seq[A]] = {
     (acc(this), this.parsedSubmissionDate) match {
       case(Some(vals), Some(sd)) => Some((vals zip sd).filter(_._2.getDay == dow).map(_._1))

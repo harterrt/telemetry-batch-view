@@ -10,7 +10,7 @@ import org.apache.spark.sql.Dataset
 class CrossSectionalViewTest extends FlatSpec {
   def compareDS(actual: Dataset[CrossSectional], expected: Dataset[CrossSectional]) = {
     actual.collect.zip(expected.collect)
-      .map(xx=> xx._1.compare(xx._2))
+      .map(x=> x._1.compare(x._2))
       .reduce(_ && _)
   }
 
