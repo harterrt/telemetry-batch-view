@@ -50,120 +50,69 @@ abstract class DataSetRow() extends Product {
   }
 }
 
-case class DefaultSearchEngineData (
-    val name: String
-  , val load_path: String
-  , val submission_url: String
-)
-
-case class Update (
-    val channel: String
-  , val enabled: Boolean
-  , val auto_download: Boolean
-)
-
-case class Settings (
-   val addon_compatibility_check_enabled: Boolean
- , val blocklist_enabled: Boolean
- , val is_default_browser: Boolean
- , val default_search_engine: String
- , val default_search_engine_data: DefaultSearchEngineData
- , val search_cohort: String
- , val e10s_enabled: Boolean
- , val e10s_cohort: String
- , val telemetry_enabled: Boolean
- , val locale: String
- , val update: Update
- , var user_prefs: scala.collection.Map[String, String]
-)
-
-case class Build (
-    val application_id: String
-  , val application_name: String
-  , val architecture: String
-  , val architectures_in_binary: String
-  , val build_id: String
-  , val version: String
-  , val vendor: String
-  , val platform_version: String
-  , val xpcom_abi: String
-  , val hotfix_version: String
-)
-
 object Longitudinal {
-  private val date_parser =  new java.text.SimpleDateFormat("yyyy-MM-dd")
 }
 
 class Longitudinal (
     val client_id: String
   , val normalized_channel: String
-  , val submission_date: Option[Seq[String]]
-  , val geo_country: Option[Seq[String]]
-  , val session_length: Option[Seq[Long]]
-  , val build: Option[Seq[Build]]
-  , val settings: Option[Seq[Settings]]
+  , val submission_date: Seq[String]
+  , val geo_country: Seq[String]
+  , val session_length: Seq[Long]
+  , val is_default_browser: Seq[Option[Boolean]]
+  , val default_search_engine: Seq[Option[String]]
+  , val locale: Seq[Option[String]]
+  , val architecture: Seq[Option[String]]
 ) extends DataSetRow {
-  override val valSeq = Array[Any](client_id, geo_country, session_length, build)
+  override val valSeq = Array[Any](client_id, geo_country, session_length)
 
-  def weightedMode(values: Option[Seq[String]]) = {
-    (values, this.session_length) match {
-      case (Some(gc), Some(sl)) => Some(Aggregation.weightedMode(gc, sl))
-      case _ => None
-    }
+  def weightedMode[A](values: Seq[A]): A = {
+    Aggregation.weightedMode(values, this.session_length)
   }
 
-  def distinctConfigs[A](acc: (Longitudinal) => Option[Seq[A]]) = {
-    // should be .getOrElse(List()).distinct.length
-    acc(this) match {
-      case Some(values) => values.distinct.length
-      case _ => 0
-    }
+  def distinctConfigs[A](acc: (Longitudinal) => Seq[A]) = {
+    acc(this).distinct.length
   }
 
   def parsedSubmissionDate() = {
-    this.submission_date.map(_.map(Longitudinal.date_parser.parse(_)))
+    val date_parser =  new java.text.SimpleDateFormat("yyyy-MM-dd")
+    this.submission_date.map(date_parser.parse(_))
   }
 
   // TODO(harterrt): acc is a bad variable name for accessor
-  private def filterByDOW[A](acc: Longitudinal => Option[Seq[A]], dow: Int): Option[Seq[A]] = {
-    (acc(this), this.parsedSubmissionDate) match {
-      case(Some(vals), Some(sd)) => Some((vals zip sd).filter(_._2.getDay == dow).map(_._1))
-      case _ => None
-    }
+  private def filterByDOW[A](acc: Longitudinal => Seq[A], dow: Int): Seq[A] = {
+    (acc(this) zip this.parsedSubmissionDate).filter(_._2.getDay == dow).map(_._1)
   }
 
   def activeHoursByDOW(dow: Int) = {
-    this.filterByDOW(_.session_length, dow).map(_.sum/3600.0)
+    this.filterByDOW(_.session_length, dow).sum/3600.0
   }
 
   def getAll[Group, Field]
-    (chooseGroup: (Longitudinal) => Option[Seq[Group]])
-    (chooseField: (Group) => Field): Option[Seq[Field]] = {
+    (chooseGroup: (Longitudinal) => Seq[Group])
+    (chooseField: (Group) => Field): Seq[Field] = {
     // TODO(harterrt): Fix this comment structure
     // Most columns are Seq of objects, when we really want an object
     // containing sequences for each field. This function takes an accessor
     // function for the Seq and Field and generates an Seq of all field
     // values.
     // TODO(harterrt): Should this be implemented as a subgroups's property?
-    chooseGroup(this) match {
-      case Some(yy) => Some(yy.map(chooseField))
-      case _ => None
-    }
+    chooseGroup(this).map(chooseField)
   }
 }
 
 class CrossSectional (
     val client_id: String
   , val normalized_channel: String
-  , val active_hours_total: Option[Double]
-  , val active_hours_sun: Option[Double]
-  , val active_hours_mon: Option[Double]
-  , val active_hours_tue: Option[Double]
-  , val active_hours_wed: Option[Double]
-  , val active_hours_thu: Option[Double]
-  , val active_hours_fri: Option[Double]
-  , val active_hours_sat: Option[Double]
-  , val geo_Mode: Option[String]
+  , val active_hours_total: Double
+  , val active_hours_sun: Double
+  , val active_hours_mon: Double
+  , val active_hours_tue: Double
+  , val active_hours_wed: Double
+  , val active_hours_thu: Double
+  , val active_hours_fri: Double
+  , val active_hours_sat: Double
+  , val geo_Mode: String
   //, val geo_Cfgs: Long // TODO(harterrt) Make optional, for some reason.
   , val architecture_Mode: Option[String]
   , val ffLocale_Mode: Option[String]
@@ -177,7 +126,7 @@ class CrossSectional (
     this(
       client_id = base.client_id,
       normalized_channel = base.normalized_channel,
-      active_hours_total = base.session_length.map(_.sum),
+      active_hours_total = base.session_length.sum,
       active_hours_sun = base.activeHoursByDOW(0),
       active_hours_mon = base.activeHoursByDOW(1),
       active_hours_tue = base.activeHoursByDOW(2),
@@ -187,8 +136,8 @@ class CrossSectional (
       active_hours_sat = base.activeHoursByDOW(6),
       geo_Mode = base.weightedMode(base.geo_country),
       //geo_Cfgs = base.distinctConfigs(_.geo_country),
-      architecture_Mode = base.weightedMode(base.getAll(_.build)(_.architecture)),
-      ffLocale_Mode = base.weightedMode(base.getAll(_.settings)(_.locale))
+      architecture_Mode = base.weightedMode(base.architecture),
+      ffLocale_Mode = base.weightedMode(base.locale)
     )
   }
 }
@@ -234,16 +183,18 @@ object CrossSectionalView {
     val ds = hiveContext
       .sql("SELECT * FROM longitudinal")
       .selectExpr(
-        "client_id", "normalized_channel", "submission_date", "geo_country", "session_length",
-        "build", "settings"
+        "client_id", "normalized_channel", "submission_date", "geo_country",
+        "session_length", "settings.locale", "settings.is_default_browser",
+        "settings.default_search_engine", "build.architecture"
       )
+      .na.drop()
       .as[Longitudinal]
     val output = ds.map(new CrossSectional(_))
 
     // Save to S3
     val prefix = s"cross_sectional/${opts.outName()}"
     val outputBucket = opts.outputBucket()
-    val path = s"s3://${outputBucket}/${prefix}"
+    val path = s"s3a://${outputBucket}/${prefix}"
 
 
     require(S3Store.isPrefixEmpty(outputBucket, prefix),
