@@ -1,181 +1,175 @@
 [0m[[0minfo[0m] [0mLoading project definition from /home/harterrt/Documents/xsec/harter/project[0m
 [0m[[0minfo[0m] [0mSet current project to telemetry-batch-view (in build file:/home/harterrt/Documents/xsec/harter/)[0m
-[0m[[0minfo[0m] [0mCompiling 1 Scala source to /home/harterrt/Documents/xsec/harter/target/scala-2.10/classes...[0m
-[0m[[33mwarn[0m] [0mthere were 1 deprecation warning(s); re-run with -deprecation for details[0m
-[0m[[33mwarn[0m] [0mone warning found[0m
 [0m[[0minfo[0m] [0mRunning com.mozilla.telemetry.views.CrossSectionalView --localTable=/home/harterrt/data/l10l_20160725_single_shard.parquet --outName=single_shard[0m
 Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-16/09/14 16:16:12 INFO SparkContext: Running Spark version 1.6.1
-16/09/14 16:16:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-16/09/14 16:16:13 WARN Utils: Your hostname, harter-laptop resolves to a loopback address: 127.0.1.1; using 192.168.1.154 instead (on interface wlp4s0)
-16/09/14 16:16:13 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
-16/09/14 16:16:13 INFO SecurityManager: Changing view acls to: harterrt
-16/09/14 16:16:13 INFO SecurityManager: Changing modify acls to: harterrt
-16/09/14 16:16:13 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(harterrt); users with modify permissions: Set(harterrt)
-16/09/14 16:16:13 INFO Utils: Successfully started service 'sparkDriver' on port 35971.
-16/09/14 16:16:13 INFO Slf4jLogger: Slf4jLogger started
-16/09/14 16:16:13 INFO Remoting: Starting remoting
-16/09/14 16:16:14 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.1.154:40559]
-16/09/14 16:16:14 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 40559.
-16/09/14 16:16:14 INFO SparkEnv: Registering MapOutputTracker
-16/09/14 16:16:14 INFO SparkEnv: Registering BlockManagerMaster
-16/09/14 16:16:14 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-dda50b9e-d6bf-444b-8249-ca22ec9b1fc1
-16/09/14 16:16:14 INFO MemoryStore: MemoryStore started with capacity 1140.4 MB
-16/09/14 16:16:14 INFO SparkEnv: Registering OutputCommitCoordinator
-16/09/14 16:16:14 INFO Utils: Successfully started service 'SparkUI' on port 4040.
-16/09/14 16:16:14 INFO SparkUI: Started SparkUI at http://192.168.1.154:4040
-16/09/14 16:16:14 INFO Executor: Starting executor ID driver on host localhost
-16/09/14 16:16:14 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 41140.
-16/09/14 16:16:14 INFO NettyBlockTransferService: Server created on 41140
-16/09/14 16:16:14 INFO BlockManagerMaster: Trying to register BlockManager
-16/09/14 16:16:14 INFO BlockManagerMasterEndpoint: Registering block manager localhost:41140 with 1140.4 MB RAM, BlockManagerId(driver, localhost, 41140)
-16/09/14 16:16:14 INFO BlockManagerMaster: Registered BlockManager
-16/09/14 16:16:14 INFO HiveContext: Initializing execution hive, version 1.2.1
-16/09/14 16:16:15 INFO ClientWrapper: Inspected Hadoop version: 2.7.1
-16/09/14 16:16:15 INFO ClientWrapper: Loaded org.apache.hadoop.hive.shims.Hadoop23Shims for Hadoop version 2.7.1
-16/09/14 16:16:15 INFO HiveMetaStore: 0: Opening raw store with implemenation class:org.apache.hadoop.hive.metastore.ObjectStore
-16/09/14 16:16:15 INFO ObjectStore: ObjectStore, initialize called
-16/09/14 16:16:15 INFO Persistence: Property datanucleus.cache.level2 unknown - will be ignored
-16/09/14 16:16:15 INFO Persistence: Property hive.metastore.integral.jdo.pushdown unknown - will be ignored
-16/09/14 16:16:18 INFO ObjectStore: Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes="Table,StorageDescriptor,SerDeInfo,Partition,Database,Type,FieldSchema,Order"
-16/09/14 16:16:19 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:19 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:21 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:21 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:22 INFO MetaStoreDirectSql: Using direct SQL, underlying DB is DERBY
-16/09/14 16:16:22 INFO ObjectStore: Initialized ObjectStore
-16/09/14 16:16:22 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
-16/09/14 16:16:22 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
-16/09/14 16:16:22 INFO HiveMetaStore: Added admin role in metastore
-16/09/14 16:16:22 INFO HiveMetaStore: Added public role in metastore
-16/09/14 16:16:22 INFO HiveMetaStore: No user is added in admin role, since config is empty
-16/09/14 16:16:22 INFO HiveMetaStore: 0: get_all_databases
-16/09/14 16:16:22 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_all_databases	
-16/09/14 16:16:22 INFO HiveMetaStore: 0: get_functions: db=default pat=*
-16/09/14 16:16:22 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_functions: db=default pat=*	
-16/09/14 16:16:22 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MResourceUri" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:23 INFO SessionState: Created local directory: /tmp/28e51f14-2cef-49eb-8f3b-5f6e235d7a5a_resources
-16/09/14 16:16:23 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/28e51f14-2cef-49eb-8f3b-5f6e235d7a5a
-16/09/14 16:16:23 INFO SessionState: Created local directory: /tmp/harterrt/28e51f14-2cef-49eb-8f3b-5f6e235d7a5a
-16/09/14 16:16:23 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/28e51f14-2cef-49eb-8f3b-5f6e235d7a5a/_tmp_space.db
-16/09/14 16:16:23 INFO HiveContext: default warehouse location is /user/hive/warehouse
-16/09/14 16:16:23 INFO HiveContext: Initializing HiveMetastoreConnection version 1.2.1 using Spark classes.
-16/09/14 16:16:23 INFO ClientWrapper: Inspected Hadoop version: 2.7.1
-16/09/14 16:16:23 INFO ClientWrapper: Loaded org.apache.hadoop.hive.shims.Hadoop23Shims for Hadoop version 2.7.1
-16/09/14 16:16:23 INFO HiveMetaStore: 0: Opening raw store with implemenation class:org.apache.hadoop.hive.metastore.ObjectStore
-16/09/14 16:16:23 INFO ObjectStore: ObjectStore, initialize called
-16/09/14 16:16:24 INFO Persistence: Property datanucleus.cache.level2 unknown - will be ignored
-16/09/14 16:16:24 INFO Persistence: Property hive.metastore.integral.jdo.pushdown unknown - will be ignored
-16/09/14 16:16:25 INFO ObjectStore: Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes="Table,StorageDescriptor,SerDeInfo,Partition,Database,Type,FieldSchema,Order"
-16/09/14 16:16:25 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:25 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:26 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:26 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:26 INFO Query: Reading in results for query "org.datanucleus.store.rdbms.query.SQLQuery@0" since the connection used is closing
-16/09/14 16:16:26 INFO MetaStoreDirectSql: Using direct SQL, underlying DB is DERBY
-16/09/14 16:16:26 INFO ObjectStore: Initialized ObjectStore
-16/09/14 16:16:26 INFO HiveMetaStore: Added admin role in metastore
-16/09/14 16:16:26 INFO HiveMetaStore: Added public role in metastore
-16/09/14 16:16:26 INFO HiveMetaStore: No user is added in admin role, since config is empty
-16/09/14 16:16:26 INFO HiveMetaStore: 0: get_all_databases
-16/09/14 16:16:26 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_all_databases	
-16/09/14 16:16:26 INFO HiveMetaStore: 0: get_functions: db=default pat=*
-16/09/14 16:16:26 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_functions: db=default pat=*	
-16/09/14 16:16:26 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MResourceUri" is tagged as "embedded-only" so does not have its own datastore table.
-16/09/14 16:16:26 INFO SessionState: Created local directory: /tmp/7e03f6fb-a3e2-4a18-b12d-2e868e87b9aa_resources
-16/09/14 16:16:26 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/7e03f6fb-a3e2-4a18-b12d-2e868e87b9aa
-16/09/14 16:16:26 INFO SessionState: Created local directory: /tmp/harterrt/7e03f6fb-a3e2-4a18-b12d-2e868e87b9aa
-16/09/14 16:16:26 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/7e03f6fb-a3e2-4a18-b12d-2e868e87b9aa/_tmp_space.db
-16/09/14 16:16:27 INFO ParquetRelation: Listing file:/home/harterrt/data/l10l_20160725_single_shard.parquet on driver
-16/09/14 16:16:27 INFO SparkContext: Starting job: parquet at CrossSectionalView.scala:182
-16/09/14 16:16:27 INFO DAGScheduler: Got job 0 (parquet at CrossSectionalView.scala:182) with 4 output partitions
-16/09/14 16:16:27 INFO DAGScheduler: Final stage: ResultStage 0 (parquet at CrossSectionalView.scala:182)
-16/09/14 16:16:27 INFO DAGScheduler: Parents of final stage: List()
-16/09/14 16:16:27 INFO DAGScheduler: Missing parents: List()
-16/09/14 16:16:27 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at parquet at CrossSectionalView.scala:182), which has no missing parents
-16/09/14 16:16:27 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 68.0 KB, free 68.0 KB)
-16/09/14 16:16:27 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 23.1 KB, free 91.1 KB)
-16/09/14 16:16:27 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:41140 (size: 23.1 KB, free: 1140.4 MB)
-16/09/14 16:16:27 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1006
-16/09/14 16:16:27 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at parquet at CrossSectionalView.scala:182)
-16/09/14 16:16:27 INFO TaskSchedulerImpl: Adding task set 0.0 with 4 tasks
-16/09/14 16:16:27 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,PROCESS_LOCAL, 2076 bytes)
-16/09/14 16:16:27 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,PROCESS_LOCAL, 2076 bytes)
-16/09/14 16:16:27 INFO TaskSetManager: Starting task 2.0 in stage 0.0 (TID 2, localhost, partition 2,PROCESS_LOCAL, 2076 bytes)
-16/09/14 16:16:27 INFO TaskSetManager: Starting task 3.0 in stage 0.0 (TID 3, localhost, partition 3,PROCESS_LOCAL, 2201 bytes)
-16/09/14 16:16:27 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
-16/09/14 16:16:27 INFO Executor: Running task 2.0 in stage 0.0 (TID 2)
-16/09/14 16:16:27 INFO Executor: Running task 3.0 in stage 0.0 (TID 3)
-16/09/14 16:16:27 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
-16/09/14 16:16:27 INFO ParquetFileReader: Initiating action with parallelism: 5
-16/09/14 16:16:27 INFO ParquetFileReader: Initiating action with parallelism: 5
-16/09/14 16:16:27 INFO ParquetFileReader: Initiating action with parallelism: 5
-16/09/14 16:16:27 INFO ParquetFileReader: Initiating action with parallelism: 5
-16/09/14 16:16:27 INFO Executor: Finished task 2.0 in stage 0.0 (TID 2). 936 bytes result sent to driver
-16/09/14 16:16:27 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 936 bytes result sent to driver
-16/09/14 16:16:27 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 936 bytes result sent to driver
-16/09/14 16:16:27 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 161 ms on localhost (1/4)
-16/09/14 16:16:27 INFO TaskSetManager: Finished task 2.0 in stage 0.0 (TID 2) in 144 ms on localhost (2/4)
-16/09/14 16:16:27 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 146 ms on localhost (3/4)
+16/09/14 17:06:00 INFO SparkContext: Running Spark version 1.6.1
+16/09/14 17:06:01 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+16/09/14 17:06:01 WARN Utils: Your hostname, harter-laptop resolves to a loopback address: 127.0.1.1; using 192.168.1.154 instead (on interface wlp4s0)
+16/09/14 17:06:01 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+16/09/14 17:06:01 INFO SecurityManager: Changing view acls to: harterrt
+16/09/14 17:06:01 INFO SecurityManager: Changing modify acls to: harterrt
+16/09/14 17:06:01 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(harterrt); users with modify permissions: Set(harterrt)
+16/09/14 17:06:01 INFO Utils: Successfully started service 'sparkDriver' on port 40509.
+16/09/14 17:06:02 INFO Slf4jLogger: Slf4jLogger started
+16/09/14 17:06:02 INFO Remoting: Starting remoting
+16/09/14 17:06:02 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.1.154:44333]
+16/09/14 17:06:02 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 44333.
+16/09/14 17:06:02 INFO SparkEnv: Registering MapOutputTracker
+16/09/14 17:06:02 INFO SparkEnv: Registering BlockManagerMaster
+16/09/14 17:06:02 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-33b6240b-1466-4ffc-9337-3b55c90a9523
+16/09/14 17:06:02 INFO MemoryStore: MemoryStore started with capacity 1140.4 MB
+16/09/14 17:06:02 INFO SparkEnv: Registering OutputCommitCoordinator
+16/09/14 17:06:02 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+16/09/14 17:06:02 INFO SparkUI: Started SparkUI at http://192.168.1.154:4040
+16/09/14 17:06:02 INFO Executor: Starting executor ID driver on host localhost
+16/09/14 17:06:02 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 36081.
+16/09/14 17:06:02 INFO NettyBlockTransferService: Server created on 36081
+16/09/14 17:06:02 INFO BlockManagerMaster: Trying to register BlockManager
+16/09/14 17:06:02 INFO BlockManagerMasterEndpoint: Registering block manager localhost:36081 with 1140.4 MB RAM, BlockManagerId(driver, localhost, 36081)
+16/09/14 17:06:02 INFO BlockManagerMaster: Registered BlockManager
+16/09/14 17:06:03 INFO HiveContext: Initializing execution hive, version 1.2.1
+16/09/14 17:06:03 INFO ClientWrapper: Inspected Hadoop version: 2.7.1
+16/09/14 17:06:03 INFO ClientWrapper: Loaded org.apache.hadoop.hive.shims.Hadoop23Shims for Hadoop version 2.7.1
+16/09/14 17:06:03 INFO HiveMetaStore: 0: Opening raw store with implemenation class:org.apache.hadoop.hive.metastore.ObjectStore
+16/09/14 17:06:03 INFO ObjectStore: ObjectStore, initialize called
+16/09/14 17:06:03 INFO Persistence: Property datanucleus.cache.level2 unknown - will be ignored
+16/09/14 17:06:03 INFO Persistence: Property hive.metastore.integral.jdo.pushdown unknown - will be ignored
+16/09/14 17:06:06 INFO ObjectStore: Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes="Table,StorageDescriptor,SerDeInfo,Partition,Database,Type,FieldSchema,Order"
+16/09/14 17:06:07 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:07 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:09 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:09 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:09 INFO MetaStoreDirectSql: Using direct SQL, underlying DB is DERBY
+16/09/14 17:06:09 INFO ObjectStore: Initialized ObjectStore
+16/09/14 17:06:09 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+16/09/14 17:06:10 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+16/09/14 17:06:10 INFO HiveMetaStore: Added admin role in metastore
+16/09/14 17:06:10 INFO HiveMetaStore: Added public role in metastore
+16/09/14 17:06:10 INFO HiveMetaStore: No user is added in admin role, since config is empty
+16/09/14 17:06:10 INFO HiveMetaStore: 0: get_all_databases
+16/09/14 17:06:10 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_all_databases	
+16/09/14 17:06:10 INFO HiveMetaStore: 0: get_functions: db=default pat=*
+16/09/14 17:06:10 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_functions: db=default pat=*	
+16/09/14 17:06:10 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MResourceUri" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:10 INFO SessionState: Created local directory: /tmp/3b9fce0c-e16f-4697-b104-6c11e0bc0fd0_resources
+16/09/14 17:06:10 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/3b9fce0c-e16f-4697-b104-6c11e0bc0fd0
+16/09/14 17:06:10 INFO SessionState: Created local directory: /tmp/harterrt/3b9fce0c-e16f-4697-b104-6c11e0bc0fd0
+16/09/14 17:06:10 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/3b9fce0c-e16f-4697-b104-6c11e0bc0fd0/_tmp_space.db
+16/09/14 17:06:10 INFO HiveContext: default warehouse location is /user/hive/warehouse
+16/09/14 17:06:11 INFO HiveContext: Initializing HiveMetastoreConnection version 1.2.1 using Spark classes.
+16/09/14 17:06:11 INFO ClientWrapper: Inspected Hadoop version: 2.7.1
+16/09/14 17:06:11 INFO ClientWrapper: Loaded org.apache.hadoop.hive.shims.Hadoop23Shims for Hadoop version 2.7.1
+16/09/14 17:06:11 INFO HiveMetaStore: 0: Opening raw store with implemenation class:org.apache.hadoop.hive.metastore.ObjectStore
+16/09/14 17:06:11 INFO ObjectStore: ObjectStore, initialize called
+16/09/14 17:06:11 INFO Persistence: Property datanucleus.cache.level2 unknown - will be ignored
+16/09/14 17:06:11 INFO Persistence: Property hive.metastore.integral.jdo.pushdown unknown - will be ignored
+16/09/14 17:06:12 INFO ObjectStore: Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes="Table,StorageDescriptor,SerDeInfo,Partition,Database,Type,FieldSchema,Order"
+16/09/14 17:06:13 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:13 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:13 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MFieldSchema" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:13 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MOrder" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:14 INFO Query: Reading in results for query "org.datanucleus.store.rdbms.query.SQLQuery@0" since the connection used is closing
+16/09/14 17:06:14 INFO MetaStoreDirectSql: Using direct SQL, underlying DB is DERBY
+16/09/14 17:06:14 INFO ObjectStore: Initialized ObjectStore
+16/09/14 17:06:14 INFO HiveMetaStore: Added admin role in metastore
+16/09/14 17:06:14 INFO HiveMetaStore: Added public role in metastore
+16/09/14 17:06:14 INFO HiveMetaStore: No user is added in admin role, since config is empty
+16/09/14 17:06:14 INFO HiveMetaStore: 0: get_all_databases
+16/09/14 17:06:14 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_all_databases	
+16/09/14 17:06:14 INFO HiveMetaStore: 0: get_functions: db=default pat=*
+16/09/14 17:06:14 INFO audit: ugi=harterrt	ip=unknown-ip-addr	cmd=get_functions: db=default pat=*	
+16/09/14 17:06:14 INFO Datastore: The class "org.apache.hadoop.hive.metastore.model.MResourceUri" is tagged as "embedded-only" so does not have its own datastore table.
+16/09/14 17:06:14 INFO SessionState: Created local directory: /tmp/1debae6b-bffb-4db9-81ef-77f0a4189318_resources
+16/09/14 17:06:14 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/1debae6b-bffb-4db9-81ef-77f0a4189318
+16/09/14 17:06:14 INFO SessionState: Created local directory: /tmp/harterrt/1debae6b-bffb-4db9-81ef-77f0a4189318
+16/09/14 17:06:14 INFO SessionState: Created HDFS directory: /tmp/hive/harterrt/1debae6b-bffb-4db9-81ef-77f0a4189318/_tmp_space.db
+16/09/14 17:06:14 INFO ParquetRelation: Listing file:/home/harterrt/data/l10l_20160725_single_shard.parquet on driver
+16/09/14 17:06:14 INFO SparkContext: Starting job: parquet at CrossSectionalView.scala:178
+16/09/14 17:06:14 INFO DAGScheduler: Got job 0 (parquet at CrossSectionalView.scala:178) with 4 output partitions
+16/09/14 17:06:14 INFO DAGScheduler: Final stage: ResultStage 0 (parquet at CrossSectionalView.scala:178)
+16/09/14 17:06:14 INFO DAGScheduler: Parents of final stage: List()
+16/09/14 17:06:14 INFO DAGScheduler: Missing parents: List()
+16/09/14 17:06:14 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at parquet at CrossSectionalView.scala:178), which has no missing parents
+16/09/14 17:06:15 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 68.0 KB, free 68.0 KB)
+16/09/14 17:06:15 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 23.1 KB, free 91.1 KB)
+16/09/14 17:06:15 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:36081 (size: 23.1 KB, free: 1140.4 MB)
+16/09/14 17:06:15 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1006
+16/09/14 17:06:15 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at parquet at CrossSectionalView.scala:178)
+16/09/14 17:06:15 INFO TaskSchedulerImpl: Adding task set 0.0 with 4 tasks
+16/09/14 17:06:15 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,PROCESS_LOCAL, 2076 bytes)
+16/09/14 17:06:15 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,PROCESS_LOCAL, 2076 bytes)
+16/09/14 17:06:15 INFO TaskSetManager: Starting task 2.0 in stage 0.0 (TID 2, localhost, partition 2,PROCESS_LOCAL, 2076 bytes)
+16/09/14 17:06:15 INFO TaskSetManager: Starting task 3.0 in stage 0.0 (TID 3, localhost, partition 3,PROCESS_LOCAL, 2201 bytes)
+16/09/14 17:06:15 INFO Executor: Running task 2.0 in stage 0.0 (TID 2)
+16/09/14 17:06:15 INFO Executor: Running task 3.0 in stage 0.0 (TID 3)
+16/09/14 17:06:15 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+16/09/14 17:06:15 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
+16/09/14 17:06:15 INFO ParquetFileReader: Initiating action with parallelism: 5
+16/09/14 17:06:15 INFO ParquetFileReader: Initiating action with parallelism: 5
+16/09/14 17:06:15 INFO ParquetFileReader: Initiating action with parallelism: 5
+16/09/14 17:06:15 INFO ParquetFileReader: Initiating action with parallelism: 5
+16/09/14 17:06:15 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 936 bytes result sent to driver
+16/09/14 17:06:15 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 936 bytes result sent to driver
+16/09/14 17:06:15 INFO Executor: Finished task 2.0 in stage 0.0 (TID 2). 936 bytes result sent to driver
+16/09/14 17:06:15 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 134 ms on localhost (1/4)
+16/09/14 17:06:15 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 157 ms on localhost (2/4)
+16/09/14 17:06:15 INFO TaskSetManager: Finished task 2.0 in stage 0.0 (TID 2) in 138 ms on localhost (3/4)
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-16/09/14 16:16:28 INFO Executor: Finished task 3.0 in stage 0.0 (TID 3). 187247 bytes result sent to driver
-16/09/14 16:16:28 INFO DAGScheduler: ResultStage 0 (parquet at CrossSectionalView.scala:182) finished in 0.908 s
-16/09/14 16:16:28 INFO TaskSetManager: Finished task 3.0 in stage 0.0 (TID 3) in 872 ms on localhost (4/4)
-16/09/14 16:16:28 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
-16/09/14 16:16:28 INFO DAGScheduler: Job 0 finished: parquet at CrossSectionalView.scala:182, took 1.062929 s
-16/09/14 16:16:28 INFO ParseDriver: Parsing command: SELECT * FROM longitudinal
-16/09/14 16:16:29 INFO ParseDriver: Parse Completed
-16/09/14 16:16:30 INFO BlockManagerInfo: Removed broadcast_0_piece0 on localhost:41140 in memory (size: 23.1 KB, free: 1140.4 MB)
-16/09/14 16:16:30 INFO ContextCleaner: Cleaned accumulator 1
-16/09/14 16:16:32 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 96.4 KB, free 96.4 KB)
-16/09/14 16:16:32 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 21.7 KB, free 118.0 KB)
-16/09/14 16:16:32 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on localhost:41140 (size: 21.7 KB, free: 1140.4 MB)
-16/09/14 16:16:32 INFO SparkContext: Created broadcast 1 from parquet at CrossSectionalView.scala:207
-16/09/14 16:16:32 INFO deprecation: mapred.job.id is deprecated. Instead, use mapreduce.job.id
-16/09/14 16:16:32 INFO deprecation: mapred.tip.id is deprecated. Instead, use mapreduce.task.id
-16/09/14 16:16:32 INFO deprecation: mapred.task.id is deprecated. Instead, use mapreduce.task.attempt.id
-16/09/14 16:16:32 INFO deprecation: mapred.task.is.map is deprecated. Instead, use mapreduce.task.ismap
-16/09/14 16:16:32 INFO deprecation: mapred.task.partition is deprecated. Instead, use mapreduce.task.partition
-16/09/14 16:16:32 INFO ParquetRelation: Using default output committer for Parquet: org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:32 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:34 INFO deprecation: mapred.min.split.size is deprecated. Instead, use mapreduce.input.fileinputformat.split.minsize
-16/09/14 16:16:34 INFO ParquetRelation: Reading Parquet file(s) from file:/home/harterrt/data/l10l_20160725_single_shard.parquet
-16/09/14 16:16:34 INFO SparkContext: Starting job: parquet at CrossSectionalView.scala:207
-16/09/14 16:16:34 INFO DAGScheduler: Got job 1 (parquet at CrossSectionalView.scala:207) with 5 output partitions
-16/09/14 16:16:34 INFO DAGScheduler: Final stage: ResultStage 1 (parquet at CrossSectionalView.scala:207)
-16/09/14 16:16:34 INFO DAGScheduler: Parents of final stage: List()
-16/09/14 16:16:34 INFO DAGScheduler: Missing parents: List()
-16/09/14 16:16:34 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[6] at parquet at CrossSectionalView.scala:207), which has no missing parents
-16/09/14 16:16:34 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 288.9 KB, free 407.0 KB)
-16/09/14 16:16:34 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 90.8 KB, free 497.8 KB)
-16/09/14 16:16:34 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on localhost:41140 (size: 90.8 KB, free: 1140.3 MB)
-16/09/14 16:16:34 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1006
-16/09/14 16:16:34 INFO DAGScheduler: Submitting 5 missing tasks from ResultStage 1 (MapPartitionsRDD[6] at parquet at CrossSectionalView.scala:207)
-16/09/14 16:16:34 INFO TaskSchedulerImpl: Adding task set 1.0 with 5 tasks
-16/09/14 16:16:34 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 4, localhost, partition 0,PROCESS_LOCAL, 2200 bytes)
-16/09/14 16:16:34 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 5, localhost, partition 1,PROCESS_LOCAL, 2205 bytes)
-16/09/14 16:16:34 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 6, localhost, partition 2,PROCESS_LOCAL, 2206 bytes)
-16/09/14 16:16:34 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 7, localhost, partition 3,PROCESS_LOCAL, 2206 bytes)
-16/09/14 16:16:34 INFO Executor: Running task 0.0 in stage 1.0 (TID 4)
-16/09/14 16:16:34 INFO Executor: Running task 2.0 in stage 1.0 (TID 6)
-16/09/14 16:16:34 INFO Executor: Running task 1.0 in stage 1.0 (TID 5)
-16/09/14 16:16:34 INFO Executor: Running task 3.0 in stage 1.0 (TID 7)
-16/09/14 16:16:34 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 268435456 end: 402653184 length: 134217728 hosts: []}
-16/09/14 16:16:34 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 0 end: 134217728 length: 134217728 hosts: []}
-16/09/14 16:16:34 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 134217728 end: 268435456 length: 134217728 hosts: []}
-16/09/14 16:16:34 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 402653184 end: 536870912 length: 134217728 hosts: []}
-16/09/14 16:16:34 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:16:35 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:15 INFO Executor: Finished task 3.0 in stage 0.0 (TID 3). 187247 bytes result sent to driver
+16/09/14 17:06:15 INFO TaskSetManager: Finished task 3.0 in stage 0.0 (TID 3) in 736 ms on localhost (4/4)
+16/09/14 17:06:15 INFO DAGScheduler: ResultStage 0 (parquet at CrossSectionalView.scala:178) finished in 0.770 s
+16/09/14 17:06:15 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+16/09/14 17:06:15 INFO DAGScheduler: Job 0 finished: parquet at CrossSectionalView.scala:178, took 0.923352 s
+16/09/14 17:06:16 INFO ParseDriver: Parsing command: SELECT * FROM longitudinal
+16/09/14 17:06:16 INFO ParseDriver: Parse Completed
+16/09/14 17:06:17 INFO BlockManagerInfo: Removed broadcast_0_piece0 on localhost:36081 in memory (size: 23.1 KB, free: 1140.4 MB)
+16/09/14 17:06:17 INFO ContextCleaner: Cleaned accumulator 1
+16/09/14 17:06:20 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 96.4 KB, free 96.4 KB)
+16/09/14 17:06:20 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 21.7 KB, free 118.0 KB)
+16/09/14 17:06:20 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on localhost:36081 (size: 21.7 KB, free: 1140.4 MB)
+16/09/14 17:06:20 INFO SparkContext: Created broadcast 1 from parquet at CrossSectionalView.scala:203
+16/09/14 17:06:20 INFO deprecation: mapred.job.id is deprecated. Instead, use mapreduce.job.id
+16/09/14 17:06:20 INFO deprecation: mapred.tip.id is deprecated. Instead, use mapreduce.task.id
+16/09/14 17:06:20 INFO deprecation: mapred.task.id is deprecated. Instead, use mapreduce.task.attempt.id
+16/09/14 17:06:20 INFO deprecation: mapred.task.is.map is deprecated. Instead, use mapreduce.task.ismap
+16/09/14 17:06:20 INFO deprecation: mapred.task.partition is deprecated. Instead, use mapreduce.task.partition
+16/09/14 17:06:20 INFO ParquetRelation: Using default output committer for Parquet: org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:20 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:20 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:20 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:21 INFO deprecation: mapred.min.split.size is deprecated. Instead, use mapreduce.input.fileinputformat.split.minsize
+16/09/14 17:06:21 INFO ParquetRelation: Reading Parquet file(s) from file:/home/harterrt/data/l10l_20160725_single_shard.parquet
+16/09/14 17:06:22 INFO SparkContext: Starting job: parquet at CrossSectionalView.scala:203
+16/09/14 17:06:22 INFO DAGScheduler: Got job 1 (parquet at CrossSectionalView.scala:203) with 5 output partitions
+16/09/14 17:06:22 INFO DAGScheduler: Final stage: ResultStage 1 (parquet at CrossSectionalView.scala:203)
+16/09/14 17:06:22 INFO DAGScheduler: Parents of final stage: List()
+16/09/14 17:06:22 INFO DAGScheduler: Missing parents: List()
+16/09/14 17:06:22 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[6] at parquet at CrossSectionalView.scala:203), which has no missing parents
+16/09/14 17:06:22 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 289.3 KB, free 407.4 KB)
+16/09/14 17:06:22 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 91.0 KB, free 498.4 KB)
+16/09/14 17:06:22 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on localhost:36081 (size: 91.0 KB, free: 1140.3 MB)
+16/09/14 17:06:22 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1006
+16/09/14 17:06:22 INFO DAGScheduler: Submitting 5 missing tasks from ResultStage 1 (MapPartitionsRDD[6] at parquet at CrossSectionalView.scala:203)
+16/09/14 17:06:22 INFO TaskSchedulerImpl: Adding task set 1.0 with 5 tasks
+16/09/14 17:06:22 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 4, localhost, partition 0,PROCESS_LOCAL, 2200 bytes)
+16/09/14 17:06:22 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 5, localhost, partition 1,PROCESS_LOCAL, 2205 bytes)
+16/09/14 17:06:22 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 6, localhost, partition 2,PROCESS_LOCAL, 2206 bytes)
+16/09/14 17:06:22 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 7, localhost, partition 3,PROCESS_LOCAL, 2206 bytes)
+16/09/14 17:06:22 INFO Executor: Running task 0.0 in stage 1.0 (TID 4)
+16/09/14 17:06:22 INFO Executor: Running task 2.0 in stage 1.0 (TID 6)
+16/09/14 17:06:22 INFO Executor: Running task 1.0 in stage 1.0 (TID 5)
+16/09/14 17:06:22 INFO Executor: Running task 3.0 in stage 1.0 (TID 7)
+16/09/14 17:06:22 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 402653184 end: 536870912 length: 134217728 hosts: []}
+16/09/14 17:06:22 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 134217728 end: 268435456 length: 134217728 hosts: []}
+16/09/14 17:06:22 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 0 end: 134217728 length: 134217728 hosts: []}
+16/09/14 17:06:22 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 268435456 end: 402653184 length: 134217728 hosts: []}
+16/09/14 17:06:23 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:23 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -205,6 +199,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -219,28 +223,18 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:16:35 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:16:35 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:16:35 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:16:35 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:23 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:23 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:23 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:23 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -270,6 +264,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -284,25 +288,15 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:16:35 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:23 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -332,6 +326,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -346,25 +350,15 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:16:35 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:23 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -394,6 +388,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -408,71 +412,58 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 409.251764 ms
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 35.548391 ms
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 10.433072 ms
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 14.870261 ms
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 17.59394 ms
-16/09/14 16:16:35 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 6074 records.
-16/09/14 16:16:35 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 1910 records.
-16/09/14 16:16:35 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
-16/09/14 16:16:35 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 4448 records.
-16/09/14 16:16:35 INFO GeneratePredicate: Code generated in 30.315021 ms
-16/09/14 16:16:35 INFO GenerateUnsafeProjection: Code generated in 42.241994 ms
-16/09/14 16:16:35 INFO GenerateSafeProjection: Code generated in 19.033664 ms
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO CodecConfig: Compression: GZIP
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet block size to 134217728
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Dictionary is on
-16/09/14 16:16:35 INFO ParquetOutputFormat: Validation is off
-16/09/14 16:16:35 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO CodecConfig: Compression: GZIP
-16/09/14 16:16:35 INFO CodecConfig: Compression: GZIP
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet block size to 134217728
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet block size to 134217728
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Dictionary is on
-16/09/14 16:16:35 INFO ParquetOutputFormat: Dictionary is on
-16/09/14 16:16:35 INFO ParquetOutputFormat: Validation is off
-16/09/14 16:16:35 INFO ParquetOutputFormat: Validation is off
-16/09/14 16:16:35 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
-16/09/14 16:16:35 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
-16/09/14 16:16:35 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:35 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:35 INFO CodecConfig: Compression: GZIP
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet block size to 134217728
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
-16/09/14 16:16:35 INFO ParquetOutputFormat: Dictionary is on
-16/09/14 16:16:35 INFO ParquetOutputFormat: Validation is off
-16/09/14 16:16:35 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
-16/09/14 16:16:35 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 312.359134 ms
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 49.690318 ms
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 13.44093 ms
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 14.361608 ms
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 22.435902 ms
+16/09/14 17:06:23 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 6074 records.
+16/09/14 17:06:23 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 1910 records.
+16/09/14 17:06:23 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 4448 records.
+16/09/14 17:06:23 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
+16/09/14 17:06:23 INFO GeneratePredicate: Code generated in 18.466308 ms
+16/09/14 17:06:23 INFO GenerateUnsafeProjection: Code generated in 45.794358 ms
+16/09/14 17:06:23 INFO GenerateSafeProjection: Code generated in 16.798849 ms
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:23 INFO CodecConfig: Compression: GZIP
+16/09/14 17:06:23 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:23 INFO CodecConfig: Compression: GZIP
+16/09/14 17:06:23 INFO CodecConfig: Compression: GZIP
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet block size to 134217728
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Dictionary is on
+16/09/14 17:06:23 INFO ParquetOutputFormat: Validation is off
+16/09/14 17:06:23 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet block size to 134217728
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Dictionary is on
+16/09/14 17:06:23 INFO ParquetOutputFormat: Validation is off
+16/09/14 17:06:23 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
+16/09/14 17:06:23 INFO CodecConfig: Compression: GZIP
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet block size to 134217728
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Dictionary is on
+16/09/14 17:06:23 INFO ParquetOutputFormat: Validation is off
+16/09/14 17:06:23 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
+16/09/14 17:06:23 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
 {
   "type" : "struct",
   "fields" : [ {
@@ -531,6 +522,11 @@ StructType(StructField(submission_date,ArrayType(StringType,false),true), Struct
     "nullable" : true,
     "metadata" : { }
   }, {
+    "name" : "geo_Cfgs",
+    "type" : "long",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
     "name" : "architecture_Mode",
     "type" : "string",
     "nullable" : true,
@@ -555,12 +551,19 @@ message spark_schema {
   optional double active_hours_fri;
   optional double active_hours_sat;
   optional binary geo_Mode (UTF8);
+  optional int64 geo_Cfgs;
   optional binary architecture_Mode (UTF8);
   optional binary ffLocale_Mode (UTF8);
 }
 
        
-16/09/14 16:16:35 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet block size to 134217728
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
+16/09/14 17:06:23 INFO ParquetOutputFormat: Dictionary is on
+16/09/14 17:06:23 INFO ParquetOutputFormat: Validation is off
+16/09/14 17:06:23 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
+16/09/14 17:06:23 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
 {
   "type" : "struct",
   "fields" : [ {
@@ -619,6 +622,11 @@ message spark_schema {
     "nullable" : true,
     "metadata" : { }
   }, {
+    "name" : "geo_Cfgs",
+    "type" : "long",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
     "name" : "architecture_Mode",
     "type" : "string",
     "nullable" : true,
@@ -643,12 +651,13 @@ message spark_schema {
   optional double active_hours_fri;
   optional double active_hours_sat;
   optional binary geo_Mode (UTF8);
+  optional int64 geo_Cfgs;
   optional binary architecture_Mode (UTF8);
   optional binary ffLocale_Mode (UTF8);
 }
 
        
-16/09/14 16:16:35 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+16/09/14 17:06:23 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
 {
   "type" : "struct",
   "fields" : [ {
@@ -707,6 +716,11 @@ message spark_schema {
     "nullable" : true,
     "metadata" : { }
   }, {
+    "name" : "geo_Cfgs",
+    "type" : "long",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
     "name" : "architecture_Mode",
     "type" : "string",
     "nullable" : true,
@@ -731,12 +745,13 @@ message spark_schema {
   optional double active_hours_fri;
   optional double active_hours_sat;
   optional binary geo_Mode (UTF8);
+  optional int64 geo_Cfgs;
   optional binary architecture_Mode (UTF8);
   optional binary ffLocale_Mode (UTF8);
 }
 
        
-16/09/14 16:16:35 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+16/09/14 17:06:23 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
 {
   "type" : "struct",
   "fields" : [ {
@@ -795,6 +810,11 @@ message spark_schema {
     "nullable" : true,
     "metadata" : { }
   }, {
+    "name" : "geo_Cfgs",
+    "type" : "long",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
     "name" : "architecture_Mode",
     "type" : "string",
     "nullable" : true,
@@ -819,42 +839,40 @@ message spark_schema {
   optional double active_hours_fri;
   optional double active_hours_sat;
   optional binary geo_Mode (UTF8);
+  optional int64 geo_Cfgs;
   optional binary architecture_Mode (UTF8);
   optional binary ffLocale_Mode (UTF8);
 }
 
        
-16/09/14 16:16:36 INFO CodecPool: Got brand-new compressor [.gz]
-16/09/14 16:16:36 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:16:36 INFO CodecPool: Got brand-new decompressor [.snappy]
-16/09/14 16:16:36 INFO InternalParquetRecordReader: block read in memory in 27 ms. row count = 1910
-16/09/14 16:16:36 INFO CodecPool: Got brand-new compressor [.gz]
-16/09/14 16:16:36 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 0
-16/09/14 16:16:36 INFO CodecPool: Got brand-new compressor [.gz]
-16/09/14 16:16:36 INFO CodecPool: Got brand-new compressor [.gz]
-16/09/14 16:16:36 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:16:36 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:16:36 INFO CodecPool: Got brand-new decompressor [.snappy]
-16/09/14 16:16:36 INFO CodecPool: Got brand-new decompressor [.snappy]
-16/09/14 16:16:36 INFO InternalParquetRecordReader: block read in memory in 38 ms. row count = 4448
-16/09/14 16:16:36 INFO InternalParquetRecordReader: block read in memory in 61 ms. row count = 6074
-16/09/14 16:16:36 INFO GenerateSafeProjection: Code generated in 229.663879 ms
-16/09/14 16:16:36 INFO GenerateUnsafeProjection: Code generated in 73.638151 ms
-16/09/14 16:16:39 INFO FileOutputCommitter: Saved output of task 'attempt_201609141616_0001_m_000002_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141616_0001_m_000002
-16/09/14 16:16:39 INFO SparkHadoopMapRedUtil: attempt_201609141616_0001_m_000002_0: Committed
-16/09/14 16:16:39 INFO Executor: Finished task 2.0 in stage 1.0 (TID 6). 2327 bytes result sent to driver
-16/09/14 16:16:39 INFO TaskSetManager: Starting task 4.0 in stage 1.0 (TID 8, localhost, partition 4,PROCESS_LOCAL, 2209 bytes)
-16/09/14 16:16:39 INFO Executor: Running task 4.0 in stage 1.0 (TID 8)
-16/09/14 16:16:39 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 6) in 5348 ms on localhost (1/5)
-16/09/14 16:16:39 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 536870912 end: 658792014 length: 121921102 hosts: []}
-16/09/14 16:16:40 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:16:40 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:24 INFO CodecPool: Got brand-new compressor [.gz]
+16/09/14 17:06:24 INFO CodecPool: Got brand-new compressor [.gz]
+16/09/14 17:06:24 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:24 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:24 INFO CodecPool: Got brand-new decompressor [.snappy]
+16/09/14 17:06:24 INFO CodecPool: Got brand-new decompressor [.snappy]
+16/09/14 17:06:24 INFO InternalParquetRecordReader: block read in memory in 27 ms. row count = 1910
+16/09/14 17:06:24 INFO InternalParquetRecordReader: block read in memory in 32 ms. row count = 4448
+16/09/14 17:06:24 INFO CodecPool: Got brand-new compressor [.gz]
+16/09/14 17:06:24 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:24 INFO CodecPool: Got brand-new decompressor [.snappy]
+16/09/14 17:06:24 INFO InternalParquetRecordReader: block read in memory in 17 ms. row count = 6074
+16/09/14 17:06:24 INFO CodecPool: Got brand-new compressor [.gz]
+16/09/14 17:06:24 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 0
+16/09/14 17:06:24 INFO GenerateSafeProjection: Code generated in 156.435685 ms
+16/09/14 17:06:24 INFO GenerateUnsafeProjection: Code generated in 62.749639 ms
+16/09/14 17:06:27 INFO FileOutputCommitter: Saved output of task 'attempt_201609141706_0001_m_000002_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141706_0001_m_000002
+16/09/14 17:06:27 INFO SparkHadoopMapRedUtil: attempt_201609141706_0001_m_000002_0: Committed
+16/09/14 17:06:27 INFO Executor: Finished task 2.0 in stage 1.0 (TID 6). 2327 bytes result sent to driver
+16/09/14 17:06:27 INFO TaskSetManager: Starting task 4.0 in stage 1.0 (TID 8, localhost, partition 4,PROCESS_LOCAL, 2209 bytes)
+16/09/14 17:06:27 INFO Executor: Running task 4.0 in stage 1.0 (TID 8)
+16/09/14 17:06:27 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 6) in 5856 ms on localhost (1/5)
+16/09/14 17:06:28 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 536870912 end: 658792014 length: 121921102 hosts: []}
+16/09/14 17:06:28 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:28 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -884,6 +902,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -898,30 +926,23 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:16:40 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
-16/09/14 16:16:40 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:40 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
-16/09/14 16:16:40 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
-16/09/14 16:16:40 INFO CodecConfig: Compression: GZIP
-16/09/14 16:16:40 INFO ParquetOutputFormat: Parquet block size to 134217728
-16/09/14 16:16:40 INFO ParquetOutputFormat: Parquet page size to 1048576
-16/09/14 16:16:40 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
-16/09/14 16:16:40 INFO ParquetOutputFormat: Dictionary is on
-16/09/14 16:16:40 INFO ParquetOutputFormat: Validation is off
-16/09/14 16:16:40 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
-16/09/14 16:16:40 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+16/09/14 17:06:28 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
+16/09/14 17:06:28 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:28 INFO DefaultWriterContainer: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+16/09/14 17:06:28 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+16/09/14 17:06:28 INFO CodecConfig: Compression: GZIP
+16/09/14 17:06:28 INFO ParquetOutputFormat: Parquet block size to 134217728
+16/09/14 17:06:28 INFO ParquetOutputFormat: Parquet page size to 1048576
+16/09/14 17:06:28 INFO ParquetOutputFormat: Parquet dictionary page size to 1048576
+16/09/14 17:06:28 INFO ParquetOutputFormat: Dictionary is on
+16/09/14 17:06:28 INFO ParquetOutputFormat: Validation is off
+16/09/14 17:06:28 INFO ParquetOutputFormat: Writer version is: PARQUET_1_0
+16/09/14 17:06:28 INFO CatalystWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
 {
   "type" : "struct",
   "fields" : [ {
@@ -980,6 +1001,11 @@ StructType(StructField(submission_date,ArrayType(StringType,false),true), Struct
     "nullable" : true,
     "metadata" : { }
   }, {
+    "name" : "geo_Cfgs",
+    "type" : "long",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
     "name" : "architecture_Mode",
     "type" : "string",
     "nullable" : true,
@@ -1004,119 +1030,120 @@ message spark_schema {
   optional double active_hours_fri;
   optional double active_hours_sat;
   optional binary geo_Mode (UTF8);
+  optional int64 geo_Cfgs;
   optional binary architecture_Mode (UTF8);
   optional binary ffLocale_Mode (UTF8);
 }
 
        
-16/09/14 16:16:41 INFO CodecPool: Got brand-new compressor [.gz]
-16/09/14 16:16:41 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 0
-16/09/14 16:16:42 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 251,183
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 40,344B for [client_id] BINARY: 1,902 values, 76,087B raw, 40,242B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 244B for [normalized_channel] BINARY: 1,902 values, 346B raw, 204B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 5 entries, 49B raw, 5B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 7,324B for [active_hours_total] DOUBLE: 1,902 values, 15,223B raw, 7,279B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 1,979B for [active_hours_sun] DOUBLE: 1,902 values, 2,386B raw, 1,935B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 935 entries, 7,480B raw, 935B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 2,412B for [active_hours_mon] DOUBLE: 1,902 values, 2,630B raw, 2,368B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,192 entries, 9,536B raw, 1,192B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 2,407B for [active_hours_tue] DOUBLE: 1,902 values, 2,630B raw, 2,363B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,189 entries, 9,512B raw, 1,189B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 2,356B for [active_hours_wed] DOUBLE: 1,902 values, 2,630B raw, 2,312B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,142 entries, 9,136B raw, 1,142B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 2,454B for [active_hours_thu] DOUBLE: 1,902 values, 2,630B raw, 2,410B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,198 entries, 9,584B raw, 1,198B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 2,383B for [active_hours_fri] DOUBLE: 1,902 values, 2,630B raw, 2,339B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,152 entries, 9,216B raw, 1,152B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 1,936B for [active_hours_sat] DOUBLE: 1,902 values, 2,392B raw, 1,892B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 973 entries, 7,784B raw, 973B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 1,616B for [geo_Mode] BINARY: 1,902 values, 1,678B raw, 1,584B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 117 entries, 702B raw, 117B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 310B for [architecture_Mode] BINARY: 1,902 values, 290B raw, 273B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2 entries, 17B raw, 2B comp}
-16/09/14 16:16:42 INFO ColumnChunkPageWriteStore: written 1,183B for [ffLocale_Mode] BINARY: 1,902 values, 1,440B raw, 1,148B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 45 entries, 319B raw, 45B comp}
-16/09/14 16:16:44 INFO FileOutputCommitter: Saved output of task 'attempt_201609141616_0001_m_000004_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141616_0001_m_000004
-16/09/14 16:16:44 INFO SparkHadoopMapRedUtil: attempt_201609141616_0001_m_000004_0: Committed
-16/09/14 16:16:44 INFO Executor: Finished task 4.0 in stage 1.0 (TID 8). 2327 bytes result sent to driver
-16/09/14 16:16:44 INFO TaskSetManager: Finished task 4.0 in stage 1.0 (TID 8) in 5028 ms on localhost (2/5)
-16/09/14 16:16:46 INFO FileOutputCommitter: Saved output of task 'attempt_201609141616_0001_m_000000_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141616_0001_m_000000
-16/09/14 16:16:46 INFO SparkHadoopMapRedUtil: attempt_201609141616_0001_m_000000_0: Committed
-16/09/14 16:16:46 INFO Executor: Finished task 0.0 in stage 1.0 (TID 4). 2327 bytes result sent to driver
-16/09/14 16:16:46 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 4) in 12272 ms on localhost (3/5)
-16/09/14 16:16:46 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 579,637
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 92,915B for [client_id] BINARY: 4,419 values, 176,767B raw, 92,813B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 482B for [normalized_channel] BINARY: 4,419 values, 895B raw, 442B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 5 entries, 49B raw, 5B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 16,739B for [active_hours_total] DOUBLE: 4,419 values, 35,359B raw, 16,693B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 4,786B for [active_hours_sun] DOUBLE: 4,419 values, 6,616B raw, 4,742B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,176 entries, 17,408B raw, 2,176B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,618B for [active_hours_mon] DOUBLE: 4,419 values, 6,653B raw, 5,574B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,731 entries, 21,848B raw, 2,731B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,573B for [active_hours_tue] DOUBLE: 4,419 values, 6,653B raw, 5,529B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,713 entries, 21,704B raw, 2,713B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,557B for [active_hours_wed] DOUBLE: 4,419 values, 6,653B raw, 5,513B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,679 entries, 21,432B raw, 2,679B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,586B for [active_hours_thu] DOUBLE: 4,419 values, 6,653B raw, 5,542B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,710 entries, 21,680B raw, 2,710B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,544B for [active_hours_fri] DOUBLE: 4,419 values, 6,653B raw, 5,500B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,654 entries, 21,232B raw, 2,654B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 5,045B for [active_hours_sat] DOUBLE: 4,419 values, 6,653B raw, 5,001B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,328 entries, 18,624B raw, 2,328B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 3,224B for [geo_Mode] BINARY: 4,419 values, 4,441B raw, 3,192B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 145 entries, 870B raw, 145B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 661B for [architecture_Mode] BINARY: 4,419 values, 1,085B raw, 624B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3 entries, 24B raw, 3B comp}
-16/09/14 16:16:46 INFO ColumnChunkPageWriteStore: written 2,463B for [ffLocale_Mode] BINARY: 4,419 values, 3,335B raw, 2,428B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 46 entries, 322B raw, 46B comp}
-16/09/14 16:16:48 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 788,144
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 126,786B for [client_id] BINARY: 6,042 values, 241,687B raw, 126,684B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 551B for [normalized_channel] BINARY: 6,042 values, 902B raw, 511B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 4 entries, 38B raw, 4B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 22,647B for [active_hours_total] DOUBLE: 6,042 values, 48,343B raw, 22,601B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 6,538B for [active_hours_sun] DOUBLE: 6,042 values, 9,054B raw, 6,493B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,944 entries, 23,552B raw, 2,944B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 7,673B for [active_hours_mon] DOUBLE: 6,042 values, 9,092B raw, 7,628B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,689 entries, 29,512B raw, 3,689B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 7,641B for [active_hours_tue] DOUBLE: 6,042 values, 9,084B raw, 7,596B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,642 entries, 29,136B raw, 3,642B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 7,636B for [active_hours_wed] DOUBLE: 6,042 values, 9,092B raw, 7,591B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,666 entries, 29,328B raw, 3,666B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 7,628B for [active_hours_thu] DOUBLE: 6,042 values, 9,072B raw, 7,583B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,638 entries, 29,104B raw, 3,638B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 7,579B for [active_hours_fri] DOUBLE: 6,042 values, 9,072B raw, 7,534B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,582 entries, 28,656B raw, 3,582B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 6,792B for [active_hours_sat] DOUBLE: 6,042 values, 9,072B raw, 6,747B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,082 entries, 24,656B raw, 3,082B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 4,326B for [geo_Mode] BINARY: 6,042 values, 6,068B raw, 4,294B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 149 entries, 894B raw, 149B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 861B for [architecture_Mode] BINARY: 6,042 values, 1,460B raw, 824B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3 entries, 24B raw, 3B comp}
-16/09/14 16:16:48 INFO ColumnChunkPageWriteStore: written 3,330B for [ffLocale_Mode] BINARY: 6,042 values, 4,536B raw, 3,295B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 45 entries, 316B raw, 45B comp}
-16/09/14 16:16:51 INFO FileOutputCommitter: Saved output of task 'attempt_201609141616_0001_m_000003_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141616_0001_m_000003
-16/09/14 16:16:51 INFO SparkHadoopMapRedUtil: attempt_201609141616_0001_m_000003_0: Committed
-16/09/14 16:16:51 INFO Executor: Finished task 3.0 in stage 1.0 (TID 7). 2327 bytes result sent to driver
-16/09/14 16:16:51 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 7) in 16944 ms on localhost (4/5)
-16/09/14 16:16:53 INFO FileOutputCommitter: Saved output of task 'attempt_201609141616_0001_m_000001_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141616_0001_m_000001
-16/09/14 16:16:53 INFO SparkHadoopMapRedUtil: attempt_201609141616_0001_m_000001_0: Committed
-16/09/14 16:16:53 INFO Executor: Finished task 1.0 in stage 1.0 (TID 5). 2327 bytes result sent to driver
-16/09/14 16:16:53 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 5) in 19594 ms on localhost (5/5)
-16/09/14 16:16:53 INFO DAGScheduler: ResultStage 1 (parquet at CrossSectionalView.scala:207) finished in 19.603 s
-16/09/14 16:16:53 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
-16/09/14 16:16:53 INFO DAGScheduler: Job 1 finished: parquet at CrossSectionalView.scala:207, took 19.710725 s
-16/09/14 16:17:05 INFO ParquetFileReader: Initiating action with parallelism: 5
-16/09/14 16:17:06 INFO DefaultWriterContainer: Job job_201609141616_0000 committed.
-16/09/14 16:17:06 INFO ParquetRelation: Listing s3a://telemetry-test-bucket/cross_sectional/single_shard on driver
-16/09/14 16:17:06 INFO ParquetRelation: Listing s3a://telemetry-test-bucket/cross_sectional/single_shard on driver
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 189.7 KB, free 687.4 KB)
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 21.7 KB, free 709.1 KB)
-16/09/14 16:17:07 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on localhost:41140 (size: 21.7 KB, free: 1140.2 MB)
-16/09/14 16:17:07 INFO SparkContext: Created broadcast 3 from take at CrossSectionalView.scala:209
-16/09/14 16:17:07 INFO SparkContext: Starting job: take at CrossSectionalView.scala:209
-16/09/14 16:17:07 INFO ParquetRelation: Reading Parquet file(s) from file:/home/harterrt/data/l10l_20160725_single_shard.parquet
-16/09/14 16:17:07 INFO DAGScheduler: Registering RDD 13 (take at CrossSectionalView.scala:209)
-16/09/14 16:17:07 INFO DAGScheduler: Got job 2 (take at CrossSectionalView.scala:209) with 1 output partitions
-16/09/14 16:17:07 INFO DAGScheduler: Final stage: ResultStage 3 (take at CrossSectionalView.scala:209)
-16/09/14 16:17:07 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
-16/09/14 16:17:07 INFO DAGScheduler: Missing parents: List(ShuffleMapStage 2)
-16/09/14 16:17:07 INFO DAGScheduler: Submitting ShuffleMapStage 2 (MapPartitionsRDD[13] at take at CrossSectionalView.scala:209), which has no missing parents
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 220.6 KB, free 929.6 KB)
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 67.9 KB, free 997.5 KB)
-16/09/14 16:17:07 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on localhost:41140 (size: 67.9 KB, free: 1140.2 MB)
-16/09/14 16:17:07 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1006
-16/09/14 16:17:07 INFO DAGScheduler: Submitting 5 missing tasks from ShuffleMapStage 2 (MapPartitionsRDD[13] at take at CrossSectionalView.scala:209)
-16/09/14 16:17:07 INFO TaskSchedulerImpl: Adding task set 2.0 with 5 tasks
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 9, localhost, partition 0,PROCESS_LOCAL, 2189 bytes)
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 1.0 in stage 2.0 (TID 10, localhost, partition 1,PROCESS_LOCAL, 2194 bytes)
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 2.0 in stage 2.0 (TID 11, localhost, partition 2,PROCESS_LOCAL, 2195 bytes)
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 3.0 in stage 2.0 (TID 12, localhost, partition 3,PROCESS_LOCAL, 2195 bytes)
-16/09/14 16:17:07 INFO Executor: Running task 0.0 in stage 2.0 (TID 9)
-16/09/14 16:17:07 INFO Executor: Running task 1.0 in stage 2.0 (TID 10)
-16/09/14 16:17:07 INFO Executor: Running task 2.0 in stage 2.0 (TID 11)
-16/09/14 16:17:07 INFO Executor: Running task 3.0 in stage 2.0 (TID 12)
-16/09/14 16:17:07 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 0 end: 134217728 length: 134217728 hosts: []}
-16/09/14 16:17:07 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 402653184 end: 536870912 length: 134217728 hosts: []}
-16/09/14 16:17:07 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 134217728 end: 268435456 length: 134217728 hosts: []}
-16/09/14 16:17:07 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 268435456 end: 402653184 length: 134217728 hosts: []}
-16/09/14 16:17:07 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:17:07 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:17:07 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:17:07 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:17:07 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:28 INFO CodecPool: Got brand-new compressor [.gz]
+16/09/14 17:06:28 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 0
+16/09/14 17:06:29 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 258,831
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 40,344B for [client_id] BINARY: 1,902 values, 76,087B raw, 40,242B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 244B for [normalized_channel] BINARY: 1,902 values, 346B raw, 204B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 5 entries, 49B raw, 5B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 7,324B for [active_hours_total] DOUBLE: 1,902 values, 15,223B raw, 7,279B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 1,979B for [active_hours_sun] DOUBLE: 1,902 values, 2,386B raw, 1,935B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 935 entries, 7,480B raw, 935B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 2,412B for [active_hours_mon] DOUBLE: 1,902 values, 2,630B raw, 2,368B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,192 entries, 9,536B raw, 1,192B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 2,407B for [active_hours_tue] DOUBLE: 1,902 values, 2,630B raw, 2,363B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,189 entries, 9,512B raw, 1,189B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 2,356B for [active_hours_wed] DOUBLE: 1,902 values, 2,630B raw, 2,312B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,142 entries, 9,136B raw, 1,142B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 2,454B for [active_hours_thu] DOUBLE: 1,902 values, 2,630B raw, 2,410B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,198 entries, 9,584B raw, 1,198B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 2,383B for [active_hours_fri] DOUBLE: 1,902 values, 2,630B raw, 2,339B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 1,152 entries, 9,216B raw, 1,152B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 1,936B for [active_hours_sat] DOUBLE: 1,902 values, 2,392B raw, 1,892B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 973 entries, 7,784B raw, 973B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 1,616B for [geo_Mode] BINARY: 1,902 values, 1,678B raw, 1,584B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 117 entries, 702B raw, 117B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 244B for [geo_Cfgs] INT64: 1,902 values, 349B raw, 200B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 5 entries, 40B raw, 5B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 310B for [architecture_Mode] BINARY: 1,902 values, 290B raw, 273B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2 entries, 17B raw, 2B comp}
+16/09/14 17:06:30 INFO ColumnChunkPageWriteStore: written 1,183B for [ffLocale_Mode] BINARY: 1,902 values, 1,440B raw, 1,148B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 45 entries, 319B raw, 45B comp}
+16/09/14 17:06:33 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 597,377
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 92,915B for [client_id] BINARY: 4,419 values, 176,767B raw, 92,813B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 482B for [normalized_channel] BINARY: 4,419 values, 895B raw, 442B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 5 entries, 49B raw, 5B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 16,739B for [active_hours_total] DOUBLE: 4,419 values, 35,359B raw, 16,693B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 4,786B for [active_hours_sun] DOUBLE: 4,419 values, 6,616B raw, 4,742B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,176 entries, 17,408B raw, 2,176B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,618B for [active_hours_mon] DOUBLE: 4,419 values, 6,653B raw, 5,574B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,731 entries, 21,848B raw, 2,731B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,573B for [active_hours_tue] DOUBLE: 4,419 values, 6,653B raw, 5,529B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,713 entries, 21,704B raw, 2,713B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,557B for [active_hours_wed] DOUBLE: 4,419 values, 6,653B raw, 5,513B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,679 entries, 21,432B raw, 2,679B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,586B for [active_hours_thu] DOUBLE: 4,419 values, 6,653B raw, 5,542B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,710 entries, 21,680B raw, 2,710B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,544B for [active_hours_fri] DOUBLE: 4,419 values, 6,653B raw, 5,500B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,654 entries, 21,232B raw, 2,654B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 5,045B for [active_hours_sat] DOUBLE: 4,419 values, 6,653B raw, 5,001B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,328 entries, 18,624B raw, 2,328B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 3,224B for [geo_Mode] BINARY: 4,419 values, 4,441B raw, 3,192B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 145 entries, 870B raw, 145B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 435B for [geo_Cfgs] INT64: 4,419 values, 754B raw, 391B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 8 entries, 64B raw, 8B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 661B for [architecture_Mode] BINARY: 4,419 values, 1,085B raw, 624B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3 entries, 24B raw, 3B comp}
+16/09/14 17:06:33 INFO ColumnChunkPageWriteStore: written 2,463B for [ffLocale_Mode] BINARY: 4,419 values, 3,335B raw, 2,428B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 46 entries, 322B raw, 46B comp}
+16/09/14 17:06:33 INFO FileOutputCommitter: Saved output of task 'attempt_201609141706_0001_m_000000_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141706_0001_m_000000
+16/09/14 17:06:33 INFO SparkHadoopMapRedUtil: attempt_201609141706_0001_m_000000_0: Committed
+16/09/14 17:06:33 INFO Executor: Finished task 0.0 in stage 1.0 (TID 4). 2327 bytes result sent to driver
+16/09/14 17:06:33 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 4) in 11229 ms on localhost (2/5)
+16/09/14 17:06:33 INFO FileOutputCommitter: Saved output of task 'attempt_201609141706_0001_m_000004_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141706_0001_m_000004
+16/09/14 17:06:33 INFO SparkHadoopMapRedUtil: attempt_201609141706_0001_m_000004_0: Committed
+16/09/14 17:06:33 INFO Executor: Finished task 4.0 in stage 1.0 (TID 8). 2327 bytes result sent to driver
+16/09/14 17:06:33 INFO TaskSetManager: Finished task 4.0 in stage 1.0 (TID 8) in 5374 ms on localhost (3/5)
+16/09/14 17:06:35 INFO InternalParquetRecordWriter: Flushing mem columnStore to file. allocated memory: 812,376
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 126,786B for [client_id] BINARY: 6,042 values, 241,687B raw, 126,684B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 551B for [normalized_channel] BINARY: 6,042 values, 902B raw, 511B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 4 entries, 38B raw, 4B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 22,647B for [active_hours_total] DOUBLE: 6,042 values, 48,343B raw, 22,601B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN]
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 6,538B for [active_hours_sun] DOUBLE: 6,042 values, 9,054B raw, 6,493B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 2,944 entries, 23,552B raw, 2,944B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 7,673B for [active_hours_mon] DOUBLE: 6,042 values, 9,092B raw, 7,628B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,689 entries, 29,512B raw, 3,689B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 7,641B for [active_hours_tue] DOUBLE: 6,042 values, 9,084B raw, 7,596B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,642 entries, 29,136B raw, 3,642B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 7,636B for [active_hours_wed] DOUBLE: 6,042 values, 9,092B raw, 7,591B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,666 entries, 29,328B raw, 3,666B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 7,628B for [active_hours_thu] DOUBLE: 6,042 values, 9,072B raw, 7,583B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,638 entries, 29,104B raw, 3,638B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 7,579B for [active_hours_fri] DOUBLE: 6,042 values, 9,072B raw, 7,534B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,582 entries, 28,656B raw, 3,582B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 6,792B for [active_hours_sat] DOUBLE: 6,042 values, 9,072B raw, 6,747B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3,082 entries, 24,656B raw, 3,082B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 4,326B for [geo_Mode] BINARY: 6,042 values, 6,068B raw, 4,294B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 149 entries, 894B raw, 149B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 570B for [geo_Cfgs] INT64: 6,042 values, 1,085B raw, 526B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 8 entries, 64B raw, 8B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 861B for [architecture_Mode] BINARY: 6,042 values, 1,460B raw, 824B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 3 entries, 24B raw, 3B comp}
+16/09/14 17:06:35 INFO ColumnChunkPageWriteStore: written 3,330B for [ffLocale_Mode] BINARY: 6,042 values, 4,536B raw, 3,295B comp, 1 pages, encodings: [BIT_PACKED, RLE, PLAIN_DICTIONARY], dic { 45 entries, 316B raw, 45B comp}
+16/09/14 17:06:37 INFO FileOutputCommitter: Saved output of task 'attempt_201609141706_0001_m_000003_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141706_0001_m_000003
+16/09/14 17:06:37 INFO SparkHadoopMapRedUtil: attempt_201609141706_0001_m_000003_0: Committed
+16/09/14 17:06:37 INFO Executor: Finished task 3.0 in stage 1.0 (TID 7). 2327 bytes result sent to driver
+16/09/14 17:06:37 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 7) in 14903 ms on localhost (4/5)
+16/09/14 17:06:39 INFO FileOutputCommitter: Saved output of task 'attempt_201609141706_0001_m_000001_0' to s3a://telemetry-test-bucket/cross_sectional/single_shard/_temporary/0/task_201609141706_0001_m_000001
+16/09/14 17:06:39 INFO SparkHadoopMapRedUtil: attempt_201609141706_0001_m_000001_0: Committed
+16/09/14 17:06:39 INFO Executor: Finished task 1.0 in stage 1.0 (TID 5). 2327 bytes result sent to driver
+16/09/14 17:06:39 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 5) in 17011 ms on localhost (5/5)
+16/09/14 17:06:39 INFO DAGScheduler: ResultStage 1 (parquet at CrossSectionalView.scala:203) finished in 17.021 s
+16/09/14 17:06:39 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+16/09/14 17:06:39 INFO DAGScheduler: Job 1 finished: parquet at CrossSectionalView.scala:203, took 17.115893 s
+16/09/14 17:06:51 INFO ParquetFileReader: Initiating action with parallelism: 5
+16/09/14 17:06:53 INFO DefaultWriterContainer: Job job_201609141706_0000 committed.
+16/09/14 17:06:53 INFO ParquetRelation: Listing s3a://telemetry-test-bucket/cross_sectional/single_shard on driver
+16/09/14 17:06:53 INFO ParquetRelation: Listing s3a://telemetry-test-bucket/cross_sectional/single_shard on driver
+16/09/14 17:06:53 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 189.7 KB, free 688.0 KB)
+16/09/14 17:06:53 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 21.7 KB, free 709.7 KB)
+16/09/14 17:06:53 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on localhost:36081 (size: 21.7 KB, free: 1140.2 MB)
+16/09/14 17:06:53 INFO SparkContext: Created broadcast 3 from take at CrossSectionalView.scala:205
+16/09/14 17:06:53 INFO SparkContext: Starting job: take at CrossSectionalView.scala:205
+16/09/14 17:06:53 INFO ParquetRelation: Reading Parquet file(s) from file:/home/harterrt/data/l10l_20160725_single_shard.parquet
+16/09/14 17:06:53 INFO DAGScheduler: Registering RDD 13 (take at CrossSectionalView.scala:205)
+16/09/14 17:06:53 INFO DAGScheduler: Got job 2 (take at CrossSectionalView.scala:205) with 1 output partitions
+16/09/14 17:06:53 INFO DAGScheduler: Final stage: ResultStage 3 (take at CrossSectionalView.scala:205)
+16/09/14 17:06:53 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+16/09/14 17:06:53 INFO DAGScheduler: Missing parents: List(ShuffleMapStage 2)
+16/09/14 17:06:53 INFO DAGScheduler: Submitting ShuffleMapStage 2 (MapPartitionsRDD[13] at take at CrossSectionalView.scala:205), which has no missing parents
+16/09/14 17:06:53 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 220.9 KB, free 930.6 KB)
+16/09/14 17:06:53 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 68.0 KB, free 998.6 KB)
+16/09/14 17:06:53 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on localhost:36081 (size: 68.0 KB, free: 1140.2 MB)
+16/09/14 17:06:53 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1006
+16/09/14 17:06:53 INFO DAGScheduler: Submitting 5 missing tasks from ShuffleMapStage 2 (MapPartitionsRDD[13] at take at CrossSectionalView.scala:205)
+16/09/14 17:06:53 INFO TaskSchedulerImpl: Adding task set 2.0 with 5 tasks
+16/09/14 17:06:53 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 9, localhost, partition 0,PROCESS_LOCAL, 2189 bytes)
+16/09/14 17:06:53 INFO TaskSetManager: Starting task 1.0 in stage 2.0 (TID 10, localhost, partition 1,PROCESS_LOCAL, 2194 bytes)
+16/09/14 17:06:53 INFO TaskSetManager: Starting task 2.0 in stage 2.0 (TID 11, localhost, partition 2,PROCESS_LOCAL, 2195 bytes)
+16/09/14 17:06:53 INFO TaskSetManager: Starting task 3.0 in stage 2.0 (TID 12, localhost, partition 3,PROCESS_LOCAL, 2195 bytes)
+16/09/14 17:06:53 INFO Executor: Running task 0.0 in stage 2.0 (TID 9)
+16/09/14 17:06:53 INFO Executor: Running task 1.0 in stage 2.0 (TID 10)
+16/09/14 17:06:53 INFO Executor: Running task 3.0 in stage 2.0 (TID 12)
+16/09/14 17:06:53 INFO Executor: Running task 2.0 in stage 2.0 (TID 11)
+16/09/14 17:06:53 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 134217728 end: 268435456 length: 134217728 hosts: []}
+16/09/14 17:06:53 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 268435456 end: 402653184 length: 134217728 hosts: []}
+16/09/14 17:06:53 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 0 end: 134217728 length: 134217728 hosts: []}
+16/09/14 17:06:53 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 402653184 end: 536870912 length: 134217728 hosts: []}
+16/09/14 17:06:53 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:53 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:53 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:53 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:53 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -1146,6 +1173,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -1160,26 +1197,16 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:17:07 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
-16/09/14 16:17:07 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:54 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
+16/09/14 17:06:54 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -1209,6 +1236,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -1223,31 +1260,23 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:17:07 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 1910 records.
-16/09/14 16:17:07 INFO Executor: Finished task 2.0 in stage 2.0 (TID 11). 2536 bytes result sent to driver
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 4.0 in stage 2.0 (TID 13, localhost, partition 4,PROCESS_LOCAL, 2198 bytes)
-16/09/14 16:17:07 INFO Executor: Running task 4.0 in stage 2.0 (TID 13)
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 2.0 in stage 2.0 (TID 11) in 300 ms on localhost (1/5)
-16/09/14 16:17:07 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:17:07 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:54 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 4448 records.
+16/09/14 17:06:54 INFO Executor: Finished task 2.0 in stage 2.0 (TID 11). 2536 bytes result sent to driver
+16/09/14 17:06:54 INFO TaskSetManager: Starting task 4.0 in stage 2.0 (TID 13, localhost, partition 4,PROCESS_LOCAL, 2198 bytes)
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 2.0 in stage 2.0 (TID 11) in 349 ms on localhost (1/5)
+16/09/14 17:06:54 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:54 INFO Executor: Running task 4.0 in stage 2.0 (TID 13)
+16/09/14 17:06:54 INFO InternalParquetRecordReader: block read in memory in 13 ms. row count = 4448
+16/09/14 17:06:54 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 536870912 end: 658792014 length: 121921102 hosts: []}
+16/09/14 17:06:54 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -1277,6 +1306,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -1291,29 +1330,17 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:17:07 INFO InternalParquetRecordReader: block read in memory in 12 ms. row count = 1910
-16/09/14 16:17:07 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 6074 records.
-16/09/14 16:17:07 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:17:07 INFO ParquetRelation$$anonfun$buildInternalScan$1$$anon$1: Input split: ParquetInputSplit{part: file:/home/harterrt/data/l10l_20160725_single_shard.parquet start: 536870912 end: 658792014 length: 121921102 hosts: []}
-16/09/14 16:17:07 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:54 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 6074 records.
+16/09/14 17:06:54 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:54 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -1343,6 +1370,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -1357,30 +1394,20 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:17:07 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 4448 records.
-16/09/14 16:17:07 INFO InternalParquetRecordReader: at row 0. reading next block
-16/09/14 16:17:07 INFO InternalParquetRecordReader: block read in memory in 21 ms. row count = 4448
-16/09/14 16:17:07 INFO InternalParquetRecordReader: block read in memory in 40 ms. row count = 6074
-16/09/14 16:17:07 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
-16/09/14 16:17:07 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
+16/09/14 17:06:54 INFO InternalParquetRecordReader: block read in memory in 24 ms. row count = 6074
+16/09/14 17:06:54 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 1910 records.
+16/09/14 17:06:54 INFO InternalParquetRecordReader: at row 0. reading next block
+16/09/14 17:06:54 INFO InternalParquetRecordReader: block read in memory in 9 ms. row count = 1910
+16/09/14 17:06:54 WARN ParquetRecordReader: Can not initialize counter due to context is not a instance of TaskInputOutputContext, but is org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl
+16/09/14 17:06:54 INFO CatalystReadSupport: Going to read the following fields from the Parquet file:
 
 Parquet form:
 message spark_schema {
-  optional group submission_date (LIST) {
-    repeated binary array (UTF8);
-  }
   required binary client_id (UTF8);
   optional group settings (LIST) {
     repeated group array {
@@ -1410,6 +1437,16 @@ message spark_schema {
       }
     }
   }
+  optional group geo_country (LIST) {
+    repeated binary array (UTF8);
+  }
+  required binary normalized_channel (UTF8);
+  optional group submission_date (LIST) {
+    repeated binary array (UTF8);
+  }
+  optional group session_length (LIST) {
+    repeated int64 array;
+  }
   optional group build (LIST) {
     repeated group array {
       optional binary application_id (UTF8);
@@ -1424,54 +1461,47 @@ message spark_schema {
       optional binary hotfix_version (UTF8);
     }
   }
-  optional group geo_country (LIST) {
-    repeated binary array (UTF8);
-  }
-  required binary normalized_channel (UTF8);
-  optional group session_length (LIST) {
-    repeated int64 array;
-  }
 }
 
 Catalyst form:
-StructType(StructField(submission_date,ArrayType(StringType,false),true), StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(session_length,ArrayType(LongType,false),true))
+StructType(StructField(client_id,StringType,false), StructField(settings,ArrayType(StructType(StructField(addon_compatibility_check_enabled,BooleanType,true), StructField(blocklist_enabled,BooleanType,true), StructField(is_default_browser,BooleanType,true), StructField(default_search_engine,StringType,true), StructField(default_search_engine_data,StructType(StructField(name,StringType,true), StructField(load_path,StringType,true), StructField(submission_url,StringType,true)),true), StructField(search_cohort,StringType,true), StructField(e10s_enabled,BooleanType,true), StructField(telemetry_enabled,BooleanType,true), StructField(locale,StringType,true), StructField(update,StructType(StructField(channel,StringType,true), StructField(enabled,BooleanType,true), StructField(auto_download,BooleanType,true)),true), StructField(user_prefs,MapType(StringType,StringType,false),true)),false),true), StructField(geo_country,ArrayType(StringType,false),true), StructField(normalized_channel,StringType,false), StructField(submission_date,ArrayType(StringType,false),true), StructField(session_length,ArrayType(LongType,false),true), StructField(build,ArrayType(StructType(StructField(application_id,StringType,true), StructField(application_name,StringType,true), StructField(architecture,StringType,true), StructField(architectures_in_binary,StringType,true), StructField(build_id,StringType,true), StructField(version,StringType,true), StructField(vendor,StringType,true), StructField(platform_version,StringType,true), StructField(xpcom_abi,StringType,true), StructField(hotfix_version,StringType,true)),false),true))
        
-16/09/14 16:17:07 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
-16/09/14 16:17:07 INFO Executor: Finished task 4.0 in stage 2.0 (TID 13). 2536 bytes result sent to driver
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 4.0 in stage 2.0 (TID 13) in 214 ms on localhost (2/5)
-16/09/14 16:17:07 INFO Executor: Finished task 3.0 in stage 2.0 (TID 12). 2536 bytes result sent to driver
-16/09/14 16:17:07 INFO Executor: Finished task 0.0 in stage 2.0 (TID 9). 2536 bytes result sent to driver
-16/09/14 16:17:07 INFO Executor: Finished task 1.0 in stage 2.0 (TID 10). 2536 bytes result sent to driver
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 9) in 560 ms on localhost (3/5)
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 1.0 in stage 2.0 (TID 10) in 560 ms on localhost (4/5)
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 3.0 in stage 2.0 (TID 12) in 559 ms on localhost (5/5)
-16/09/14 16:17:07 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
-16/09/14 16:17:07 INFO DAGScheduler: ShuffleMapStage 2 (take at CrossSectionalView.scala:209) finished in 0.561 s
-16/09/14 16:17:07 INFO DAGScheduler: looking for newly runnable stages
-16/09/14 16:17:07 INFO DAGScheduler: running: Set()
-16/09/14 16:17:07 INFO DAGScheduler: waiting: Set(ResultStage 3)
-16/09/14 16:17:07 INFO DAGScheduler: failed: Set()
-16/09/14 16:17:07 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[16] at take at CrossSectionalView.scala:209), which has no missing parents
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 220.5 KB, free 1218.0 KB)
-16/09/14 16:17:07 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 68.1 KB, free 1286.1 KB)
-16/09/14 16:17:07 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on localhost:41140 (size: 68.1 KB, free: 1140.1 MB)
-16/09/14 16:17:07 INFO SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1006
-16/09/14 16:17:07 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[16] at take at CrossSectionalView.scala:209)
-16/09/14 16:17:07 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks
-16/09/14 16:17:07 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 14, localhost, partition 0,NODE_LOCAL, 1894 bytes)
-16/09/14 16:17:07 INFO Executor: Running task 0.0 in stage 3.0 (TID 14)
-16/09/14 16:17:07 INFO ShuffleBlockFetcherIterator: Getting 3 non-empty blocks out of 5 blocks
-16/09/14 16:17:07 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 4 ms
-16/09/14 16:17:07 INFO Executor: Finished task 0.0 in stage 3.0 (TID 14). 1813 bytes result sent to driver
-16/09/14 16:17:07 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 14) in 55 ms on localhost (1/1)
-16/09/14 16:17:07 INFO DAGScheduler: ResultStage 3 (take at CrossSectionalView.scala:209) finished in 0.047 s
-16/09/14 16:17:07 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
-16/09/14 16:17:07 INFO DAGScheduler: Job 2 finished: take at CrossSectionalView.scala:209, took 0.721927 s
-16/09/14 16:17:07 INFO GenerateSafeProjection: Code generated in 18.675594 ms
+16/09/14 17:06:54 INFO InternalParquetRecordReader: RecordReader initialized will read a total of 0 records.
+16/09/14 17:06:54 INFO Executor: Finished task 4.0 in stage 2.0 (TID 13). 2536 bytes result sent to driver
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 4.0 in stage 2.0 (TID 13) in 218 ms on localhost (2/5)
+16/09/14 17:06:54 INFO Executor: Finished task 1.0 in stage 2.0 (TID 10). 2536 bytes result sent to driver
+16/09/14 17:06:54 INFO Executor: Finished task 0.0 in stage 2.0 (TID 9). 2536 bytes result sent to driver
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 1.0 in stage 2.0 (TID 10) in 599 ms on localhost (3/5)
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 9) in 601 ms on localhost (4/5)
+16/09/14 17:06:54 INFO Executor: Finished task 3.0 in stage 2.0 (TID 12). 2536 bytes result sent to driver
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 3.0 in stage 2.0 (TID 12) in 600 ms on localhost (5/5)
+16/09/14 17:06:54 INFO DAGScheduler: ShuffleMapStage 2 (take at CrossSectionalView.scala:205) finished in 0.603 s
+16/09/14 17:06:54 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+16/09/14 17:06:54 INFO DAGScheduler: looking for newly runnable stages
+16/09/14 17:06:54 INFO DAGScheduler: running: Set()
+16/09/14 17:06:54 INFO DAGScheduler: waiting: Set(ResultStage 3)
+16/09/14 17:06:54 INFO DAGScheduler: failed: Set()
+16/09/14 17:06:54 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[16] at take at CrossSectionalView.scala:205), which has no missing parents
+16/09/14 17:06:54 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 220.8 KB, free 1219.3 KB)
+16/09/14 17:06:54 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 68.2 KB, free 1287.5 KB)
+16/09/14 17:06:54 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on localhost:36081 (size: 68.2 KB, free: 1140.1 MB)
+16/09/14 17:06:54 INFO SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1006
+16/09/14 17:06:54 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[16] at take at CrossSectionalView.scala:205)
+16/09/14 17:06:54 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks
+16/09/14 17:06:54 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 14, localhost, partition 0,NODE_LOCAL, 1894 bytes)
+16/09/14 17:06:54 INFO Executor: Running task 0.0 in stage 3.0 (TID 14)
+16/09/14 17:06:54 INFO ShuffleBlockFetcherIterator: Getting 3 non-empty blocks out of 5 blocks
+16/09/14 17:06:54 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 4 ms
+16/09/14 17:06:54 INFO Executor: Finished task 0.0 in stage 3.0 (TID 14). 1829 bytes result sent to driver
+16/09/14 17:06:54 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 14) in 51 ms on localhost (1/1)
+16/09/14 17:06:54 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+16/09/14 17:06:54 INFO DAGScheduler: ResultStage 3 (take at CrossSectionalView.scala:205) finished in 0.051 s
+16/09/14 17:06:54 INFO DAGScheduler: Job 2 finished: take at CrossSectionalView.scala:205, took 0.751545 s
+16/09/14 17:06:54 INFO GenerateSafeProjection: Code generated in 19.115818 ms
 ================================================================================
-[Lcom.mozilla.telemetry.views.CrossSectional;@36243d93
+[Lcom.mozilla.telemetry.views.CrossSectional;@205811ff
 ================================================================================
-16/09/14 16:17:07 ERROR Utils: uncaught error in thread SparkListenerBus, stopping SparkContext
+16/09/14 17:06:54 ERROR Utils: uncaught error in thread SparkListenerBus, stopping SparkContext
 java.lang.InterruptedException
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedInterruptibly(AbstractQueuedSynchronizer.java:996)
 	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly(AbstractQueuedSynchronizer.java:1303)
@@ -1483,7 +1513,7 @@ java.lang.InterruptedException
 	at org.apache.spark.util.AsynchronousListenerBus$$anon$1$$anonfun$run$1.apply$mcV$sp(AsynchronousListenerBus.scala:64)
 	at org.apache.spark.util.Utils$.tryOrStopSparkContext(Utils.scala:1180)
 	at org.apache.spark.util.AsynchronousListenerBus$$anon$1.run(AsynchronousListenerBus.scala:63)
-16/09/14 16:17:08 ERROR ContextCleaner: Error in cleaning thread
+16/09/14 17:06:54 ERROR ContextCleaner: Error in cleaning thread
 java.lang.InterruptedException
 	at java.lang.Object.wait(Native Method)
 	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
@@ -1491,10 +1521,10 @@ java.lang.InterruptedException
 	at org.apache.spark.util.Utils$.tryOrStopSparkContext(Utils.scala:1180)
 	at org.apache.spark.ContextCleaner.org$apache$spark$ContextCleaner$$keepCleaning(ContextCleaner.scala:173)
 	at org.apache.spark.ContextCleaner$$anon$3.run(ContextCleaner.scala:68)
-16/09/14 16:17:08 INFO SparkUI: Stopped Spark web UI at http://192.168.1.154:4040
-[0m[[32msuccess[0m] [0mTotal time: 64 s, completed Sep 14, 2016 4:17:09 PM[0m
-16/09/14 16:17:09 INFO DiskBlockManager: Shutdown hook called
-16/09/14 16:17:09 INFO ShutdownHookManager: Shutdown hook called
-16/09/14 16:17:09 INFO ShutdownHookManager: Deleting directory /tmp/spark-3cb9de1c-4c8c-4944-8f0a-a41a8187970d/userFiles-bcb6f732-304c-4743-9463-8ba508275e21
-16/09/14 16:17:09 INFO ShutdownHookManager: Deleting directory /tmp/spark-3cb9de1c-4c8c-4944-8f0a-a41a8187970d
-16/09/14 16:17:09 INFO ShutdownHookManager: Deleting directory /tmp/spark-3a3ca0e4-e9cb-4831-b83d-524d6894632d
+16/09/14 17:06:54 INFO SparkUI: Stopped Spark web UI at http://192.168.1.154:4040
+[0m[[32msuccess[0m] [0mTotal time: 55 s, completed Sep 14, 2016 5:06:54 PM[0m
+16/09/14 17:06:54 INFO DiskBlockManager: Shutdown hook called
+16/09/14 17:06:54 INFO ShutdownHookManager: Shutdown hook called
+16/09/14 17:06:54 INFO ShutdownHookManager: Deleting directory /tmp/spark-9ef32867-2b51-4b0c-97b8-cb05e4b924e5
+16/09/14 17:06:54 INFO ShutdownHookManager: Deleting directory /tmp/spark-581e5e25-c251-4fff-a393-ed3e7155c69d/userFiles-fdcf0813-9424-4a09-87a6-3bd9b55fd7b5
+16/09/14 17:06:54 INFO ShutdownHookManager: Deleting directory /tmp/spark-581e5e25-c251-4fff-a393-ed3e7155c69d

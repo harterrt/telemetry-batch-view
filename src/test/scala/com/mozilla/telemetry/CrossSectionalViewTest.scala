@@ -15,54 +15,17 @@ class CrossSectionalViewTest extends FlatSpec {
   }
 
   def getExampleLongitudinal(client_id: String) = {
-    val default_search_engine = DefaultSearchEngineData (
-      name = "grep",
-      load_path = "test",
-      submission_url = "cli"
-    )
-
-    val update = Update (
-      channel = "update_channel",
-      enabled = true,
-      auto_download = false
-    )
-
-    val settings = Settings (
-      addon_compatibility_check_enabled = true,
-      blocklist_enabled = false,
-      is_default_browser = false,
-      default_search_engine = "grep",
-      default_search_engine_data = default_search_engine,
-      search_cohort = "a_cohort",
-      e10s_enabled = false,
-      telemetry_enabled = true,
-      locale = "en_US",
-      update = update,
-      user_prefs = Map("browser.download.lastDir" -> "/home/johnny/Desktop")
-    )
-
-    val build = Build(
-      application_id = "some_app_id",
-      application_name = "build_app_name",
-      architecture = "build_architecture",
-      architectures_in_binary = "build_architecture_in_binary",
-      build_id = "build_id",
-      version = "build_version",
-      vendor = "build_vendor",
-      platform_version = "build_platform_version",
-      xpcom_abi = "build_xpcom_abi",
-      hotfix_version = "build_hotfix_version"
-    )
-
     new Longitudinal(
       client_id = client_id,
       normalized_channel = "release",
-      submission_date = Some(Seq("2016-01-01T00:00:00.0+00:00",
-        "2016-01-02T00:00:00.0+00:00", "2016-01-03T00:00:00.0+00:00")),
-      geo_country = Some(Seq("DE", "DE", "IT")),
-      session_length = Some(Seq(3600, 7200, 14400)),
-      build = Some(Seq(build, build, build)),
-      settings = Some(Seq(settings, settings, settings))
+      submission_date = Seq("2016-01-01T00:00:00.0+00:00",
+        "2016-01-02T00:00:00.0+00:00", "2016-01-03T00:00:00.0+00:00"),
+      geo_country = Seq("DE", "DE", "IT"),
+      session_length = Seq(3600, 7200, 14400),
+      is_default_browser = Seq(Some(true), Some(true), Some(true)),
+      default_search_engine = Seq(Some("grep"), Some("grep"), Some("grep")),
+      locale = Seq(Some("de_DE"), Some("de_DE"), None),
+      architecture = Seq(None, Some("arch"), Some("arch"))
     )
   }
 
@@ -70,18 +33,18 @@ class CrossSectionalViewTest extends FlatSpec {
     new CrossSectional(
       client_id = client_id,
       normalized_channel = "release",
-      active_hours_total = Some(25200),
-      active_hours_sun = Some(14400 / 3600.0),
-      active_hours_mon = Some(0.0),
-      active_hours_tue = Some(0.0),
-      active_hours_wed = Some(0.0),
-      active_hours_thu = Some(0.0),
-      active_hours_fri = Some(3600/3600.0),
-      active_hours_sat = Some(7200/3600.0),
-      geo_Mode = Some("IT"),
+      active_hours_total = 25200,
+      active_hours_sun = 14400 / 3600.0,
+      active_hours_mon = 0.0,
+      active_hours_tue = 0.0,
+      active_hours_wed = 0.0,
+      active_hours_thu = 0.0,
+      active_hours_fri = 3600/3600.0,
+      active_hours_sat = 7200/3600.0,
+      geo_Mode = "IT",
       geo_Cfgs = 2,
-      architecture_Mode = Some("build_architecture"),
-      ffLocale_Mode = Some("en_US")
+      architecture_Mode = Some("arch"),
+      ffLocale_Mode = None
     )
   }
 

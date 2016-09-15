@@ -113,7 +113,7 @@ class CrossSectional (
   , val active_hours_fri: Double
   , val active_hours_sat: Double
   , val geo_Mode: String
-  //, val geo_Cfgs: Long // TODO(harterrt) Make optional, for some reason.
+  , val geo_Cfgs: Long
   , val architecture_Mode: Option[String]
   , val ffLocale_Mode: Option[String]
 ) extends DataSetRow {
@@ -135,7 +135,7 @@ class CrossSectional (
       active_hours_fri = base.activeHoursByDOW(5),
       active_hours_sat = base.activeHoursByDOW(6),
       geo_Mode = base.weightedMode(base.geo_country),
-      //geo_Cfgs = base.distinctConfigs(_.geo_country),
+      geo_Cfgs = base.distinctConfigs(_.geo_country),
       architecture_Mode = base.weightedMode(base.architecture),
       ffLocale_Mode = base.weightedMode(base.locale)
     )
