@@ -22,11 +22,15 @@ class CrossSectionalViewTest extends FlatSpec {
       // necessarily preserve transitivity.
       // Do the comparison
       def compareElement(pair: (Any, Any)) = {
-        pair match {
+        val out = pair match {
           case (Some(first: Double), Some(second: Double)) => Math.abs(first - second) < epsilon
           case (first: Any, second: Any) => first == second
           case _ => false
         }
+        if (!out) {
+          println(pair)
+        }
+        out
       }
 
       def productToSeq(prod: Product): Seq[Any] = {
@@ -308,6 +312,23 @@ class CrossSectionalViewTest extends FlatSpec {
       plugins_count_avg = Some(4.0 / 3),
       plugins_count_mode = Some(1),
       search_default_mode = Some("grep")
+    )
+
+    assert(actual compare expected)
+  }
+
+  it must "handle bad dates" in {
+    val actual = new CrossSectional(
+      getExampleLongitudinal("a").copy(
+        submission_date = Some(Seq("2016-01-01T00:00:00.0+00:00", //Odd Date
+          "invalid-02T00:00:00.0+00:00", "2016-01-07T00:00:00.0+00:00"))
+      )
+    )
+
+    val expected = getExampleCrossSectional("a").copy(
+      date_skew_per_ping_avg = Some(2.0 / 2),
+      date_skew_per_ping_max = Some(2),
+      date_skew_per_ping_min = Some(0)
     )
 
     assert(actual compare expected)
