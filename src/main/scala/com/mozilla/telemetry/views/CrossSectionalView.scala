@@ -142,7 +142,7 @@ case class Longitudinal (
     this.reason.getOrElse(Seq()).filter(_ == value).size
   }
 
-  def previousSubsessionIdCounts(): Option[Map[String, Int]] = {
+  def previousSubsessionIdCounts(): Option[Map[String, Long]] = {
       this.previous_subsession_id.map(_.groupBy(identity).mapValues(_.size))
   }
 
@@ -274,8 +274,8 @@ case class CrossSectional (
       addon_count_mode = base.weightedMode(base.addonCount).getOrElse(None),
       number_of_pings = base.session_length.map(_.length),
       bookmarks_avg = base.weightedMean(base.bookmarks_sum),
-      bookmarks_max = base.bookmarks_sum.map(_.flatten.max),
-      bookmarks_min = base.bookmarks_sum.map(_.flatten.min),
+      bookmarks_max = base.bookmarks_sum.flatMap(_.flatten.reduceOption(_ max _)),
+      bookmarks_min = base.bookmarks_sum.flatMap(_.flatten.reduceOption(_ min _)),
       cpu_count_mode = base.weightedMode(base.cpu_count).getOrElse(None),
       channel_configs = base.channel.map(_.distinct.length),
       channel_mode = base.weightedMode(base.channel).getOrElse(None),
@@ -299,7 +299,7 @@ case class CrossSectional (
       locale_configs = base.locale.map(_.distinct.length),
       locale_mode = base.weightedMode(base.locale).getOrElse(None),
       version_configs = base.version.map(_.distinct.length),
-      version_max = base.version.map(_.max).getOrElse(None),
+      version_max = base.version.map(_.flatten.max)
       addon_names_list = base.addonNames,
       main_ping_reason_num_aborted = base.countPingReason("aborted-session"),
       main_ping_reason_num_end_of_day = base.countPingReason("daily"),
@@ -311,8 +311,8 @@ case class CrossSectional (
       os_version_mode = base.weightedMode(base.os_version).getOrElse(None),
       os_version_configs = base.os_version.map(_.distinct.length),
       pages_count_avg = base.weightedMean(base.pages_count),
-      pages_count_min = base.pages_count.map(_.flatten.min),
-      pages_count_max = base.pages_count.map(_.flatten.max),
+      pages_count_min = base.pages_count.flatMap(_.flatten.reduceOption(_ min _)),
+      pages_count_max = base.pages_count.flatMap(_.flatten.reduceOption(_ max _)),
       plugins_count_avg = base.weightedMean(base.pluginsCount),
       plugins_count_configs = base.pluginsCount.map(_.distinct.length),
       plugins_count_mode = base.weightedMode(base.pluginsCount).getOrElse(None),
@@ -321,19 +321,19 @@ case class CrossSectional (
       subsession_length_badTimer = base.session_length.map(_.filter(_ == -1).length),
       subsession_length_negative = base.session_length.map(_.filter(_ < -1).length),
       subsession_length_tooLong = base.session_length.map(_.filter(_ > SECONDS_PER_DAY * CrossSectional.MarginOfError).length),
-      previous_subsession_id_repeats = base.previousSubsessionIdCounts.map(_.values.max),
+      previous_subsession_id_repeats = base.previousSubsessionIdCounts.flatMap(_.values.reduceOption(_ max _)),
       profile_creation_date = base.profile_creation_date.map(_.head),
-      profile_subsession_counter_min = base.profile_subsession_counter.map(_.min),
-      profile_subsession_counter_max = base.profile_subsession_counter.map(_.max),
+      profile_subsession_counter_min = base.profile_subsession_counter.flatMap(_.reduceOption(_ min _)),
+      profile_subsession_counter_max = base.profile_subsession_counter.flatMap(_.reduceOption(_ max _)),
       profile_subsession_counter_configs = base.profile_subsession_counter.map(_.distinct.length),
       search_counts_total = base.search_counts.map(_.values.foldLeft(0l)(_ + _.sum)),
       search_default_configs = base.default_search_engine.map(_.distinct.length),
       search_default_mode = base.weightedMode(base.default_search_engine).getOrElse(None),
       session_num_total = base.session_id.map(_.distinct.length),
       subsession_branches = base.previousSubsessionIdCounts.map(_.values.filter(_ > 1).size),
-      date_skew_per_ping_avg = base.ssStartToSubmission.map(aggregation.mean).getOrElse(None),
-      date_skew_per_ping_max = base.ssStartToSubmission.map(_.max),
-      date_skew_per_ping_min = base.ssStartToSubmission.map(_.min)
+      date_skew_per_ping_avg = base.ssStartToSubmission.map(x => aggregation.mean(x.flatten)).getOrElse(None),
+      date_skew_per_ping_max = base.ssStartToSubmission.flatMap(_.flatten.reduceOption(_ max _)),
+      date_skew_per_ping_min = base.ssStartToSubmission.flatMap(_.flatten.reduceOption(_ min _))
     )
   }
 }
