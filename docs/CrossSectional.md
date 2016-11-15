@@ -53,7 +53,7 @@ configurations for a variable.  For example, if we receive three pings for one
 * `days_possible` - the number of days between the earliest and latest `submission_date`
 * `default_pct` - the `subsession_length` weighted percentage of time `settings.is_default_browser` is true
 * `addon_names_list` - an array of string values containing the names of all addons associated with a `client_id`
-* `date_skew_per_ping_*`
+* `date_skew_per_ping_*` TODO
 [//]: # (TODO(harterrt) : * `pages_count_*` - )
 
 # List of Columns
