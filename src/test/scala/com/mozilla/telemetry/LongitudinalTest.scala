@@ -39,6 +39,9 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
           ("sum" -> 42)) ~
         ("GC_MS" ->
           ("values" -> ("1" -> 42)) ~
+          ("sum" -> 42)) ~
+        ("TELEMETRY_TEST_CATEGORICAL_OPTOUT" ->
+          ("values" -> ("1" -> 42)) ~
           ("sum" -> 42))
 
       val keyedHistograms =
@@ -419,6 +422,22 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
 
       for ((value, key) <- h.zipWithIndex) {
         if (key == 1)
+          assert(value == 42)
+        else
+          assert(value == 0)
+      }
+    }
+  }
+
+  "Categorical histograms" must "be converted correctly" in {
+    val histograms = fixture.row.getList[WrappedArray[Int]](fixture.row.fieldIndex("telemetry_test_categorical_optout"))
+    assert(histograms.length == fixture.payloads.length)
+
+    for (h <- histograms) {
+      assert(h.length == 5)
+
+      for ((value, key) <- h.zipWithIndex) {
+        if (key == "")
           assert(value == 42)
         else
           assert(value == 0)

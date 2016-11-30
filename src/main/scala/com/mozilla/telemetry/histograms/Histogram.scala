@@ -54,6 +54,7 @@ object Histograms {
               case _ => Some(false)
             }
             case ("releaseChannelCollection", JString(x)) => Some(x)
+            case ("labels", JArray(x)) => Some(x)
             case _ => None
           }
         } catch {
@@ -78,20 +79,23 @@ object Histograms {
         val low = v.getOrElse("low", Some(1)).get.asInstanceOf[Int]
         val high = v.getOrElse("high", None).asInstanceOf[Option[Int]]
         val nBuckets = v.getOrElse("n_buckets", None).asInstanceOf[Option[Int]]
+        val labels = v.getOrElse("labels", None).asInstanceOf[Option[List[String]]]
 
-        (kind, nValues, high, nBuckets) match {
-          case ("flag", _, _, _) =>
+        (kind, nValues, high, nBuckets, labels) match {
+          case ("flag", _, _, _, _) =>
             Some((k, FlagHistogram(keyed)))
-          case ("boolean", _, _ , _) =>
+          case ("boolean", _, _ , _, _) =>
             Some((k, BooleanHistogram(keyed)))
-          case ("count", _, _, _) =>
+          case ("count", _, _, _, _) =>
             Some((k, CountHistogram(keyed)))
-          case ("enumerated", Some(x), _, _) =>
+          case ("enumerated", Some(x), _, _, _) =>
             Some((k, EnumeratedHistogram(keyed, x)))
-          case ("linear", _, Some(h), Some(n)) =>
+          case ("linear", _, Some(h), Some(n), _) =>
             Some((k, LinearHistogram(keyed, low, h, n)))
-          case ("exponential", _, Some(h), Some(n)) =>
+          case ("exponential", _, Some(h), Some(n), _) =>
             Some((k, ExponentialHistogram(keyed, low, h, n)))
+          case ("categorical", _, _, _, Some(x)) =>
+            Some((k, EnumeratedHistogram(keyed, x.size)))
           case _ =>
             None
         }
