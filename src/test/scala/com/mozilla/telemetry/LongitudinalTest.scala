@@ -434,10 +434,11 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     assert(histograms.length == fixture.payloads.length)
 
     for (h <- histograms) {
+      println(h)
       assert(h.length == 5)
 
       for ((value, key) <- h.zipWithIndex) {
-        if (key == "")
+        if (key == 1)
           assert(value == 42)
         else
           assert(value == 0)
