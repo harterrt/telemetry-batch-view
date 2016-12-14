@@ -186,6 +186,8 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
         "payload.simpleMeasurements" -> compact(render(simpleMeasurements)),
         "payload.histograms" -> compact(render(histograms)),
         "payload.keyedHistograms" -> compact(render(keyedHistograms)),
+        "payload.processes.content.histograms" -> compact(render(histograms)),
+        "payload.processes.content.keyedHistograms" -> compact(render(keyedHistograms)),
         "payload" -> render(pingPayload),
         "environment.build" -> compact(render(build)),
         "environment.partner" -> compact(render(partner)),
@@ -393,6 +395,12 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     val records = fixture.row.getList[Row](fixture.row.fieldIndex("simple_measurements"))
     assert(records.length == fixture.payloads.length)
     records.foreach(x => assert(x.getAs[Long]("uptime") == 18))
+  }
+
+  "Content process histograms" must "be converted correctly" in {
+    val histograms = fixture.row.getList[Boolean](fixture.row.fieldIndex("fips_enabled_child"))
+    assert(histograms.length == fixture.payloads.length)
+    histograms.foreach(x => assert(x))
   }
 
   "Flag histograms" must "be converted correctly" in {
