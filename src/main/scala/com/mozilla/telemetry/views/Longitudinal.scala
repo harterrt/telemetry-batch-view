@@ -491,6 +491,9 @@ object LongitudinalView {
         .name("thread_hang_stacks").`type`().optional().array().items().map().values().map().values(histogramType)
         .name("simple_measurements").`type`().optional().array().items(simpleMeasurementsType)
 
+    println("DEFS")
+    println(Histograms.definitions)
+    println("DEFS")
     Histograms.definitions.foreach{ case (k, value) =>
       val key = k.toLowerCase
       value match {
@@ -553,8 +556,15 @@ object LongitudinalView {
                                               payloads: List[Map[String, RawHistogram]],
                                               flatten: RawHistogram => T,
                                               default: T): java.util.Collection[T] = {
+    println("HEHEH")
+    println(name)
+    println(payloads)
+    println(flatten)
+    println(default)
+    println("HEHEH")
     val buffer = ListBuffer[T]()
     for (histograms <- payloads) {
+      println(histograms.get(name))
       histograms.get(name) match {
         case Some(histogram) =>
           buffer += flatten(histogram)
@@ -562,13 +572,22 @@ object LongitudinalView {
           buffer += default
       }
     }
+    println(buffer)
+    println(buffer.asJava)
     buffer.asJava
   }
 
   private def vectorizeHistogram[T:ClassTag](name: String,
                                              definition: HistogramDefinition,
                                              payloads: List[Map[String, RawHistogram]],
-                                             histogramSchema: Schema): java.util.Collection[Any] =
+                                             histogramSchema: Schema): java.util.Collection[Any] = {
+    println("MARK")
+    println(name)
+    println(definition)
+    println(payloads)
+    println(histogramSchema)
+    println("MARK")
+
     definition match {
       case _: FlagHistogram =>
         // A flag histograms is represented with a scalar.
@@ -646,6 +665,7 @@ object LongitudinalView {
 
         vectorizeHistogram_(name, payloads, flatten, empty)
     }
+  }
 
   private def JSON2Avro(jsonField: String, jsonPath: List[String], avroField: String,
                         payloads: List[Map[String, Any]],
@@ -710,6 +730,32 @@ object LongitudinalView {
       } yield (label, vector)
 
       root.set(key.toLowerCase, vectorized.toMap.asJava)
+    }
+  }
+
+  private def childHistograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
+    implicit val formats = DefaultFormats
+
+    val histogramsList = payloads.map{ case (x) =>
+      val json = x.getOrElse("payload.processes.content.histograms", return).asInstanceOf[String]
+      parse(json).extract[Map[String, RawHistogram]].map(pair => (pair._1 + "_CHILD", pair._2))
+    }
+
+    val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
+
+    val validKeys = for {
+      key <- uniqueKeys
+      definition <- Histograms.definitions.get(key)
+    } yield (key, definition)
+
+    val histogramSchema = getElemType(schema, "fx_tab_switch_total_ms")
+    println("HERE")
+
+    for ((key, definition) <- validKeys) {
+      println("HERE + " + key)
+      vectorizeHistogram(key, definition, histogramsList, histogramSchema)
+      root.set(key.toLowerCase, vectorizeHistogram(key, definition, histogramsList, histogramSchema))
+      println("HERE + " + key)
     }
   }
 
@@ -974,6 +1020,7 @@ object LongitudinalView {
       JSON2Avro("payload.info",               List("subsessionId"),             "subsession_id", sorted, root, schema)
       JSON2Avro("payload.info",               List("subsessionLength"),         "subsession_length", sorted, root, schema)
       JSON2Avro("payload.info",               List("timezoneOffset"),           "timezone_offset", sorted, root, schema)
+      childHistograms2Avro(sorted, root, schema)
       histograms2Avro(sorted, root, schema)
       keyedHistograms2Avro(sorted, root, schema)
       scalars2Avro(sorted, root)

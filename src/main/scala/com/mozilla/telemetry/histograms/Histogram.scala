@@ -81,27 +81,31 @@ object Histograms {
         val nBuckets = v.getOrElse("n_buckets", None).asInstanceOf[Option[Int]]
         val labels = v.getOrElse("labels", None).asInstanceOf[Option[List[String]]]
 
+        def makePair(k: String, hist: HistogramDefinition): Option[List[(String, HistogramDefinition)]] = {
+          Some(List((k, hist), (k + "_CHILD", hist)))
+        }
+
         (kind, nValues, high, nBuckets, labels) match {
           case ("flag", _, _, _, _) =>
-            Some((k, FlagHistogram(keyed)))
+            makePair(k, FlagHistogram(keyed))
           case ("boolean", _, _ , _, _) =>
-            Some((k, BooleanHistogram(keyed)))
+            makePair(k, BooleanHistogram(keyed))
           case ("count", _, _, _, _) =>
-            Some((k, CountHistogram(keyed)))
+            makePair(k, CountHistogram(keyed))
           case ("enumerated", Some(x), _, _, _) =>
-            Some((k, EnumeratedHistogram(keyed, x)))
+            makePair(k, EnumeratedHistogram(keyed, x))
           case ("linear", _, Some(h), Some(n), _) =>
-            Some((k, LinearHistogram(keyed, low, h, n)))
+            makePair(k, LinearHistogram(keyed, low, h, n))
           case ("exponential", _, Some(h), Some(n), _) =>
-            Some((k, ExponentialHistogram(keyed, low, h, n)))
+            makePair(k, ExponentialHistogram(keyed, low, h, n))
           case ("categorical", _, _, _, Some(x)) =>
-            Some((k, EnumeratedHistogram(keyed, x.size)))
+            makePair(k, EnumeratedHistogram(keyed, x.size))
           case _ =>
             None
         }
       }
 
-      (key, pretty.flatten.toMap)
+      (key, pretty.flatten.flatten.toMap)
     }
 
     // Histograms are considered to be immutable so it's OK to merge their definitions

@@ -398,9 +398,17 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
   }
 
   "Content process histograms" must "be converted correctly" in {
+    println(fixture.row.schema)
+    println(fixture.row.fieldIndex("fips_enabled"))
+    println(fixture.row.fieldIndex("fips_enabled_child"))
     val histograms = fixture.row.getList[Boolean](fixture.row.fieldIndex("fips_enabled_child"))
+    println("Clear 1")
+    println(histograms)
+    println("huh")
     assert(histograms.length == fixture.payloads.length)
+    println("Clear 2")
     histograms.foreach(x => assert(x))
+    println("Clear 3")
   }
 
   "Flag histograms" must "be converted correctly" in {
