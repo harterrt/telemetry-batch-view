@@ -485,8 +485,21 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     }
   }
 
+  "Keyed Child Histograms" must "be included" in {
+    val entries = fixture.row.getMap[String, WrappedArray[Int]](fixture.row.fieldIndex("search_counts_child"))
+    assert(entries.size == 1)
+    assert(entries("foo").size == fixture.payloads.length)
+    entries("foo").foreach(x => assert(x == 42))
+  }
+
+
   "Opt-in Histograms" must "be ignored" in {
     intercept[IllegalArgumentException](fixture.row.fieldIndex("gc_ms"))
+  }
+
+  "Child Histograms" must "be included" in {
+    val histograms = fixture.row.getList[Boolean](fixture.row.fieldIndex("fips_enabled_child"))
+    histograms.foreach(x => assert(x))
   }
 
   "ClientIterator" should "not trim histories of size < 1000" in {
