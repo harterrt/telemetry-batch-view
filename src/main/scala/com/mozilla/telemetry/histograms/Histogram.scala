@@ -82,7 +82,7 @@ object Histograms {
         val labels = v.getOrElse("labels", None).asInstanceOf[Option[List[String]]]
 
         def makePair(k: String, hist: HistogramDefinition): Option[List[(String, HistogramDefinition)]] = {
-          Some(List((k, hist), (k + "_CHILD", hist)))
+          Some(List((k, hist)))
         }
 
         (kind, nValues, high, nBuckets, labels) match {
@@ -104,8 +104,11 @@ object Histograms {
             None
         }
       }
+      val pp = pretty.flatten.flatten
 
-      (key, pretty.flatten.flatten.toMap)
+      val complete = pp ++ pp.map(pair => (pair._1 + "_CHILD", pair._2))
+
+      (key, complete.toMap)
     }
 
     // Histograms are considered to be immutable so it's OK to merge their definitions
