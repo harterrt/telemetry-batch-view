@@ -725,11 +725,28 @@ object LongitudinalView {
   private def histograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
     implicit val formats = DefaultFormats
 
-    val histogramsList = payloads.map{ case (x) =>
-      val json = x.getOrElse("payload.histograms", return).asInstanceOf[String]
-      parse(json).extract[Map[String, RawHistogram]]
+    // Just refactor this whole block - return statement should be removed,
+    // case statement should be removed, allow for generic set of locations
+    //
+    // Remember, there are multiple payloads here. Extract all locations from
+    // each, keep them together.
+    def getHistograms(payload: Map[String, Any], location: String, suffix: String): Option[Map[String, RawHistogram]] = {
+      payload.get(location).map(json => 
+          parse(json.asInstanceOf[String])
+            .extract[Map[String, RawHistogram]]
+            .map(pair => (pair._1 + suffix, pair._2))
+      )
     }
 
+    def stripPayload(payload: Map[String, Any]): Map[String, RawHistogram] = {
+      val histMaps = getHistograms(payload, "payload.histograms", "") ++
+        getHistograms(payload, "payload.processes.content.histograms", "_CHILD")
+
+      histMaps.foldLeft(Map[String, RawHistogram]())((acc, map) => acc ++ map)
+    }
+
+    val histogramsList = payloads.map(stripPayload)
+        
     val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
 
     val validKeys = for {

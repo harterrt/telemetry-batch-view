@@ -183,6 +183,8 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
         "payload.simpleMeasurements" -> compact(render(simpleMeasurements)),
         "payload.histograms" -> compact(render(histograms)),
         "payload.keyedHistograms" -> compact(render(keyedHistograms)),
+        "payload.processes.content.histograms" -> compact(render(histograms)),
+        "payload.processes.content.keyedHistograms" -> compact(render(keyedHistograms)),
         "payload" -> render(pingPayload),
         "environment.build" -> compact(render(build)),
         "environment.partner" -> compact(render(partner)),

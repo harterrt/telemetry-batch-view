@@ -97,11 +97,17 @@ object Histograms {
         }
       }
 
-      (key, pretty.flatten.toMap)
+      val childHists = pretty.flatten.map(histToChildHist)
+
+      (key, (pretty.flatten ++ childHists).toMap)
     }
 
     // Histograms are considered to be immutable so it's OK to merge their definitions
     parsed.flatMap(_._2)
+  }
+
+  def histToChildHist[A](pair: (String, A)): (String, A) = {
+    (pair._1 + "_CHILD", pair._2)
   }
 
   def linearBuckets(min: Float, max: Float, nBuckets: Int): Array[Int] = {
