@@ -725,22 +725,26 @@ object LongitudinalView {
   private def histograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
     implicit val formats = DefaultFormats
 
-    // Just refactor this whole block - return statement should be removed,
-    // case statement should be removed, allow for generic set of locations
-    //
-    // Remember, there are multiple payloads here. Extract all locations from
-    // each, keep them together.
-    def getHistograms(payload: Map[String, Any], location: String, suffix: String): Option[Map[String, RawHistogram]] = {
-      payload.get(location).map(json => 
-          parse(json.asInstanceOf[String])
-            .extract[Map[String, RawHistogram]]
+    def parseHistogramsFromPayload[Value : Manifest](
+      payload: Map[String, Any],
+      location: String,
+      suffix: String
+    ): Option[Map[String, Value]] = {
+    //): Option[Map[String, RawHistogram]] = {
+      for (
+        json <- payload.get(location)
+      ) yield (
+        parse(json.asInstanceOf[String])
+            .extract[Map[String, Value]]
             .map(pair => (pair._1 + suffix, pair._2))
       )
     }
 
     def stripPayload(payload: Map[String, Any]): Map[String, RawHistogram] = {
-      val histMaps = getHistograms(payload, "payload.histograms", "") ++
-        getHistograms(payload, "payload.processes.content.histograms", "_CHILD")
+      val parser = parseHistogramsFromPayload[RawHistogram] _
+      val histMaps = 
+        parser(payload, "payload.histograms", "") ++
+        parser(payload, "payload.processes.content.histograms", "_CHILD")
 
       histMaps.foldLeft(Map[String, RawHistogram]())((acc, map) => acc ++ map)
     }
