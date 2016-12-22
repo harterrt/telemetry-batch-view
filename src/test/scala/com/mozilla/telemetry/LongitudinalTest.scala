@@ -487,8 +487,8 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     }
   }
 
-  "Keyed Child Histograms" must "be included" in {
-    val entries = fixture.row.getMap[String, WrappedArray[Int]](fixture.row.fieldIndex("search_counts_child"))
+  "Keyed Content Histograms" must "be included" in {
+    val entries = fixture.row.getMap[String, WrappedArray[Int]](fixture.row.fieldIndex("search_counts_content"))
     assert(entries.size == 1)
     assert(entries("foo").size == fixture.payloads.length)
     entries("foo").foreach(x => assert(x == 42))
@@ -499,8 +499,8 @@ class LongitudinalTest extends FlatSpec with Matchers with PrivateMethodTester {
     intercept[IllegalArgumentException](fixture.row.fieldIndex("gc_ms"))
   }
 
-  "Child Histograms" must "be included" in {
-    val histograms = fixture.row.getList[Boolean](fixture.row.fieldIndex("fips_enabled_child"))
+  "Content Histograms" must "be included" in {
+    val histograms = fixture.row.getList[Boolean](fixture.row.fieldIndex("fips_enabled_content"))
     histograms.foreach(x => assert(x))
   }
 
