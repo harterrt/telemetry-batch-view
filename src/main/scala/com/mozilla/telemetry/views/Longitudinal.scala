@@ -687,9 +687,7 @@ object LongitudinalView {
   }
 
   private def keyedHistograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
-    val histogramsList = payloads.map(payload => 
-      stripPayload[Map[String, RawHistogram]](payload, keyedHistogramLocations)
-    )
+    val histogramsList = payloads.map(Histograms.stripKeyedHistograms)
 
     val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
 
@@ -718,45 +716,8 @@ object LongitudinalView {
     }
   }
 
-  private case class HistogramLocation(path: String, suffix: String)
-  private val histogramLocations = List(
-    HistogramLocation("payload.histograms", ""),
-    HistogramLocation("payload.processes.content.histograms", "_CONTENT")
-  )
-
-  private val keyedHistogramLocations = List(
-    HistogramLocation("payload.keyedHistograms", ""),
-    HistogramLocation("payload.processes.content.keyedHistograms", "_CONTENT")
-  )
-
-  private def parseHistogramsFromPayload[Value : Manifest](
-    payload: Map[String, Any],
-    location: String,
-    suffix: String
-  ): Option[Map[String, Value]] = {
-  //): Option[Map[String, RawHistogram]] = {
-    implicit val formats = DefaultFormats
-    for (
-      json <- payload.get(location)
-    ) yield (
-      parse(json.asInstanceOf[String])
-          .extract[Map[String, Value]]
-          .map(pair => (pair._1 + suffix, pair._2))
-    )
-  }
-
-  private def stripPayload[HistFormat: Manifest](
-    payload: Map[String, Any],
-    locations: List[HistogramLocation]
-  ): Map[String, HistFormat] = {
-    val parser = parseHistogramsFromPayload[HistFormat] _
-    locations.map(location => parser(payload, location.path, location.suffix))
-      .flatten
-      .foldLeft(Map[String, HistFormat]())((acc, map) => acc ++ map)
-  }
-
   private def histograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
-    val histogramsList = payloads.map(payload => stripPayload[RawHistogram](payload, histogramLocations))
+    val histogramsList = payloads.map(Histograms.stripHistograms)
         
     val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
 

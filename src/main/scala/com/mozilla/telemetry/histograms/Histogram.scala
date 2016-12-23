@@ -16,6 +16,46 @@ case class LinearHistogram(keyed: Boolean, low: Int, high: Int, nBuckets: Int) e
 case class ExponentialHistogram(keyed: Boolean, low: Int, high: Int, nBuckets: Int) extends HistogramDefinition
 
 object Histograms {
+  private case class HistogramLocation(path: String, suffix: String)
+  private val histogramLocations = List(
+    HistogramLocation("payload.histograms", ""),
+    HistogramLocation("payload.processes.content.histograms", "_CONTENT")
+  )
+
+  private val keyedHistogramLocations = List(
+    HistogramLocation("payload.keyedHistograms", ""),
+    HistogramLocation("payload.processes.content.keyedHistograms", "_CONTENT")
+  )
+
+  private val suffixes = (histogramLocations ++ keyedHistogramLocations).map(_.suffix).distinct
+
+  private def parseHistogramLocation[Value : Manifest](
+    payload: Map[String, Any],
+    location: HistogramLocation
+  ): Option[Map[String, Value]] = {
+    implicit val formats = DefaultFormats
+    for (
+      json <- payload.get(location.path)
+    ) yield (
+      parse(json.asInstanceOf[String])
+          .extract[Map[String, Value]]
+          .map(pair => (pair._1 + location.suffix, pair._2))
+    )
+  }
+
+  private def stripPayload[HistFormat: Manifest](
+    locations: List[HistogramLocation]
+  )(
+    payload: Map[String, Any]
+  ): Map[String, HistFormat] = {
+    locations.map(parseHistogramLocation[HistFormat](payload, _))
+      .flatten //Maybe just two flattens?
+      .foldLeft(Map[String, HistFormat]())((acc, map) => acc ++ map)
+  }
+
+  val stripHistograms = stripPayload[RawHistogram](histogramLocations) _
+  val stripKeyedHistograms = stripPayload[Map[String, RawHistogram]](keyedHistogramLocations) _
+
   val definitions = {
     implicit val formats = DefaultFormats
 
@@ -80,7 +120,6 @@ object Histograms {
         val nBuckets = v.getOrElse("n_buckets", None).asInstanceOf[Option[Int]]
 
         def addSuffixes(key: String, histogram: HistogramDefinition): List[(String, HistogramDefinition)] = {
-          val suffixes = List("", "_CONTENT")
           suffixes.map(suffix => (key + suffix, histogram))
         }
 
