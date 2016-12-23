@@ -565,9 +565,14 @@ object LongitudinalView {
     val buffer = ListBuffer[T]()
     println("HERE")
     println(payloads.map(_.get(name)).flatten)
+    println("A"*80)
     //println(payloads.map(_.get(name).map(_.keys)))
-    println(payloads.map(_.get(name).map(_.values)))
     for (histograms <- payloads) {
+      println(histograms)
+      println(name)
+      println(histograms.get(name))
+      println(histograms.get(name).map(flatten))
+      println("B"*80)
       histograms.get(name) match {
         case Some(histogram) =>
           buffer += flatten(histogram)
@@ -576,6 +581,8 @@ object LongitudinalView {
       }
     }
     println("DONE")
+    buffer.asJava
+    println("DONEr")
     buffer.asJava
   }
 
@@ -586,7 +593,7 @@ object LongitudinalView {
     definition match {
       case _: FlagHistogram =>
         // A flag histograms is represented with a scalar.
-        vectorizeHistogram_(name, payloads, h => h.values("0") == 0, false)
+        vectorizeHistogram_(name, payloads, h =>{println(h); h.values("0") == 0}, false)
 
       case _: BooleanHistogram =>
         // A boolean histograms is represented with an array of two integers.
@@ -754,20 +761,28 @@ object LongitudinalView {
       val histograms = for {
         processesJson <- payload.get("payload.processes").toList
         val processes = parse(processesJson.asInstanceOf[String])
-          .extract[Map[String, Map[String, Map[String, Any]]]]
+          .extract[Map[String, Map[String, Map[String, JObject]]]]
         //  .map(pair => (HistogramKey(pair._1, "content"), pair._2))
         processType <- processes.keys
         process <- processes.get(processType).toList
         //processJson <- processes.get(processType).toList
         //val process = processJson.asInstanceOf[Map[String, Any]]
         histograms <- process.get("histograms").toList
-        //histogram <- histograms
-        histogram <- histograms.asInstanceOf[Map[String, RawHistogram]]
+        histogram <- histograms
+        val hist = histogram._2
+        //histogram <- histograms.asInstanceOf[Map[String, RawHistogram]]
       } yield (
-        (HistogramKey(histogram._1, processType), histogram._2)
+        (HistogramKey(histogram._1, processType),
+         RawHistogram(
+           (hist \\ "values").extract[Map[String, Int]],
+           (hist \\ "sum").extract[Long]
+         ))
       )
 
-      //Some(Map(HistogramKey("One", "Two") -> RawHistogram(Map("One"-> 2), 1l)))
+      //Map(HistogramKey("One", "Two") -> RawHistogram(Map("One"-> 2), 1l))
+      println("C"*80)
+      println(histograms)
+      println("C"*80)
       histograms.toMap
     }
 
@@ -793,8 +808,10 @@ object LongitudinalView {
     for ((key, definition) <- validKeys) {
       println("="*80)
       println(key.join)
+      println(vectorizeHistogram(key, definition, histogramsList, histogramSchema))
+      println(">"*80)
       root.set(key.join, vectorizeHistogram(key, definition, histogramsList, histogramSchema))
-      println("="*80)
+      println("!"*80)
     }
   }
 
@@ -1037,7 +1054,9 @@ object LongitudinalView {
       JSON2Avro("payload.info",               List("subsessionId"),             "subsession_id", sorted, root, schema)
       JSON2Avro("payload.info",               List("subsessionLength"),         "subsession_length", sorted, root, schema)
       JSON2Avro("payload.info",               List("timezoneOffset"),           "timezone_offset", sorted, root, schema)
+      println("entering avro")
       histograms2Avro(sorted, root, schema)
+      println("exiting avro")
       //keyedHistograms2Avro(sorted, root, schema)
       scalars2Avro(sorted, root)
       keyedScalars2Avro(sorted, root)
