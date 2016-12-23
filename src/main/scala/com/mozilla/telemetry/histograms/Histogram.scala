@@ -29,16 +29,16 @@ object Histograms {
 
   private val suffixes = (histogramLocations ++ keyedHistogramLocations).map(_.suffix).distinct
 
-  private def parseHistogramLocation[Value : Manifest](
+  private def parseHistogramLocation[HistFormat : Manifest](
     payload: Map[String, Any],
     location: HistogramLocation
-  ): Option[Map[String, Value]] = {
+  ): Option[Map[String, HistFormat]] = {
     implicit val formats = DefaultFormats
     for (
       json <- payload.get(location.path)
     ) yield (
       parse(json.asInstanceOf[String])
-          .extract[Map[String, Value]]
+          .extract[Map[String, HistFormat]]
           .map(pair => (pair._1 + location.suffix, pair._2))
     )
   }
@@ -49,7 +49,7 @@ object Histograms {
     payload: Map[String, Any]
   ): Map[String, HistFormat] = {
     locations.map(parseHistogramLocation[HistFormat](payload, _))
-      .flatten //Maybe just two flattens?
+      .flatten
       .foldLeft(Map[String, HistFormat]())((acc, map) => acc ++ map)
   }
 
