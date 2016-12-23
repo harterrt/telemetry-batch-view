@@ -79,35 +79,35 @@ object Histograms {
         val high = v.getOrElse("high", None).asInstanceOf[Option[Int]]
         val nBuckets = v.getOrElse("n_buckets", None).asInstanceOf[Option[Int]]
 
+        def addSuffixes(key: String, histogram: HistogramDefinition): List[(String, HistogramDefinition)] = {
+          val suffixes = List("", "_CONTENT")
+          suffixes.map(suffix => (key + suffix, histogram))
+        }
+
         (kind, nValues, high, nBuckets) match {
           case ("flag", _, _, _) =>
-            Some((k, FlagHistogram(keyed)))
+            Some(addSuffixes(k, FlagHistogram(keyed)))
           case ("boolean", _, _ , _) =>
-            Some((k, BooleanHistogram(keyed)))
+            Some(addSuffixes(k, BooleanHistogram(keyed)))
           case ("count", _, _, _) =>
-            Some((k, CountHistogram(keyed)))
+            Some(addSuffixes(k, CountHistogram(keyed)))
           case ("enumerated", Some(x), _, _) =>
-            Some((k, EnumeratedHistogram(keyed, x)))
+            Some(addSuffixes(k, EnumeratedHistogram(keyed, x)))
           case ("linear", _, Some(h), Some(n)) =>
-            Some((k, LinearHistogram(keyed, low, h, n)))
+            Some(addSuffixes(k, LinearHistogram(keyed, low, h, n)))
           case ("exponential", _, Some(h), Some(n)) =>
-            Some((k, ExponentialHistogram(keyed, low, h, n)))
+            Some(addSuffixes(k, ExponentialHistogram(keyed, low, h, n)))
           case _ =>
             None
         }
       }
 
-      val contentHists = pretty.flatten.map(histToContentHist)
-
-      (key, (pretty.flatten ++ contentHists).toMap)
+      println(pretty.flatten.flatten)
+      (key, pretty.flatten.flatten.toMap)
     }
 
     // Histograms are considered to be immutable so it's OK to merge their definitions
     parsed.flatMap(_._2)
-  }
-
-  def histToContentHist[A](pair: (String, A)): (String, A) = {
-    (pair._1 + "_CONTENT", pair._2)
   }
 
   def linearBuckets(min: Float, max: Float, nBuckets: Int): Array[Int] = {
