@@ -102,7 +102,6 @@ object Histograms {
         }
       }
 
-      println(pretty.flatten.flatten)
       (key, pretty.flatten.flatten.toMap)
     }
 

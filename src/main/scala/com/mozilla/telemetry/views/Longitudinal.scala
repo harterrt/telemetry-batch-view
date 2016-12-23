@@ -214,7 +214,6 @@ object LongitudinalView {
       }
 
     val counts = partitionCounts.reduce( (x, y) => (x._1 + y._1, x._2 + y._2))
-    println("Clients seen: %d".format(counts._1))
     println("Clients ignored: %d".format(counts._2))
 
     // NOTE: This line must be after the reduce above due to lazy eval, or else this will execute before any real work
@@ -563,7 +562,6 @@ object LongitudinalView {
                                               flatten: RawHistogram => T,
                                               default: T): java.util.Collection[T] = {
     val buffer = ListBuffer[T]()
-    println("Vectorizing " + name)
     for (histograms <- payloads) {
       histograms.get(name) match {
         case Some(histogram) =>
@@ -572,7 +570,6 @@ object LongitudinalView {
           buffer += default
       }
     }
-    println("Vectorized")
     buffer.asJava
   }
 
@@ -689,81 +686,77 @@ object LongitudinalView {
     schema.getField(field).schema.getTypes.get(1).getElementType
   }
 
-//  private def keyedHistograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
-//    implicit val formats = DefaultFormats
-//
-//    val histogramsList = payloads.map{ case (x) =>
-//      val json = x.getOrElse("payload.keyedHistograms", return).asInstanceOf[String]
-//      parse(json).extract[Map[String, Map[String, RawHistogram]]]
-//    }
-//
-//    val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
-//
-//    val validKeys = for {
-//      key <- uniqueKeys
-//      definition <- Histograms.definitions.get(key)
-//    } yield (key, definition)
-//
-//    val histogramSchema = getElemType(schema, "fx_tab_switch_total_ms")
-//
-//    for ((key, definition) <- validKeys) {
-//      val keyedHistogramsList = histogramsList.map{x =>
-//        x.get(key) match {
-//          case Some(v) => v
-//          case _ => Map[String, RawHistogram]()
-//        }
-//      }
-//
-//      val uniqueLabels = keyedHistogramsList.flatMap(x => x.keys).distinct.toSet
-//      val vectorized = for {
-//        label <- uniqueLabels
-//        vector = vectorizeHistogram((label, ""), definition, keyedHistogramsList, histogramSchema)
-//      } yield (label, vector)
-//
-//      root.set(key.toLowerCase, vectorized.toMap.asJava)
-//    }
-//  }
+  private def keyedHistograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
+    val histogramsList = payloads.map(payload => 
+      stripPayload[Map[String, RawHistogram]](payload, keyedHistogramLocations)
+    )
 
-  private case class HistogramKey(histogramType: String, processType: String) {
-    def join(): String = {
-      if (processType == "parent") {
-        histogramType.toLowerCase
-      } else {
-        (histogramType + "_" + processType).toLowerCase
+    val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
+
+    val validKeys = for {
+      key <- uniqueKeys
+      definition <- Histograms.definitions.get(key)
+    } yield (key, definition)
+
+    val histogramSchema = getElemType(schema, "fx_tab_switch_total_ms")
+
+    for ((key, definition) <- validKeys) {
+      val keyedHistogramsList = histogramsList.map{x =>
+        x.get(key) match {
+          case Some(v) => v
+          case _ => Map[String, RawHistogram]()
+        }
       }
+
+      val uniqueLabels = keyedHistogramsList.flatMap(x => x.keys).distinct.toSet
+      val vectorized = for {
+        label <- uniqueLabels
+        vector = vectorizeHistogram(label, definition, keyedHistogramsList, histogramSchema)
+      } yield (label, vector)
+
+      root.set(key.toLowerCase, vectorized.toMap.asJava)
     }
   }
 
-  private def histograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
+  private case class HistogramLocation(path: String, suffix: String)
+  private val histogramLocations = List(
+    HistogramLocation("payload.histograms", ""),
+    HistogramLocation("payload.processes.content.histograms", "_CONTENT")
+  )
+
+  private val keyedHistogramLocations = List(
+    HistogramLocation("payload.keyedHistograms", ""),
+    HistogramLocation("payload.processes.content.keyedHistograms", "_CONTENT")
+  )
+
+  private def parseHistogramsFromPayload[Value : Manifest](
+    payload: Map[String, Any],
+    location: String,
+    suffix: String
+  ): Option[Map[String, Value]] = {
+  //): Option[Map[String, RawHistogram]] = {
     implicit val formats = DefaultFormats
+    for (
+      json <- payload.get(location)
+    ) yield (
+      parse(json.asInstanceOf[String])
+          .extract[Map[String, Value]]
+          .map(pair => (pair._1 + suffix, pair._2))
+    )
+  }
 
-    def parseHistogramsFromPayload[Value : Manifest](
-      payload: Map[String, Any],
-      location: String,
-      suffix: String
-    ): Option[Map[String, Value]] = {
-    //): Option[Map[String, RawHistogram]] = {
-      for (
-        json <- payload.get(location)
-      ) yield (
-        parse(json.asInstanceOf[String])
-            .extract[Map[String, Value]]
-            .map(pair => (pair._1 + suffix, pair._2))
-      )
-    }
+  private def stripPayload[HistFormat: Manifest](
+    payload: Map[String, Any],
+    locations: List[HistogramLocation]
+  ): Map[String, HistFormat] = {
+    val parser = parseHistogramsFromPayload[HistFormat] _
+    locations.map(location => parser(payload, location.path, location.suffix))
+      .flatten
+      .foldLeft(Map[String, HistFormat]())((acc, map) => acc ++ map)
+  }
 
-    def stripPayload(payload: Map[String, Any]): Map[String, RawHistogram] = {
-      val parser = parseHistogramsFromPayload[RawHistogram] _
-      val histMaps = 
-        parser(payload, "payload.histograms", "") ++
-        parser(payload, "payload.processes.content.histograms", "_CONTENT")
-
-      histMaps.foldLeft(Map[String, RawHistogram]())((acc, map) =>
-          acc ++ map)
-    }
-
-    println("Stripping:")
-    val histogramsList = payloads.map(stripPayload)
+  private def histograms2Avro(payloads: List[Map[String, Any]], root: GenericRecordBuilder, schema: Schema) {
+    val histogramsList = payloads.map(payload => stripPayload[RawHistogram](payload, histogramLocations))
         
     val uniqueKeys = histogramsList.flatMap(x => x.keys).distinct.toSet
 
@@ -775,9 +768,7 @@ object LongitudinalView {
     val histogramSchema = getElemType(schema, "fx_tab_switch_total_ms")
 
     for ((key, definition) <- validKeys) {
-      println("Setting Key:" + key)
       root.set(key.toLowerCase, vectorizeHistogram(key, definition, histogramsList, histogramSchema))
-      println("Key Set:")
     }
   }
 
@@ -1021,7 +1012,7 @@ object LongitudinalView {
       JSON2Avro("payload.info",               List("subsessionLength"),         "subsession_length", sorted, root, schema)
       JSON2Avro("payload.info",               List("timezoneOffset"),           "timezone_offset", sorted, root, schema)
       histograms2Avro(sorted, root, schema)
-      //keyedHistograms2Avro(sorted, root, schema)
+      keyedHistograms2Avro(sorted, root, schema)
       scalars2Avro(sorted, root)
       keyedScalars2Avro(sorted, root)
       subsessionStartDate2Avro(sorted, root, schema)
